@@ -95,113 +95,239 @@ screen skillsUI:
     add "gui/white_menu.png"     
     imagebutton auto "gui/button/skills_%s.png" xalign 0.95 yalign 0.05 focus_mask None action Return()
 
-    hbox:
-        xalign 0.5
-        yalign 0.3
-        spacing 30
-    
-        vbox:                
-            text "WARFARE ( [warfare] )" size 40
-            text "Violence as a last resort." size 30
-            text "\nSOLDIER: combat and \nhandling of weapons. \nProtect the peace and \ndefend the innocent." size 30
-            text "\nSTRATEGIST: knowledge \nof military strategy. \nInsight into criminal minds." size 30
+    hbox:  
+        xalign 0.1
+        yalign 0.2
+        spacing 50
 
-        vbox:
-            text "CHARISMA ( [charisma] )" size 40
-            text "What makes people tick?" size 30
-            text "\nDIPLOMAT: flatter with \nhoneyed words. Convince \nthe most stubborn of fools." size 30
-            text "\n\nDECEIVER: coerce and \nmanipulate. The truth \nis relative." size 30
-
-        vbox:
-            text "SCHOLARSHIP ( [scholarship] )" size 40
-            text "To understand is to know." size 30
-            text "\nSCIENTIST: knowledge of the \nphysical and metaphysical. \nKnow why and how things \nare." size 30
-            text "\nCRAFTSMAN: insight into \ndevices and their properties. \nManipulate hextech and \nchemtech instruments." size 30
-
-        vbox:
-            text "SURVIVAL ( [survival] )" size 40
-            text "The art of staying alive." size 30
-            text "\nSHADOW: experts in \ndisguise and stealth. \nBlend into a crowd." size 30
-            text "\n\nSTREET RAT: notice anomalies. \nCatch a weird accent or \nan object out of place." size 30
-
-
-    ### displays subskills as the percentage of their parent skills
-    ### e.g. subskill_A = 1 and subskill_B = 2 are 33.3% and 66.7% respectively
-    hbox:
-        xalign 0.5
-        yalign 0.8
-        spacing 40
-            
-        vbox:
+        vbox:   
             spacing 10
-            text "Soldier" size 30
-            text "Diplomat" size 30
-            text "Scientist" size 30
-            text "Shadow" size 30
+            box_wrap True
+            xmaximum 0.2   
+            text "SKILLS\n" size 40
 
-        vbox:
-            spacing 10
-            if soldier+strategist != 0:
-                text "{:.1%}".format(soldier/(soldier+strategist)) size 30
-            else: 
-                text "50%" size 30
-            if diplomat+deceiver != 0:
-                text "{:.1%}".format(diplomat/(diplomat+deceiver)) size 30
-            else: 
-                text "50%" size 30
-            if scientist+craftsman !=0:                
-                text "{:.1%}".format(scientist/(scientist+craftsman)) size 30
-            else:
-                text "50%" size 30
-            if shadow+streetrat !=0:
-                text "{:.1%}".format(shadow/(shadow+streetrat)) size 30
-            else:
-                text "50%" size 30
-            
-        vbox:
-            spacing 10
-            if soldier+strategist != 0:
-                bar value soldier range (soldier+strategist) xysize(200,30)
-            else:
-                bar value 2.5 range 5 xysize(200,30)
-            if diplomat+deceiver != 0:
-                bar value diplomat range (diplomat+deceiver) xysize(200,30)
-            else:
-                bar value 2.5 range 5 xysize(200,30)
-            if scientist+craftsman !=0:
-                bar value scientist range (scientist+craftsman) xysize(200,30)
-            else:
-                bar value 2.5 range 5 xysize(200,30)
-            if shadow+streetrat !=0:
-                bar value shadow range (shadow+streetrat) xysize(200,30)
-            else:
-                bar value 2.5 range 5 xysize(200,30)
+            text "WARFARE ( [warfare] )" size 35
+            text "[warfare_skill_description]\n\n" size 30
 
-        vbox:
-            spacing 10
-            if soldier+strategist != 0:
-                text "{:.1%}".format(strategist/(soldier+strategist)) size 30
-            else: 
-                text "50%" size 30
-            if diplomat+deceiver != 0:
-                text "{:.1%}".format(deceiver/(diplomat+deceiver)) size 30
-            else: 
-                text "50%" size 30
-            if scientist+craftsman !=0:
-                text "{:.1%}".format(craftsman/(scientist+craftsman)) size 30
-            else: 
-                text "50%" size 30
-            if shadow+streetrat !=0:
-                text "{:.1%}".format(streetrat/(shadow+streetrat)) size 30
-            else: 
-                text "50%" size 30
+            text "CHARISMA ( [charisma] )" size 35
+            text "[charisma_skill_description]\n\n" size 30 
 
-        vbox:
+            text "SCHOLARSHIP ( [scholarship] )" size 35
+            text "[scholarship_skill_description]\n\n" size 30  
+
+            text "SURVIVAL ( [survival] )" size 35
+            text "[survival_skill_description]\n\n" size 30 
+
+            text "VIGOR ( [vigor] )" size 35
+            text "[vigor_skill_description]\n\n" size 30  
+        
+        vbox:            
             spacing 10
-            text "Strategist" size 30
-            text "Deceiver" size 30
-            text "Craftsman" size 30
-            text "Street Rat" size 30
+            box_wrap True
+            xmaximum 0.5
+            text "BACKGROUND\n" size 40
+
+            if adulthood_background == "soldier":
+                text "SOLDIER" size 35
+                text "[soldier_background_description]\n\n" size 30 
+            elif adulthood_background == "strategist":
+                text "STRATEGIST" size 35
+                text "[strategist_background_description]\n\n" size 30
+            elif adulthood_background == "diplomat":
+                text "DIPLOMAT" size 35
+                text "[diplomat_background_description]\n\n" size 30 
+            elif adulthood_background == "deceiver":
+                text "DECEIVER" size 35
+                text "[deceiver_background_description]\n\n" size 30 
+            elif adulthood_background == "scientist":
+                text "SCIENTIST" size 35
+                text "[scientist_background_description]\n\n" size 30 
+            elif adulthood_background == "craftsman":
+                text "CRAFTSMAN" size 35
+                text "[craftsman_background_description]\n\n" size 30 
+            elif adulthood_background == "shadow":
+                text "SHADOW" size 35
+                text "[shadow_background_description]\n\n" size 30 
+            elif adulthood_background == "streetrat":
+                text "STREET RAT" size 35
+                text "[streetrat_background_description]\n\n" size 30 
+
+            if childhood_background != adulthood_background:
+                if childhood_background == "soldier":
+                    text "SOLDIER" size 35
+                    text "[soldier_background_description]\n\n" size 30 
+                elif childhood_background == "strategist":
+                    text "STRATEGIST" size 35
+                    text "[strategist_background_description]\n\n" size 30
+                elif childhood_background == "diplomat":
+                    text "DIPLOMAT" size 35
+                    text "[diplomat_background_description]\n\n" size 30 
+                elif childhood_background == "deceiver":
+                    text "DECEIVER" size 35
+                    text "[deceiver_background_description]\n\n" size 30 
+                elif childhood_background == "scientist":
+                    text "SCIENTIST" size 35
+                    text "[scientist_background_description]\n\n" size 30 
+                elif childhood_background == "craftsman":
+                    text "CRAFTSMAN" size 35
+                    text "[craftsman_background_description]\n\n" size 30 
+                elif childhood_background == "shadow":
+                    text "SHADOW" size 35
+                    text "[shadow_background_description]\n\n" size 30 
+                elif childhood_background == "streetrat":
+                    text "STREET RAT" size 35
+                    text "[streetrat_background_description]\n\n" size 30 
+
+## Dice roll/skill check screens ################################################
+## Added by taqueets
+## Used to display everything for the dice tray, dice roll, and skill check overlay
+##
+
+screen dice_tray_overlay:
+    add "gui/diceroll/dice_tray.png":
+        xcenter 0.5
+        ycenter 0.4
+    text "[skill_type] Check" xalign 0.5 yalign 0.2 size 28 color "#ececec"
+    text "+[skill_modifier] Modifier" xalign 0.5 yalign 0.24 size 22 color "#ececec"
+    text "Diffculty Class [dc]" xalign 0.5 yalign 0.26 size 22 color "#ececec"
+
+    if roll == 20:
+        add "roll20":
+            zoom 1.3
+            xcenter 0.5
+            ycenter 0.4
+
+        text "You rolled a natural 20." xalign 0.5 yalign 0.51 size 22 color "#ececec"
+        text "CRITICAL SUCCESS!" xalign 0.5 yalign 0.55 size 22 color "#ececec"
+
+    elif roll == 1:
+        add "roll1":
+            zoom 1.3
+            xcenter 0.5
+            ycenter 0.4
+        text "You rolled a natural 1." xalign 0.5 yalign 0.51 size 22 color "#ececec"
+        text "CRITICAL FAILURE :(" xalign 0.5 yalign 0.55 size 22 color "#ececec"
+
+    else:
+        if roll == 2:
+            add "roll2":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 3:
+            add "roll3":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 4:
+            add "roll4":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 5:
+            add "roll5":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 6:
+            add "roll6":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 7:
+            add "roll7":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 8:
+            add "roll8":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 9:
+            add "roll9":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 10:
+            add "roll10":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 11:
+            add "roll11":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 12:
+            add "roll12":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 13:
+            add "roll13":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 14:
+            add "roll14":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 15:
+            add "roll15":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 16:
+            add "roll16":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 17:
+            add "roll17":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 18:
+            add "roll18":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        elif roll == 19:
+            add "roll19":
+                zoom 1.3
+                xcenter 0.5
+                ycenter 0.4
+
+        if skill_check >= dc:
+            text "You rolled [roll]." xalign 0.5 yalign 0.51 size 22 color "#ececec"
+            text "[roll] + [skill_modifier] = [skill_check]" xalign 0.5 yalign 0.53 size 22 color "#ececec"
+            text "SUCCESS" xalign 0.5 yalign 0.55 size 22 color "#ececec"
+
+        else:
+            text "You rolled [roll]." xalign 0.5 yalign 0.51 size 22 color "#ececec"
+            text "[roll] + [skill_modifier] = [skill_check]" xalign 0.5 yalign 0.53 size 22 color "#ececec"
+            text "FAILURE" xalign 0.5 yalign 0.55 size 22 color "#ececec"
+
+    textbutton "Continue" action Return() xalign 0.5 yalign 0.60 text_color "#ececec" text_hover_color "#00ccff"
 
 ### CRIME SCENES ###################################################
 screen cs00_demo:

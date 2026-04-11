@@ -50,6 +50,8 @@ label gameplay_demo:
                 call demo_cinematic
             "Crime scene minigame":
                 call demo_crimescene
+            "Dice roll & skill check demo":
+                call demo_skill_check
             "Exit":                
                 $ exitloop = True
                 $ textbox_type = "cinematic"

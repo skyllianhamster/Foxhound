@@ -4,9 +4,12 @@ image black overlay = "gui/black_overlay.png"
 
 image bg black = "gui/black_menu.png"
 image bg demo = "images/backgrounds/bg_demo.png"
+image bg zaun alley = "images/backgrounds/riot-zaun-concept-art-placeholder-bg.png"
 
 image cs demo = "images/crimescenes/cs00_demo.png"
 image cs demoB = "images/crimescenes/cs00_demoB.png"
+
+image dice_tray = "gui/diceroll/dice_tray.png"
 
 ### SPRITES ###################################
 image caitlyn enforcer concerned demo = "images/characters/caitlyn/caitlyn_enforcer_concerned_demo.png" 

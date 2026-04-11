@@ -1,111 +1,106 @@
 ### Define functions here
 
-### SUBSKILLS ####################################################
-### USAGE: call update_subskill(int)
-### pass a positive or negative int 
-### value capped at 5 (subject to change)
+### BACKGROUNDS ####################################################
+### USAGE: initial skill spread distribution
 ### automatically updates parent skills
 #################################################################
 
-label update_soldier(x):
-    if (soldier + x) >= 5:
-        $ soldier = 5
-    else:
-        $ soldier = soldier + x    
-    call update_warfare()
+label background_soldier():
+    call update_warfare(2)
+    call update_vigor(2)
     return
 
-label update_strategist(x):
-    if (strategist + x) >= 5:
-        $ strategist = 5
-    else:
-        $ strategist = strategist + x
-    call update_warfare()
+label background_strategist():
+    call update_warfare(2)
+    call update_scholarship(1)
+    call update_vigor(1)
     return
 
-label update_diplomat(x):
-    if (diplomat + x) >= 5:
-        $ diplomat = 5
-    else:
-        $ diplomat = diplomat + x    
-    call update_charisma()
+label background_diplomat():
+    call update_charisma(2)
+    call update_warfare(1)
+    call update_scholarship(1)
     return
 
-label update_deceiver(x):
-    if (deceiver + x) >= 5:
-        $ deceiver = 5
-    else:
-        $ deceiver = deceiver + x
-    call update_charisma()
+label background_deceiver():
+    call update_charisma(2)
+    call update_survival(1)
+    call update_vigor(1)
     return
 
-label update_scientist(x):
-    if (scientist + x) >= 5:
-        $ scientist = 5
-    else:
-        $ scientist = scientist + x    
-    call update_scholarship()
+label background_scientist():
+    call update_scholarship(2)
+    call update_charisma(1)
+    call update_survival(1)
     return
 
-label update_craftsman(x):
-    if (craftsman + x) >= 5:
-        $ craftsman = 5
-    else:
-        $ craftsman = craftsman + x
-    call update_scholarship()
+label background_craftsman():
+    call update_scholarship(2)
+    call update_vigor(2)
     return
 
-label update_shadow(x):
-    if (shadow + x) >= 5:
-        $ shadow = 5
-    else:
-        $ shadow = shadow + x    
-    call update_survival()
+label background_shadow():  
+    call update_survival(2)
+    call update_warfare(1)
+    call update_charisma(1)
     return
 
-label update_streetrat(x):
-    if (streetrat + x) >= 5:
-        $ streetrat = 5
-    else:
-        $ streetrat = streetrat + x
-    call update_survival()
+label background_streetrat():
+    call update_survival(2)
+    call update_charisma(1)
+    call update_vigor(1)
     return
 
 ### SKILLS ####################################################
-### USAGE: call update_skill
-### each skill is the average of its 2 subskills
+### USAGE: call update_skillname(x)
+### where x is an integer to increase
 #################################################################
 
-label update_warfare():
-    $ warfare = (soldier + strategist) / 2
+label update_warfare(x):
+    if (warfare + x) >= 5:
+        $ warfare = 5
+    else:
+        $ warfare = warfare + x
     return
 
-label update_charisma():
-    $ charisma = (diplomat + deceiver) / 2
+label update_charisma(x):
+    if (charisma + x) >= 5:
+        $ charisma = 5
+    else:
+        $ charisma = charisma + x
     return
 
-label update_scholarship():
-    $ scholarship = (scientist + craftsman) / 2
+label update_scholarship(x):
+    if (scholarship + x) >= 5:
+        $ scholarship = 5
+    else:
+        $ scholarship = scholarship + x
     return
 
-label update_survival():
-    $ survival = (shadow + streetrat) / 2
+label update_survival(x):
+    if (survival + x) >= 5:
+        $ survival = 5
+    else:
+        $ survival = survival + x
     return
 
-### for testing/debugging #######################################
+label update_vigor(x):
+    if (vigor + x) >= 5:
+        $ vigor = 5
+    else:
+        $ vigor = vigor + x
+    return
+
+### 
 
 ### resets all skills to 0 
 label reset_skills():
-    $ soldier = 0
-    $ strategist = 0
-    $ diplomat = 0
-    $ deceiver = 0
-    $ scientist = 0
-    $ craftsman = 0
-    $ shadow = 0
-    $ streetrat = 0
-    call update_warfare()
-    call update_charisma()
-    call update_scholarship()
-    call update_survival()
+    $ childhood_background = ''
+    $ adulthood_background = ''
+
+    $ warfare = 0
+    $ charisma = 0
+    $ scholarship = 0
+    $ survival = 0
+    $ vigor = 0
     return

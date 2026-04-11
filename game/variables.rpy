@@ -6,24 +6,21 @@
 ### TEXTBOXES ###################################################
 default textbox_type = "dialogue" #dialogue or cinematic
 
-### BACKGROUNDS ####################################################
-default childhood_background = ''
-default adulthood_background = ''
+### SUBSKILLS ####################################################
+default soldier = 0
+default strategist = 0
+default diplomat = 0
+default deceiver = 0
+default scientist = 0
+default craftsman = 0
+default shadow = 0
+default streetrat = 0
 
 ### SKILLS ####################################################
 default warfare = 0
 default charisma = 0
 default scholarship = 0
 default survival = 0
-default vigor = 0
-
-### SKILL CHECK #############################################
-default player_success = False
-default required_warfare = 0
-default required_charisma = 0
-default required_scholarship = 0
-default required_survival = 0
-default required_vigor = 0
 
 ### LOOPS ####################################################
 default i = 0

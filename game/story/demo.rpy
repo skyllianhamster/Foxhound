@@ -2,6 +2,8 @@
 
 ### Dialogue screen demo ############################################
 label demo_dialogue:
+    call reset_skills()
+
     $ textbox_type = "dialogue"
 
     scene bg demo 
@@ -89,51 +91,90 @@ label demo_dialogue:
             vi "You do lots of fighting, then?"        
             menu:
                 extend " "
-                "That's where the scars come from.":
-                    call update_soldier(3)
-                    call update_strategist(1)
+                "That's where the scars come from. (WAR +2, VIG +2)":
+                    call background_soldier()
+                    $ adulthood_background = 'soldier'
                     "Vi grins and nods with approval."
                     vi "That makes two of us."
-                "I'm better with a bird's eye view.":
-                    call update_strategist(3)
-                    call update_soldier(1)
+                "I'm better with a bird's eye view. (WAR +2, SCH +1, VIG +1)":
+                    call background_strategist()
+                    $ adulthood_background = 'strategist'
                     vi "Cait-- I mean, the Sheriff'll appreciate having someone else to bounce ideas off of."
         "In an ambassadorial capacity, yes.": 
             vi "Ugh, politicians."
             menu:
                 extend " "
-                "Not exactly, but let's just say I'm pretty good at getting what I want.":
-                    call update_deceiver(3)
-                    call update_diplomat(1)
+                "Not exactly, but let's just say I'm pretty good at getting what I want. (CHA +2, SUR +1, VIG +1)":
+                    call background_deceiver()
+                    $ adulthood_background = 'deceiver'                   
                     vi "That can come in handy."
-                "Talking often is the path of least resistance.":
-                    call update_diplomat(3)
-                    call update_deceiver(1)
+                "Talking often is the path of least resistance. (CHA +2, WAR +1, SCH +1)":
+                    call background_diplomat()
+                    $ adulthood_background = 'diplomat'
                     vi "Debatable."
         "I did. Buried in books all day long.":
             vi "Yeah? What kind?"
             menu:
                 extend " "
-                "Theory and research.":
-                    call update_scientist(3)
-                    call update_craftsman(1)
+                "Theory and research. (SCH +2, CHA +1, SUR +1)":
+                    call background_scientist()
+                    $ adulthood_background = 'scientist'
                     vi "We could use more people in R&D and analysis."
-                "Schematics and application.":
-                    call update_craftsman(3)
-                    call update_scientist(1)
+                "Schematics and application. (SCH +2, VIG +2)":
+                    call background_craftsman()
+                    $ adulthood_background = 'craftsman'
                     vi "Nice, Chief Zevi could use a hand if you can work Hextech."
         "'Elsewhere' doing a lot of heavy lifting there.": 
             vi "Depends how you can be useful."
             menu:
                 extend " "
-                "People often don't notice me.":
-                    call update_shadow(3)
-                    call update_streetrat(1)
+                "People often don't notice me. (SUR +2, WAR +1, CHA +1)":
+                    call background_shadow()
+                    $ adulthood_background = 'shadow'
                     vi "Best way to stay alive."
-                "I notice people. A lot. And things about them.":
-                    call update_streetrat(3)
-                    call update_shadow(1)
+                "I notice people. A lot. And things about them. (SUR +2, CHA +1, VIG +1)":
+                    call background_streetrat()
+                    $ adulthood_background = 'streetrat'
                     vi "That makes you both reliable and dangerous."
+
+    player "Still not clear what the Sheriff wants, though."
+    vi "You'll have to hear it from her. Anything else?"
+    menu:
+        extend " "
+        "I spent a lot of time in training grounds and barracks...":
+            menu:
+                "Just swords and spears, all day long. (WAR +2, VIG +2)":
+                    call background_soldier()
+                    $ childhood_background = 'soldier'
+                "Maps. Learning what generals had for breakfast. More maps. (WAR +2, SCH +1, VIG +1)": 
+                    call background_strategist()
+                    $ childhood_background = 'strategist'
+        "Want to know something about people?":
+            menu:
+                "It's fascinating how much a good Noxian red can reveal. (CHA +2, WAR +1, SCH +1)":
+                    call background_diplomat()
+                    $ childhood_background = 'diplomat'
+                "If someone embellishes too much they're probably lying. (CHA +2, SUR +1, VIG +1)":
+                    call background_deceiver()
+                    $ childhood_background = 'deceiver'
+        "Yes. My books and equipment...":
+            menu:
+                "I'll need a bit more space to store my books. (SCH +2, CHA +1, SUR +1)":
+                    call background_scientist()
+                    $ childhood_background = 'scientist'
+                "Gonna need a replacement for my hammer. And some new gloves. (SCH +2, VIG +2)":
+                    call background_craftsman()
+                    $ childhood_background = 'craftsman'
+        "Mm. Nice office.":
+            menu:
+                "I'll go take a look around, if you don't mind. (SUR +2, WAR +1, CHA +1)":
+                    call background_shadow()
+                    $ childhood_background = 'shadow'
+                "That conspiracy board's missing a few pins. (SUR +2, CHA +1, VIG +1)":
+                    call background_streetrat()
+                    $ childhood_background = 'streetrat'
+        
+
 
     "Click the skills button on the upper right to see the skills screen."
     window hide
@@ -503,4 +544,168 @@ label demo_crimescene:
     hide screen returnButton
 
     scene black with dissolve
+    return
+
+### Dice roll & skill check demo ############################################
+label demo_skill_check:
+    $ textbox_type = "dialogue"
+
+    # Set skills for this demo scene
+    $ survival = 4
+    $ warfare = 2
+    $ charisma = 1
+
+    scene bg zaun alley
+    show screen skillsButton
+    show screen returnButton
+
+    window show #shows dialogue textbox with dissolve
+    """This section simulates a simple scene with dice roll\nand skill check mechanics.\n\nScene starting now...
+    """
+    window hide #hides dialogue textbox with dissolve
+
+    window show
+    """{i}Steam hisses from broken pipes. The glow of shimmer pulses faintly\namongst the broken glass containers scattered by the warehouse.{/i}
+
+    {i}Inside are armed chemtanks and crates.{/i}
+
+    {i}Caitlyn, Vi, and you hide in a nearby alley.{/i}
+    """
+    window hide
+
+    show vi pitfighter concerned demo at left20
+    with dissolve
+
+    window show
+    vi "Tell me we're not just gonna stand here."
+    window hide
+
+    show caitlyn enforcer concerned demo at right
+    with dissolve
+
+    window show
+    caitlyn "We're not rushing in blind."
+    window hide
+
+    window show
+    """{i}Caitlyn glances at you.{/i}
+    """
+    window hide
+
+    window show
+    caitlyn "You're the variable here. What's the call?"
+    window hide
+
+    window show
+    """{i}Both of them are waiting on you.{/i}
+    """
+    window hide
+
+    menu:
+        extend " " # keeps the textbox and last line on screen while options appear
+        "Lead a quiet entry with Caitlyn covering and Vi ready to strike. (Survival +[survival])":
+
+            $ roll = DiceRoll()
+            $ skill_type = survival_choice
+            $ skill_modifier = survival
+            $ skill_check = roll + skill_modifier
+            $ dc = 14
+
+            jump run_skill_check
+
+        "Work with Caitlyn to map positions and create a precise takedown plan. (Warfare +[warfare])":
+
+            $ roll = DiceRoll()
+            $ skill_type = warfare_choice
+            $ skill_modifier = warfare
+            $ skill_check = roll + skill_modifier
+            $ dc = 14
+
+            jump run_skill_check
+
+        "Create a distraction or manipulate someone inside. (Charisma +[charisma])":
+
+            $ roll = DiceRoll()
+            $ skill_type = charisma_choice
+            $ skill_modifier = charisma
+            $ skill_check = roll + skill_modifier
+            $ dc = 14
+
+            jump run_skill_check
+
+label run_skill_check:
+
+    call screen dice_tray_overlay
+
+    hide screen skillsButton
+    hide screen returnButton
+
+    scene black with dissolve
+
+    if skill_check >= dc:
+        if skill_type == survival_choice:
+            jump stealth_success
+
+        elif skill_type == warfare_choice:
+            jump takedown_success
+
+        elif skill_type == charisma_choice:
+            jump manipulation_success
+
+    else:
+        if skill_type == survival_choice:
+            jump stealth_failure
+
+        elif skill_type == warfare_choice:
+            jump takedown_failure
+
+        elif skill_type == charisma_choice:
+            jump manipulation_failure
+
+label stealth_success:
+    window show
+    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a successful stealth mission would go here.
+    """
+    window hide
+
+    return
+
+label stealth_failure:
+    window show
+    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a failed stealth mission would go here.
+    """
+    window hide
+
+    return
+
+label takedown_success:
+    window show
+    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a successful takedown plan would go here.
+    """
+    window hide
+
+    return
+
+label takedown_failure:
+    window show
+    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a failed takedown plan would go here.
+    """
+    window hide
+
+    return
+
+label manipulation_success:
+    window show
+    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of successful distraction and manipulation would go here.
+    """
+    window hide
+
+    return
+
+label manipulation_failure:
+    window show
+    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of failed distraction and manipulation would go here.
+    """
+    window hide
+
     return

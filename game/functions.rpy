@@ -102,6 +102,10 @@ init python:
 
 ### resets all skills to 0 
 label reset_skills():
+    $ inventory = []
+    $ item_description = ""
+    $ item_zoom = "gui/screen_skills/items/item_zoom.png"
+
     $ childhood_background = ''
     $ adulthood_background = ''
 

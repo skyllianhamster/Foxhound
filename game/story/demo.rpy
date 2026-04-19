@@ -174,9 +174,13 @@ label demo_dialogue:
                     call background_streetrat()
                     $ childhood_background = 'streetrat'
         
+    $ inventory = ["item_demo_keys", "item_demo_note", "item_demo_rods"]
 
+    """Click the skills button on the upper right to see the skills screen.
+    
+    Items have been added to your inventory.
+    """
 
-    "Click the skills button on the upper right to see the skills screen."
     window hide
 
     hide screen skillsButton

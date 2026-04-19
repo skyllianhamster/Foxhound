@@ -380,12 +380,12 @@ screen main_menu():
 
     fixed:
         
-        imagebutton auto "gui/button/mm_start_%s.png" xpos 1676 ypos 160 focus_mask None action Start()
-        imagebutton auto "gui/button/mm_load_%s.png" xpos 1692 ypos 231 focus_mask None action ShowMenu("load")
-        imagebutton auto "gui/button/mm_settings_%s.png" xpos 1605 ypos 303 focus_mask None action ShowMenu("preferences")
-        imagebutton auto "gui/button/mm_about_%s.png" xpos 1657 ypos 374 focus_mask None action ShowMenu("about")
-        imagebutton auto "gui/button/mm_help_%s.png" xpos 1688 ypos 445 focus_mask None action ShowMenu("help")
-        imagebutton auto "gui/button/mm_quit_%s.png" xpos 1688 ypos 518 focus_mask None action Quit()
+        imagebutton auto "gui/screen_main/screen_main_start_%s.png" xpos 1676 ypos 160 focus_mask None action Start()
+        imagebutton auto "gui/screen_main/screen_main_load_%s.png" xpos 1692 ypos 231 focus_mask None action ShowMenu("load")
+        imagebutton auto "gui/screen_main/screen_main_settings_%s.png" xpos 1605 ypos 303 focus_mask None action ShowMenu("preferences")
+        imagebutton auto "gui/screen_main/screen_main_about_%s.png" xpos 1657 ypos 374 focus_mask None action ShowMenu("about")
+        imagebutton auto "gui/screen_main/screen_main_help_%s.png" xpos 1688 ypos 445 focus_mask None action ShowMenu("help")
+        imagebutton auto "gui/screen_main/screen_main_quit_%s.png" xpos 1688 ypos 518 focus_mask None action Quit()
 
     ## This empty frame darkens the main menu.
     #frame:

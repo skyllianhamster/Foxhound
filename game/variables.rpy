@@ -17,6 +17,16 @@ default scholarship = 0
 default survival = 0
 default vigor = 0
 
+### INVENTORY ######################################
+default inventory = [] #filenames without the _idle.png and _hover.png
+default item_zoom = "gui/screen_skills/items/item_zoom.png"
+default item_description = ""
+define item_descriptions = { 
+    "item_demo_keys": "A set of three keys: brass, iron, and steel.",
+    "item_demo_note": "A note signed by \"C\".",
+    "item_demo_rods": "Aluminum rods from Cadwalder Foundry."
+    }
+
 ### ROLLS & SKILL CHECKS #####################################
 # Added by taqueets
 define warfare_choice = "Warfare"

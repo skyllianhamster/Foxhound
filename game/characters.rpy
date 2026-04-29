@@ -1,6 +1,6 @@
 ### Define characters here
 
-define player = Character("PLAYER", color=gui.name_color)
+define player = Character("[player_name!u]", color=gui.name_color)
 define vi = Character("VI", color=gui.name_color)
 define caitlyn = Character("CAITLYN", color=gui.name_color) 
 

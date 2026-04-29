@@ -1,88 +1,73 @@
-### This is a demo of story flow elements and the 3 visual screens
+### This is a demo of story flow elements
+
+### Player customization demo ############################################
+
+label demo_player_customization:
+    
+    $ player_name = ""
+
+    call screen player_name_and_pronouns("Your name:")
+
+    $ player_name = player_name.strip()
+
+    if not player_name or player_name.lower() in forbidden_names:
+        call screen error_screen("Please enter a valid name.") 
+        jump demo_player_customization
+
+    if not pronoun:
+        call screen error_screen("Please choose your pronouns.")         
+        jump demo_player_customization
+
+    menu:
+        "You chose [player_name!c] as your name and [they]/[them] as your preferred pronouns. Confirm?":
+            jump demo_dialogue
+        "No, I want to change it.":
+            jump demo_player_customization
+
+    return  
+
+    
 
 ### Dialogue screen demo ############################################
+# default name is Tala (they/them) unless going through customization first
+# use "[they], [them], [their], [theirs], [themself], [they_re], [they_ve]" as necessary in the text
+
 label demo_dialogue:
-    call reset_skills()
+    call reset_skills_and_inventory()
 
     $ textbox_type = "dialogue"
 
     scene bg demo 
-    show screen skillsButton
-    show screen returnButton
-    
-    window show #shows dialogue textbox with dissolve
-    """DEMO: DIALOGUE
+    show screen skills_and_inventory_button
+    show screen return_button  
 
-    This section simulates the dialogue screens and levelling up of skills based on dialogue choices.
-    """
-    window hide #hides dialogue textbox with dissolve
 
     show vi pitfighter concerned demo at left20 
     with dissolve
-    
-    window show 
-    vi "Can't Harknor handle it?"    
-    window hide 
+
+    window show
+    vi "Cait, [they_re] here."
+    window hide
 
     show caitlyn enforcer concerned demo at right 
     with dissolve
 
     window show
-    caitlyn "I promise I'll be back before noon."
-    vi "You better, or I'm coming in and giving 'em a piece of my f-"
-    caitlyn "I'll be fine. Mind the precinct while I'm gone."    
-    window hide   
+    caitlyn """[player_name!c]. Welcome.
+    
+    Vi, [they_ve!c] come a long way. Please show [them] [their] space so [they] can settle in.
+    """
+    window hide
 
     hide caitlyn enforcer concerned demo 
     with dissolve
 
-    window show
-    """{i}The tall officer exits the office, leaving the other woman pacing inside.{/i}
+    window auto   
+    player "Where's she going?"
+    vi """Council summons. You're stuck with me for today.
     
-    {i}She stops, noticing you watching through the blinds.{/i}
+    A couple of things first. You said you worked elsewhere before this?
     """
-
-    vi "You need something?"
-
-    """{i}The space was fairly cramped. Stacks of papers littered the desk in the middle of the room, and a large map covered almost all of the opposite wall.{/i}
-    
-    {i}It was an organized kind of chaos.{/i}
-    """
-
-    player "The Sheriff sent for me. For assistance on a case."
-    vi "Right. I'm Vi. You're a bit early."
-
-    "{i}You glance at the clock. It was half past nine.{/i}"
-
-    menu: 
-        extend " " # keeps the textbox and last line on screen while options appear
-        "That so?":
-            vi """
-            Yeah, Sheriff's off to a meeting right now.             
-            
-            Steb's out on patrol, Harknor's probably gone to track down his pen... 
-            
-            ...he's been at it for a few weeks now, come to think of it.
-            """
-        "Better early than late.":
-            "{i}There is a flicker of amusement on her face.{/i}"
-            vi "You won't be saying that after a week here."
-
-    vi "In any case, Cait's busy at the moment. For now you're stuck with me."
-
-    menu:
-        extend " "
-        "\"Cait\"?":
-            vi """
-            Oh.
-
-            Sheriff Kiramman, I mean.
-            """
-            "..."
-        "(say nothing)":
-            "..."
-
-    vi "You said you worked elsewhere before this?"
 
     ### leveling up skills based on picked options
     menu:
@@ -183,8 +168,8 @@ label demo_dialogue:
 
     window hide
 
-    hide screen skillsButton
-    hide screen returnButton
+    hide screen skills_and_inventory_button
+    hide screen return_button
 
     scene black with dissolve
     
@@ -193,11 +178,11 @@ label demo_dialogue:
 ### Cinematic screen demo ############################################
 label demo_cinematic:
 
-    show screen returnButton
+    show screen return_button
     
     $ textbox_type = "cinematic"
 
-    show screen returnButton
+    show screen return_button
 
     scene black with dissolve
 
@@ -255,7 +240,7 @@ label demo_cinematic:
     \"Good morning, love. We're going to be late.\"
     """
 
-    hide screen returnButton
+    hide screen return_button
     scene black with dissolve
     
     return
@@ -270,7 +255,7 @@ label demo_crimescene:
 
     cine "DEMO: CRIME SCENE"            
     
-    show screen returnButton with dissolve
+    show screen return_button with dissolve
 
     window hide
     $ textbox_type = "dialogue"
@@ -303,7 +288,7 @@ label demo_crimescene:
             scene cs demo
         else:
             scene cs demoB
-        call clearScreens
+        call clear_screens
         call screen cs00_demo
 
     label cs00_device:     
@@ -419,7 +404,7 @@ label demo_crimescene:
 
         show black overlay
 
-        show screen showObjectText(cs00_paper_text)
+        show screen object_text_button(cs00_paper_text)
 
         if cs00_paper_found == False:
             show cs00 paper closeup zorder 1 with dissolve
@@ -445,7 +430,7 @@ label demo_crimescene:
 
         show black overlay
 
-        show screen showObjectText(cs00_rods_text)
+        show screen object_text_button(cs00_rods_text)
 
         if cs00_rods_found == False:
             show cs00 rods closeup zorder 1 with dissolve
@@ -544,8 +529,7 @@ label demo_crimescene:
     hide vi 
     hide black overlay
 
-    hide screen returnButton with dissolve
-    hide screen returnButton
+    hide screen return_button with dissolve
 
     scene black with dissolve
     return
@@ -554,21 +538,20 @@ label demo_crimescene:
 label demo_skill_check:
     $ textbox_type = "dialogue"
 
-    # Set skills for this demo scene
+    # Set skills for this demo scene    
     $ survival = 4
     $ warfare = 2
-    $ charisma = 1
+    $ charisma = 1    
+    $ scholarship = 1
+    $ vigor = 1
 
     scene bg zaun alley
-    show screen skillsButton
-    show screen returnButton
+    show screen skills_and_inventory_button
+    show screen return_button
 
-    window show #shows dialogue textbox with dissolve
-    """This section simulates a simple scene with dice roll\nand skill check mechanics.\n\nScene starting now...
-    """
-    window hide #hides dialogue textbox with dissolve
+    window show 
+    "This section simulates a simple scene with dice roll and skill check mechanics.\n\nScene starting now..."
 
-    window show
     """{i}Steam hisses from broken pipes. The glow of shimmer pulses faintly\namongst the broken glass containers scattered by the warehouse.{/i}
 
     {i}Inside are armed chemtanks and crates.{/i}
@@ -591,125 +574,43 @@ label demo_skill_check:
     caitlyn "We're not rushing in blind."
     window hide
 
-    window show
+    window auto
     """{i}Caitlyn glances at you.{/i}
     """
-    window hide
 
-    window show
     caitlyn "You're the variable here. What's the call?"
-    window hide
 
-    window show
     """{i}Both of them are waiting on you.{/i}
     """
-    window hide
+
 
     menu:
-        extend " " # keeps the textbox and last line on screen while options appear
-        "Lead a quiet entry with Caitlyn covering and Vi ready to strike. (Survival +[survival])":
+        extend " "
+        "Lead a quiet entry with Caitlyn covering and Vi ready to strike. (Survival)":
 
-            $ roll = DiceRoll()
-            $ skill_type = survival_choice
-            $ skill_modifier = survival
-            $ skill_check = roll + skill_modifier
-            $ dc = 14
+            # writer decides what skill and skill level is required for this check 
+            # e.g. player has to beat Survival 3
+            call skill_check_survival(3)
+            if skill_check_success == True:
+                # player succeeds
+                "(Survival option success scene goes here.)"
+            else:
+                # player fails
+                "(Survival option failure scene goes here.)"
 
-            jump run_skill_check
+        "Work with Caitlyn to map positions and create a precise takedown plan. (Warfare)":
+            call skill_check_warfare(5)
+            if skill_check_success == True:
+                "(Warfare option success scene goes here.)"
+            else:
+                "(Warfare option failure scene goes here.)"
 
-        "Work with Caitlyn to map positions and create a precise takedown plan. (Warfare +[warfare])":
+        "Create a distraction or manipulate someone inside. (Charisma)":
+            call skill_check_charisma(2)
+            if skill_check_success == True:
+                "(Charisma option success scene goes here.)"
+            else:
+                "(Charisma option failure scene goes here.)"
 
-            $ roll = DiceRoll()
-            $ skill_type = warfare_choice
-            $ skill_modifier = warfare
-            $ skill_check = roll + skill_modifier
-            $ dc = 14
 
-            jump run_skill_check
 
-        "Create a distraction or manipulate someone inside. (Charisma +[charisma])":
-
-            $ roll = DiceRoll()
-            $ skill_type = charisma_choice
-            $ skill_modifier = charisma
-            $ skill_check = roll + skill_modifier
-            $ dc = 14
-
-            jump run_skill_check
-
-label run_skill_check:
-
-    call screen dice_tray_overlay
-
-    hide screen skillsButton
-    hide screen returnButton
-
-    scene black with dissolve
-
-    if skill_check >= dc:
-        if skill_type == survival_choice:
-            jump stealth_success
-
-        elif skill_type == warfare_choice:
-            jump takedown_success
-
-        elif skill_type == charisma_choice:
-            jump manipulation_success
-
-    else:
-        if skill_type == survival_choice:
-            jump stealth_failure
-
-        elif skill_type == warfare_choice:
-            jump takedown_failure
-
-        elif skill_type == charisma_choice:
-            jump manipulation_failure
-
-label stealth_success:
-    window show
-    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a successful stealth mission would go here.
-    """
-    window hide
-
-    return
-
-label stealth_failure:
-    window show
-    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a failed stealth mission would go here.
-    """
-    window hide
-
-    return
-
-label takedown_success:
-    window show
-    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a successful takedown plan would go here.
-    """
-    window hide
-
-    return
-
-label takedown_failure:
-    window show
-    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a failed takedown plan would go here.
-    """
-    window hide
-
-    return
-
-label manipulation_success:
-    window show
-    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of successful distraction and manipulation would go here.
-    """
-    window hide
-
-    return
-
-label manipulation_failure:
-    window show
-    """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of failed distraction and manipulation would go here.
-    """
-    window hide
-
-    return

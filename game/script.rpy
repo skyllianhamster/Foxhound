@@ -35,7 +35,7 @@ label splashscreen:
 ### The game starts here. ###############################################
 label start:    
 
-    call reset_skills() #clears skill values
+    call reset_skills_and_inventory() #clears skill values and inventory
     
     call gameplay_demo #plays story/demo.rpy for testing
 
@@ -44,6 +44,8 @@ label gameplay_demo:
 
     while exitloop == False:
         menu:            
+            "Player customization demo":
+                call demo_player_customization 
             "Dialogue demo":   
                 call demo_dialogue
             "Cinematic demo":                 

@@ -3,23 +3,44 @@
 #define = constant variables
 #default = regular variables
 
-### TEXTBOXES ###################################################
+### PLAYER CUSTOMIZATION #####################
+
+## given name TODO: set to "", defaults for testing only
+default player_name = "tala"
+default pronoun = "they/them" 
+
+## pronouns and verbs
+define they = Pronoun("they", "she", "he", default="they")
+define them = Pronoun("them", "her", "him", default="them")
+define are = PronounVerb("are", "is")
+define were = PronounVerb("were", "was")
+
+## forbidden names
+define forbidden_names = ["no", "caitlyn", "vi"]
+
+### TEXTBOXES #####################
 default textbox_type = "dialogue" #dialogue or cinematic
 
-### BACKGROUNDS ####################################################
+### BACKGROUNDS #####################
 default childhood_background = ''
 default adulthood_background = ''
 
-### SKILLS ####################################################
-default warfare = 0
-default charisma = 0
-default scholarship = 0
-default survival = 0
-default vigor = 0
+### SKILLS #####################
+default warfare = 1
+default charisma = 1
+default scholarship = 1
+default survival = 1
+default vigor = 1
 
-### INVENTORY ######################################
+default warfare_dc_modifier = 0
+default charisma_dc_modifier = 0
+default scholarship_dc_modifier = 0
+default survival_dc_modifier = 0
+default vigor_dc_modifier = 0
+
+### INVENTORY #####################
 default inventory = [] #filenames without the _idle.png and _hover.png
-default item_zoom = "gui/screen_skills/items/item_zoom.png"
+default item_zoom = "gui/screen_skills/items/item_zoom.png" # blank png
 default item_description = ""
 define item_descriptions = { 
     "item_demo_keys": "A set of three keys: brass, iron, and steel.",
@@ -27,32 +48,18 @@ define item_descriptions = {
     "item_demo_rods": "Aluminum rods from Cadwalder Foundry."
     }
 
-### ROLLS & SKILL CHECKS #####################################
+### ROLLS & SKILL CHECKS #####################
 # Added by taqueets
-define warfare_choice = "Warfare"
-define charisma_choice = "Charisma"
-define scholarship_choice = "Scholarship"
-define survival_choice = "Survival"
 
-default skill_type = ""
-default skill_modifier = 0
-default skill_check = 0
+default skill_check_success = False
 default dc = 0
 default roll = 0
 
-### SKILL CHECK #############################################
-default player_success = False
-default required_warfare = 0
-default required_charisma = 0
-default required_scholarship = 0
-default required_survival = 0
-default required_vigor = 0
-
-### LOOPS ####################################################
+### LOOPS #####################
 default i = 0
 default exitloop = False
 
-### CRIME SCENE FLAGS ########################################
+### CRIME SCENE FLAGS #####################
 default cs00_done = False
 default cs00_window_found = False
 default cs00_paper_found = False
@@ -63,3 +70,4 @@ default cs00_shoes_found = False
 default cs00_keys_found = False
 
 default cs00_lockbox_taken = False
+

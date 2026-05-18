@@ -4,25 +4,11 @@
 
 label demo_player_customization:
     
+    
     $ player_name = ""
+    $ pronoun = "they/them"
 
-    call screen player_name_and_pronouns("Your name:")
-
-    $ player_name = player_name.strip()
-
-    if not player_name or player_name.lower() in forbidden_names:
-        call screen error_screen("Please enter a valid name.") 
-        jump demo_player_customization
-
-    if not pronoun:
-        call screen error_screen("Please choose your pronouns.")         
-        jump demo_player_customization
-
-    menu:
-        "You chose [player_name!c] as your name and [they]/[them] as your preferred pronouns. Confirm?":
-            jump demo_dialogue
-        "No, I want to change it.":
-            jump demo_player_customization
+    call screen player_name_and_pronouns    
 
     return  
 
@@ -77,49 +63,49 @@ label demo_dialogue:
             menu:
                 extend " "
                 "That's where the scars come from. (WAR +2, VIG +2)":
-                    call background_soldier()
-                    $ adulthood_background = 'soldier'
+                    call set_initial_skill_points('soldier')
+                    call set_adulthood_background('soldier')
                     "Vi grins and nods with approval."
                     vi "That makes two of us."
                 "I'm better with a bird's eye view. (WAR +2, SCH +1, VIG +1)":
-                    call background_strategist()
-                    $ adulthood_background = 'strategist'
+                    call set_initial_skill_points('strategist')
+                    call set_adulthood_background('strategist')
                     vi "Cait-- I mean, the Sheriff'll appreciate having someone else to bounce ideas off of."
         "In an ambassadorial capacity, yes.": 
             vi "Ugh, politicians."
             menu:
                 extend " "
                 "Not exactly, but let's just say I'm pretty good at getting what I want. (CHA +2, SUR +1, VIG +1)":
-                    call background_deceiver()
-                    $ adulthood_background = 'deceiver'                   
+                    call set_initial_skill_points('deceiver')
+                    call set_adulthood_background('deceiver')
                     vi "That can come in handy."
                 "Talking often is the path of least resistance. (CHA +2, WAR +1, SCH +1)":
-                    call background_diplomat()
-                    $ adulthood_background = 'diplomat'
+                    call set_initial_skill_points('diplomat')
+                    call set_adulthood_background('diplomat')
                     vi "Debatable."
         "I did. Buried in books all day long.":
             vi "Yeah? What kind?"
             menu:
                 extend " "
                 "Theory and research. (SCH +2, CHA +1, SUR +1)":
-                    call background_scientist()
-                    $ adulthood_background = 'scientist'
+                    call set_initial_skill_points('scientist')
+                    call set_adulthood_background('scientist')
                     vi "We could use more people in R&D and analysis."
                 "Schematics and application. (SCH +2, VIG +2)":
-                    call background_craftsman()
-                    $ adulthood_background = 'craftsman'
+                    call set_initial_skill_points('craftsman')
+                    call set_adulthood_background('craftsman')
                     vi "Nice, Chief Zevi could use a hand if you can work Hextech."
         "'Elsewhere' doing a lot of heavy lifting there.": 
             vi "Depends how you can be useful."
             menu:
                 extend " "
                 "People often don't notice me. (SUR +2, WAR +1, CHA +1)":
-                    call background_shadow()
-                    $ adulthood_background = 'shadow'
+                    call set_initial_skill_points('shadow')
+                    call set_adulthood_background('shadow')
                     vi "Best way to stay alive."
                 "I notice people. A lot. And things about them. (SUR +2, CHA +1, VIG +1)":
-                    call background_streetrat()
-                    $ adulthood_background = 'streetrat'
+                    call set_initial_skill_points('streetrat')
+                    call set_adulthood_background('streetrat')
                     vi "That makes you both reliable and dangerous."
 
     player "Still not clear what the Sheriff wants, though."
@@ -129,37 +115,39 @@ label demo_dialogue:
         "I spent a lot of time in training grounds and barracks...":
             menu:
                 "Just swords and spears, all day long. (WAR +2, VIG +2)":
-                    call background_soldier()
-                    $ childhood_background = 'soldier'
+                    call set_initial_skill_points('soldier')
+                    call set_childhood_background('soldier')
                 "Maps. Learning what generals had for breakfast. More maps. (WAR +2, SCH +1, VIG +1)": 
-                    call background_strategist()
-                    $ childhood_background = 'strategist'
+                    call set_initial_skill_points('strategist')
+                    call set_childhood_background('strategist')
         "Want to know something about people?":
             menu:
                 "It's fascinating how much a good Noxian red can reveal. (CHA +2, WAR +1, SCH +1)":
-                    call background_diplomat()
-                    $ childhood_background = 'diplomat'
+                    call set_initial_skill_points('diplomat')
+                    call set_childhood_background('diplomat')
                 "If someone embellishes too much they're probably lying. (CHA +2, SUR +1, VIG +1)":
-                    call background_deceiver()
-                    $ childhood_background = 'deceiver'
+                    call set_initial_skill_points('deceiver')
+                    call set_childhood_background('deceiver')
         "Yes. My books and equipment...":
             menu:
                 "I'll need a bit more space to store my books. (SCH +2, CHA +1, SUR +1)":
-                    call background_scientist()
-                    $ childhood_background = 'scientist'
+                    call set_initial_skill_points('scientist')
+                    call set_childhood_background('scientist')
                 "Gonna need a replacement for my hammer. And some new gloves. (SCH +2, VIG +2)":
-                    call background_craftsman()
-                    $ childhood_background = 'craftsman'
+                    call set_initial_skill_points('craftsman')
+                    call set_childhood_background('craftsman')
         "Mm. Nice office.":
             menu:
                 "I'll go take a look around, if you don't mind. (SUR +2, WAR +1, CHA +1)":
-                    call background_shadow()
-                    $ childhood_background = 'shadow'
+                    call set_initial_skill_points('shadow')
+                    call set_childhood_background('shadow')
                 "That conspiracy board's missing a few pins. (SUR +2, CHA +1, VIG +1)":
-                    call background_streetrat()
-                    $ childhood_background = 'streetrat'
-        
-    $ inventory = ["item_demo_keys", "item_demo_note", "item_demo_rods"]
+                    call set_initial_skill_points('streetrat')
+                    call set_childhood_background('streetrat')
+    
+    call add_to_inventory("item_demo_note")
+    call add_to_inventory("item_demo_rods")
+    call add_to_inventory("item_demo_keys")
 
     """Click the skills button on the upper right to see the skills screen.
     

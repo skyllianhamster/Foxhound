@@ -1,54 +1,155 @@
 ### Define functions here
 
+### resets all skills to 0 ###############################
+label reset_skills_and_inventory(): 
+    $ childhood_background = ''
+    $ adulthood_background = ''
+    $ childhood_background_description = ''
+    $ adulthood_background_description = ''
+
+    $ childhood_background_description_add = ''
+
+    $ warfare = 1
+    $ charisma = 1
+    $ scholarship = 1
+    $ survival = 1
+    $ vigor = 1
+
+    $ warfare_dc_modifier = 0
+    $ charisma_dc_modifier = 0
+    $ scholarship_dc_modifier = 0
+    $ survival_dc_modifier = 0
+    $ vigor_dc_modifier = 0
+
+    $ skill_check_type = ""
+    $ skill_check_success = False
+    $ dc = 0
+    $ roll = 0
+
+    $ inventory = []
+    $ item_name = ""
+    $ item_description = ""
+    $ item_zoom = "gui/screen_skills/items/item_zoom.png"
+    return
+
+### add an item to the inventory
+label add_to_inventory(item_key):
+    $ inventory.append(item_key)
+    return
+
 ### BACKGROUNDS ####################################################
 ### USAGE: initial skill spread distribution
 ### automatically updates parent skills
 #################################################################
 
-label background_soldier():
-    call update_warfare(2)
-    call update_vigor(2)
+label set_adulthood_background(bg):
+    if bg == 'soldier':
+        $ adulthood_background = 'soldier'
+        $ adulthood_background_description = soldier_background_description
+    elif bg == 'strategist':
+        $ adulthood_background = 'strategist'
+        $ adulthood_background_description = strategist_background_description
+    elif bg == 'diplomat':
+        $ adulthood_background = 'diplomat'
+        $ adulthood_background_description = diplomat_background_description
+    elif bg == 'deceiver':
+        $ adulthood_background = 'deceiver'
+        $ adulthood_background_description = deceiver_background_description
+    elif bg == 'scientist':
+        $ adulthood_background = 'scientist'
+        $ adulthood_background_description = scientist_background_description
+    elif bg == 'craftsman':
+        $ adulthood_background = 'craftsman'
+        $ adulthood_background_description = craftsman_background_description
+    elif bg == 'shadow':
+        $ adulthood_background = 'shadow'
+        $ adulthood_background_description = shadow_background_description
+    elif bg == 'streetrat':
+        $ adulthood_background = 'streetrat'
+        $ adulthood_background_description = streetrat_background_description
+    else:
+        $ adulthood_background = ''
+        $ adulthood_background_description = ''
     return
 
-label background_strategist():
-    call update_warfare(2)
-    call update_scholarship(1)
-    call update_vigor(1)
+label set_childhood_background(bg):
+    if bg == 'soldier':
+        $ childhood_background = 'soldier'
+        $ childhood_background_description = soldier_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = soldier_background_description_add
+    elif bg == 'strategist':
+        $ childhood_background = 'strategist'
+        $ childhood_background_description = strategist_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = strategist_background_description
+    elif bg == 'diplomat':
+        $ childhood_background = 'diplomat'
+        $ childhood_background_description = diplomat_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = diplomat_background_description
+    elif bg == 'deceiver':
+        $ childhood_background = 'deceiver'
+        $ childhood_background_description = deceiver_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = deceiver_background_description
+    elif bg == 'scientist':
+        $ childhood_background = 'scientist'
+        $ childhood_background_description = scientist_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = deceiver_background_description
+    elif bg == 'craftsman':
+        $ childhood_background = 'craftsman'
+        $ childhood_background_description = craftsman_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = craftsman_background_description
+    elif bg == 'shadow':
+        $ childhood_background = 'shadow'
+        $ childhood_background_description = shadow_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = shadow_background_description
+    elif bg == 'streetrat':
+        $ childhood_background = 'streetrat'
+        $ childhood_background_description = streetrat_background_description
+        if childhood_background == adulthood_background:
+            $ childhood_background_description_add = streetrat_background_description
+    else:
+        $ childhood_background = ''
+        $ childhood_background_description = ''
+        $ childhood_background_description_add = '' 
     return
 
-label background_diplomat():
-    call update_charisma(2)
-    call update_warfare(1)
-    call update_scholarship(1)
-    return
-
-label background_deceiver():
-    call update_charisma(2)
-    call update_survival(1)
-    call update_vigor(1)
-    return
-
-label background_scientist():
-    call update_scholarship(2)
-    call update_charisma(1)
-    call update_survival(1)
-    return
-
-label background_craftsman():
-    call update_scholarship(2)
-    call update_vigor(2)
-    return
-
-label background_shadow():  
-    call update_survival(2)
-    call update_warfare(1)
-    call update_charisma(1)
-    return
-
-label background_streetrat():
-    call update_survival(2)
-    call update_charisma(1)
-    call update_vigor(1)
+label set_initial_skill_points(bg):
+    if bg == 'soldier':
+        call update_warfare(2)
+        call update_vigor(2)
+    elif bg == 'strategist':
+        call update_warfare(2)
+        call update_scholarship(1)
+        call update_vigor(1)
+    elif bg == 'diplomat':
+        call update_charisma(2)
+        call update_warfare(1)
+        call update_scholarship(1)
+    elif bg == 'deceiver':
+        call update_charisma(2)
+        call update_survival(1)
+        call update_vigor(1)
+    elif bg == 'scientist':
+        call update_scholarship(2)
+        call update_charisma(1)
+        call update_survival(1)
+    elif bg == 'craftsman':
+        call update_scholarship(2)
+        call update_vigor(2)
+    elif bg == 'shadow':
+        call update_survival(2)
+        call update_warfare(1)
+        call update_charisma(1)
+    elif bg == 'streetrat':
+        call update_survival(2)
+        call update_charisma(1)
+        call update_vigor(1)
     return
 
 ### SKILLS ####################################################
@@ -153,29 +254,6 @@ label update_vigor_dc_modifier(x):
         $ vigor_dc_modifier = vigor_dc_modifier + x
     return
 
-
-### resets all skills to 0 ###############################
-label reset_skills_and_inventory(): 
-    $ childhood_background = ''
-    $ adulthood_background = ''
-
-    $ warfare = 1
-    $ charisma = 1
-    $ scholarship = 1
-    $ survival = 1
-    $ vigor = 1
-
-    $ warfare_dc_modifier = 0
-    $ charisma_dc_modifier = 0
-    $ scholarship_dc_modifier = 0
-    $ survival_dc_modifier = 0
-    $ vigor_dc_modifier = 0
-
-    $ inventory = []
-    $ item_description = ""
-    $ item_zoom = "gui/screen_skills/items/item_zoom.png"
-    return
-
 ### ROLLS & SKILL CHECKS ###############################
 ### USAGE: call DiceRoll() and show dice roll UI
 ### Added by taqueets
@@ -187,6 +265,8 @@ init python:
 
 label skill_check_warfare(required_skill_value):  
 
+    $ skill_check_type = "warfare"
+
     if warfare >= required_skill_value:
         $ skill_check_success = True
     else:
@@ -196,10 +276,12 @@ label skill_check_warfare(required_skill_value):
         if roll >= dc:
             $ skill_check_success = True
         else:
-            $ skill_check_success = False    
+            $ skill_check_success = False                
     return
 
 label skill_check_charisma(required_skill_value): 
+
+    $ skill_check_type = "charisma"
 
     if charisma >= required_skill_value:
         $ skill_check_success = True
@@ -215,6 +297,8 @@ label skill_check_charisma(required_skill_value):
 
 label skill_check_scholarship(required_skill_value):
 
+    $ skill_check_type = "scholarship"
+
     if scholarship >= required_skill_value:
         $ skill_check_success = True
     else:
@@ -229,6 +313,8 @@ label skill_check_scholarship(required_skill_value):
 
 label skill_check_survival(required_skill_value):
 
+    $ skill_check_type = "survival"
+
     if survival >= required_skill_value:
         $ skill_check_success = True
     else:
@@ -242,6 +328,8 @@ label skill_check_survival(required_skill_value):
     return
 
 label skill_check_vigor(required_skill_value):
+
+    $ skill_check_type = "vigor"
 
     if vigor >= required_skill_value:
         $ skill_check_success = True

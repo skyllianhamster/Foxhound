@@ -37,9 +37,15 @@ init -1:
             fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect
 
 style demo_button_colors:
-    idle_color "#fff"
-    hover_color "#808"
-    size 40
+    font "JustAnotherHand-Regular.ttf"
+    idle_color "#555555"
+    hover_color "#ff0000"
+    size 60
+
+style demo_button_text:
+    font "JustAnotherHand-Regular.ttf"
+    color "#222222"
+    size 60
 
 ### HIDE ALL SCREENS ################################################
 label clear_screens:
@@ -52,24 +58,36 @@ label clear_screens:
     hide screen return_button
     hide screen object_text
     hide screen object_text_button
+    hide screen player_name_and_pronouns
+    hide screen player_name_and_pronouns_confirm
+    hide screen dice_tray_overlay
     return
 
 ### SHOW ERROR MSG ################################################
 screen error_screen(error_msg):
+    modal True
+    zorder 100
+
+    add "gui/black_overlay90.png" alpha 0.4
+
     frame:
-        xpos 0
-        ypos 0
-        xsize 1920
-        ysize 1080
-        padding (40, 40)
-        background Frame("gui/black_menu.png")
+        style "empty"
+        background Frame("gui/screen_confirm/screen_confirm_frame.png")
+        xalign 0.5
+        yalign 0.5
+        xsize 684
+        ysize 361
+        padding (10, 5)
 
-        text "[error_msg]" size 50 xalign 0.5 yalign 0.5 color "#fff"
+        text "[error_msg!u]":
+            xalign 0.5
+            yalign 0.4
+            style "demo_button_colors"                           
 
-        textbutton _("Return"): 
+        textbutton "RETURN":
             text_style "demo_button_colors"
             xalign 0.5 
-            yalign 0.75
+            yalign 0.95
             action [Call("clear_screens"), Return()]
 
 ### RETURN TO MAIN MENU BUTTON ######################################
@@ -77,7 +95,7 @@ screen error_screen(error_msg):
 #####################################################################
 screen return_button:
     zorder 100
-    textbutton _("Return"): 
+    textbutton "Return": 
         text_style "demo_button_colors"
         xalign 0.95 
         yalign 0.95 

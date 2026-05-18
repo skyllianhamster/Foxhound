@@ -43,7 +43,7 @@ label start:
 label gameplay_demo:
 
     while exitloop == False:
-        menu:            
+        menu:  
             "Player customization demo":
                 call demo_player_customization 
             "Dialogue demo":   

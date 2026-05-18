@@ -1179,6 +1179,7 @@ style help_label_text:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#confirm
 
+
 screen confirm(message, yes_action, no_action):
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1194,7 +1195,7 @@ screen confirm(message, yes_action, no_action):
 
         vbox:
             xalign .5
-            yalign .5
+            yalign .87
             spacing 45
 
             label _(message):
@@ -1203,10 +1204,17 @@ screen confirm(message, yes_action, no_action):
 
             hbox:
                 xalign 0.5
-                spacing 150
+                spacing 70
 
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+                textbutton _("YES"): 
+                    action yes_action
+                    text_font "JustAnotherHand-Regular.ttf"
+                    text_size 60
+
+                textbutton _("NO"):
+                    action no_action
+                    text_font "JustAnotherHand-Regular.ttf"
+                    text_size 60
 
     ## Right-click and escape answer "no".
     key "game_menu" action no_action
@@ -1219,14 +1227,18 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame([ "gui/screen_confirm/screen_confirm_frame.png", "gui/screen_confirm/frame_default.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
+    xsize 684
+    ysize 361
 
 style confirm_prompt_text:
-    textalign 0.5
+    textalign 0.5    
     layout "subtitle"
+    font "JustAnotherHand-Regular.ttf"
+    size 60
 
 style confirm_button:
     properties gui.button_properties("confirm_button")

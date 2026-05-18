@@ -52,6 +52,7 @@ One of mind, one of body.
 
 ### BACKGROUNDS TEXT #########################################################
 ### subject to change from writers
+
 define soldier_background_description = _p("""
 War is a dance and the best dancers are rewarded with 
 a continued existence. 
@@ -83,6 +84,32 @@ everything, but remain unseen to the world.
 define streetrat_background_description = _p("""
 Wares from the land, and wares from the sea; the best wares 
 are the ones set free.
+""")
+
+## additional paragraph if player chooses the same background twice
+define soldier_background_description_add = _p("""
+Additional paragraph for the soldier background here.
+""")
+define strategist_background_description_add = _p("""
+Additional paragraph for the strategist background here.
+""")
+define diplomat_background_description_add = _p("""
+Additional paragraph for the diplomat background here.
+""")
+define deceiver_background_description_add = _p("""
+Additional paragraph for the deceiver background here.
+""")
+define scientist_background_description_add = _p("""
+Additional paragraph for the scientist background here.
+""")
+define craftsman_background_description_add = _p("""
+Additional paragraph for the craftsman background here.
+""")
+define shadow_background_description_add = _p("""
+Additional paragraph for the shadow background here.
+""")
+define streetrat_background_description_add = _p("""
+Additional paragraph for the streetrat background here.
 """)
 
 

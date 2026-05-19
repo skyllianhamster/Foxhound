@@ -2,34 +2,6 @@
 define pronouns_list = [ 'they/them', 'she/her', 'he/him']
 default pronoun_list_index = 0
 
-### Define buttons colors
-style button_customization:
-    font "American Typewriter Regular.ttf"
-    idle_color "#888888"
-    hover_color "#f00"
-    selected_color "#222222"        
-    size 27
-
-style text_customization:
-    font "American Typewriter Regular.ttf"
-    size 25
-
-style button_nav:
-    font "fonts/DOMCO 02.otf"    
-    idle_color "#ff9900"
-    hover_color "#eeeeee"
-    size 80
-
-style text_customization_confirm:
-    font "JustAnotherHand-Regular.ttf" 
-    size 50 
-
-style button_customization_confirm:    
-    font "JustAnotherHand-Regular.ttf"    
-    idle_color "#555555"
-    hover_color "#222222"
-    size 60
-
 ### NAME & PRONOUNS #################################################
 ### text input and pronoun selection
 #####################################################################
@@ -37,11 +9,13 @@ screen player_name_and_pronouns():
     modal True
     zorder 100
 
+    ## background
     frame:
         xalign 0.5 
         yalign 0.5
         background Frame("gui/screen_player_customization/screen_player_customization.png", xalign=0, yalign=0, alpha=1.0)      
 
+        ## name input
         frame:
             style "empty"            
             xsize 310
@@ -60,6 +34,7 @@ screen player_name_and_pronouns():
                 copypaste True
                 style "text_customization"           
 
+        ## pronoun selection
         frame:
             style "empty"            
             xsize 280
@@ -71,6 +46,7 @@ screen player_name_and_pronouns():
                 xalign 0.5
                 yalign 0.5
 
+                ## arrow buttons cycle through pronoun array
                 textbutton "<<<":
                     action If(
                                 pronoun_list_index==0, 
@@ -101,27 +77,14 @@ screen player_name_and_pronouns():
                     yalign 0.5
                     text_style "button_customization"
 
-                # textbutton "They/Them":
-                #     action SetVariable("pronoun", "they/them")  
-                #     selected_background Frame("gui/circled.png")                  
-                #     text_style "button_customization"
-                    
-                # textbutton "She/Her":
-                #     action SetVariable("pronoun", "she/her")
-                #     selected_background Frame("gui/circled.png")
-                #     text_style "button_customization"                    
-                    
-                # textbutton "He/Him":
-                #     action SetVariable("pronoun", "he/him")
-                #     selected_background Frame("gui/circled.png")
-                #     text_style "button_customization"
-
+        ## back to main menu button
         textbutton "<<<":
             xalign 0.18
             yalign 0.95
             action MainMenu()
             text_style "button_nav"                  
 
+        ## check if name and pronouns are valid 
         textbutton ">>>":
             xalign 0.825
             yalign 0.95
@@ -161,8 +124,10 @@ screen player_name_and_pronouns_confirm():
     modal True
     zorder 100
 
+    ## darkens the background a bit to highlight the post-it note
     add "gui/overlay/black_overlay.png" alpha 0.4
 
+    ## post-it note image
     frame:
         style "empty" 
         xsize 560
@@ -171,9 +136,10 @@ screen player_name_and_pronouns_confirm():
         yalign 0.6        
         background Frame("gui/screen_player_customization/screen_player_customization_postit.png")  
 
+        ## rotates post-it text
         transform:
-            rotate 5           
-            
+            rotate 5   
+
             vbox:
                 xalign -0.6
                 yalign 0
@@ -186,7 +152,7 @@ screen player_name_and_pronouns_confirm():
                 text "\n just triple checking—sheriff's orders\n     paperwork's annoying to re-file":
                     style "text_customization_confirm"
 
-        
+            ## hides this screen
             textbutton "change":
                 xalign -0.15
                 yalign 0.6
@@ -194,6 +160,7 @@ screen player_name_and_pronouns_confirm():
                 hover_background Frame("gui/underline.png")
                 text_style "button_customization_confirm"  
 
+            ## move on to the rest of the game
             textbutton "confirm":
                 xalign 0.5
                 yalign 0.6
@@ -205,6 +172,35 @@ screen player_name_and_pronouns_confirm():
                 hover_background Frame("gui/underline.png")
                 text_style "button_customization_confirm"
 
+### Define button and text colors
+style button_customization:
+    font "American Typewriter Regular.ttf"
+    idle_color "#888888"
+    hover_color "#f00"
+    selected_color "#222222"        
+    size 27
+
+style text_customization:
+    font "American Typewriter Regular.ttf"
+    size 25
+
+style button_nav:
+    font "fonts/DOMCO 02.otf"    
+    idle_color "#ff9900"
+    hover_color "#eeeeee"
+    size 80
+
+style text_customization_confirm:
+    font "JustAnotherHand-Regular.ttf" 
+    size 50 
+
+style button_customization_confirm:    
+    font "JustAnotherHand-Regular.ttf"    
+    idle_color "#555555"
+    hover_color "#222222"
+    size 60
+
+### original added by corvus
 
         # vbox:
         #     spacing 30

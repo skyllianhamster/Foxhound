@@ -1,6 +1,6 @@
 ### Define images here
 
-image black overlay = "gui/black_overlay.png"
+image black overlay = "gui/overlay/black_overlay.png"
 
 image bg black = "gui/black_menu.png"
 image bg demo = "images/backgrounds/bg_demo.png"

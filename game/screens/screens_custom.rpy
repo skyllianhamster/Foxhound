@@ -1,4 +1,4 @@
-### Define custom generic / smaller screens here
+### custom generic / smaller screens 
 
 ### CUSTOM TEXT EFFECTS ###############################################
 ### usage for plugins/01_fancytext.rpy 
@@ -68,7 +68,7 @@ screen error_screen(error_msg):
     modal True
     zorder 100
 
-    add "gui/black_overlay90.png" alpha 0.4
+    add "gui/overlay/black_overlay.png" alpha 0.4
 
     frame:
         style "empty"
@@ -118,7 +118,7 @@ screen object_text_button(object):
 ### ###################################################################
 screen object_text(object):
     zorder 10
-    add "gui/black_overlay90.png"
+    add "gui/overlay/black_overlay.png"
     hbox:
         xalign 0.5
         yalign 0.3

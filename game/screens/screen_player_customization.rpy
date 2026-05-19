@@ -161,7 +161,7 @@ screen player_name_and_pronouns_confirm():
     modal True
     zorder 100
 
-    add "gui/black_overlay90.png" alpha 0.4
+    add "gui/overlay/black_overlay.png" alpha 0.4
 
     frame:
         style "empty" 

@@ -17,63 +17,85 @@ screen skills_and_inventory_button:
 ### displays skills and inventory
 #####################################################################
 
+style skills_tooltip_text:
+    color '#eee'  
+    font gui.text_font_typewriter
+    size 26*gui.text_size_multiplier 
+    xanchor 0.5
+    yanchor 0.5
+    ypos 3
+
+style skills_tooltip_frame:
+    ysize gui.text_size_multiplier*25+10
+    xanchor 0.5
+    yanchor 0.5
+
 style skills_headers:
-    color '#222222'  
-    font 'American Typewriter Regular.ttf'
+    color '#111'  
+    font gui.text_font_typewriter
 
 style item_header:
-    color '#222222'  
-    font 'SS Soapy Hands Bold.otf'  
+    color '#111'  
+    font gui.text_font_handwritten 
+    size 38*gui.text_size_multiplier
 
 style item_description:
-    color '#333333'
-    font 'SS Soapy Hands Bold.otf'
+    color '#111'
+    font gui.text_font_handwritten 
     line_spacing -20
-    kerning 0
-    size 30  
+    size 28*gui.text_size_multiplier
     
 style skills_type:
-    color '#222222'
-    font 'American Typewriter Regular.ttf'
-    size 38
+    color '#111'
+    font gui.text_font_typewriter
+    size 38*gui.text_size_multiplier
 
 style skills_description:
-    color '#333333'
-    font 'American Typewriter Regular.ttf'
-    line_spacing -20
-    kerning -1
-    size 26  
+    color '#111'
+    font gui.text_font_typewriter
+    # line_spacing -20
+    # kerning -1
+    size 26*gui.text_size_multiplier
 
+screen skills_tooltip_frame():
+    frame:        
+        background Frame("gui/screen_skills/screen_skills_tooltip_bg.png")     
+        text "By royal decree, you shall be executed on the morrow."
 
 screen skills_and_inventory:    
 
     ### skills and inventory screen background
-    frame:               
-        imagebutton: 
-            focus_mask True
-            xalign 0.95
-            yalign 0.06
-            idle "gui/screen_skills/screen_skills_open_idle.png"
-            hover "gui/screen_skills/screen_skills_open_hover.png"    
-            action Return()
-        background Frame("gui/screen_skills/screen_skills.png")
+    frame:   
+        if gui.reduce_clutter:
+            background Frame("gui/screen_skills/screen_skills_reduce_clutter.png")          
+        else:
+            background Frame("gui/screen_skills/screen_skills.png")      
         xsize 1920
         ysize 1080
         xpadding 0
         ypadding 0
         xpos 0
-        ypos 0                   
+        ypos 0  
+
+        ### button that hides the screen
+        imagebutton: 
+            focus_mask True
+            xalign 0.983
+            yalign 0.035
+            idle "gui/screen_skills/screen_skills_open_idle.png"
+            hover "gui/screen_skills/screen_skills_open_hover.png"    
+            action Return()                 
 
         ### rotates the content slightly to match the skewed paper background
         transform:
             rotate -1
-            xpos -100
-            ypos -580
+            xpos -119
+            ypos -550
 
             ### player's backgrounds
             frame:
                 style "empty"
-                background Frame("gui/screen_skills/screen_skills_backgrounds.png")
+                # background Frame("gui/screen_skills/screen_skills_backgrounds.png")
                 xsize 1021
                 ysize 570
                 xpadding 0
@@ -86,16 +108,18 @@ screen skills_and_inventory:
                     style "empty"
                     top_padding 10
                     left_padding 20
+                    xpos 9
+                    ypos -13
                     text "{=skills_headers}Background{/}"
 
                 ### background 1 - adulthood            
                 frame: 
                     style "empty"
-                    background Frame("gui/screen_skills/screen_skills_background_definitions.png")
-                    xsize 911
+                    # background Frame("gui/screen_skills/screen_skills_background_definitions.png")
+                    xsize 950
                     ysize 205
-                    xpos 57
-                    ypos 102                
+                    xpos 60
+                    ypos 100              
 
                     ### icon
                     frame:
@@ -106,32 +130,46 @@ screen skills_and_inventory:
                         xpos 45
                         ypos 10
 
-                    ### description
-                    frame:
-                        style "empty"                    
-                        xsize 661
-                        ysize 178                    
-                        xpos 220
-                        ypos 0
-                        right_padding 20
-                        ypadding 20 
+                    ### description                    
+                    viewport:                        
+                        # add "gui/overlay/black_overlay.png" alpha 0.4                        
+                        scrollbars "vertical"     
+                        vscrollbar_xpos 0    
+                        vscrollbar_ypos 0
+                        vscrollbar_thumb "#c4b5a2cc" #scrollbar color or image
+                        vscrollbar_base_bar "#d7cfcccc" #scrollbar background or image 
+                        vscrollbar_unscrollable "hide"   
+                        mousewheel True
+                        draggable True
+                        pagekeys True                          
+                        xpos 240
+                        ypos -3
+                        xsize 677
+                        ysize 182 
 
-                        if adulthood_background == "":
-                            text ""
-                        else:
-                            text "{=skills_type}[adulthood_background!u]{/}\n"
-                            text "\n{=skills_description}[adulthood_background_description]{/}" ypos 20                    
+                        frame:                        
+                            style "empty"
+                            xfill True
+                            right_padding 20
+                            ypadding 20 
 
+                            vbox:
+
+                                if adulthood_background == "":
+                                    text ""
+                                else:
+                                    text "{=skills_type}[adulthood_background!u]{/}"
+                                    text "{=skills_description}[adulthood_background_description]{/}" 
 
                 ### background 2 - childhood
                 frame: 
                     style "empty"
-                    background Frame("gui/screen_skills/screen_skills_background_definitions.png")
-                    xsize 911
+                    # background Frame("gui/screen_skills/screen_skills_background_definitions.png")
+                    xsize 950
                     ysize 205               
-                    xpos 57
-                    ypos 332
-
+                    xpos 60
+                    ypos 335
+                    
                     ### icon
                     frame:
                         style "empty"
@@ -141,40 +179,55 @@ screen skills_and_inventory:
                         xpos 45
                         ypos 10
 
-                    ### description
-                    frame:
-                        style "empty"                    
-                        xsize 661
-                        ysize 178                    
-                        xpos 220
-                        ypos 0
-                        right_padding 20
-                        ypadding 20     
+                    ### description                    
+                    viewport:                        
+                        # add "gui/overlay/black_overlay.png" alpha 0.4                        
+                        scrollbars "vertical"     
+                        vscrollbar_xpos 0    
+                        vscrollbar_ypos 0
+                        vscrollbar_thumb "#c4b5a2cc" #scrollbar color or image
+                        vscrollbar_base_bar "#d7cfcccc" #scrollbar background or image 
+                        vscrollbar_unscrollable "hide"   
+                        mousewheel True
+                        draggable True
+                        pagekeys True                          
+                        xpos 240
+                        ypos 2
+                        xsize 677
+                        ysize 182 
 
-                        if childhood_background != adulthood_background:
-                            if childhood_background == "":
-                                text ""
-                            else:
-                                text "{=skills_type}[childhood_background!u]{/}\n"
-                                text "\n{=skills_description}[childhood_background_description]{/}" ypos 20      
+                        frame:                        
+                            style "empty"
+                            xfill True
+                            right_padding 20
+                            ypadding 20 
 
-                        else:
-                            if childhood_background == "":
-                                text ""                        
-                            else:
-                                text "{=skills_type}[childhood_background!u]{/}\n"
-                                text "\n{=skills_description}[childhood_background_description_add]{/}" ypos 20
+                            vbox:                   
+
+                                if childhood_background != adulthood_background:
+                                    if childhood_background == "":
+                                        text ""
+                                    else:
+                                        text "{=skills_type}[childhood_background!u]{/}"
+                                        text "{=skills_description}[childhood_background_description]{/}"
+
+                                else:
+                                    if childhood_background == "":
+                                        text ""                        
+                                    else:
+                                        text "{=skills_type}[childhood_background!u]{/}"
+                                        text "{=skills_description}[childhood_background_description_add]{/}"
             
             ### skills
             frame:
                 style "empty"
-                background Frame("gui/screen_skills/screen_skills_skills.png")
-                xsize 649
-                ysize 570
+                # background Frame("gui/screen_skills/screen_skills_skills.png")
+                xsize 680
+                ysize 595
                 xpadding 0
                 ypadding 0
-                xpos 1152
-                ypos 134
+                xpos 1175
+                ypos 120
 
                 ### header
                 frame:
@@ -184,13 +237,13 @@ screen skills_and_inventory:
                     text "{=skills_headers}Skills{/}"  
 
                 ### radar chart
-                add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#dea198','#736c64',1,350,True) xalign 0.5 yalign 0.65
+                add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#dea198','#736c64',1,350,True) xalign 0.5 yalign 0.70
                 
                 ### skill icons with tooltip   
                 frame:
                     style "empty"
                     xalign 0.5
-                    yalign 0.15     
+                    yalign 0.2    
                     imagebutton auto "gui/screen_skills/screen_skills_warfare_%s.png":
                         focus_mask None
                         xpos 0 
@@ -199,15 +252,16 @@ screen skills_and_inventory:
                         hovered [
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", xpos=-60, ypos=-50, xsize=104), 
-                                Text("Warfare", font="fonts/American Typewriter Regular.ttf", color="#eeeeee", size=20, text_align=0.5, xpos=-60, ypos=-58, min_width=104, yoffset=10), xmaximum=104, ymaximum=30))
+                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", style="skills_tooltip_frame", xsize=gui.text_size_multiplier*50+100),
+                                Text("Warfare", style="skills_tooltip_text"), 
+                                xmaximum=170, ymaximum=45, ypos=-45))                           
                             ]
                         unhovered SetField(mtt, 'redraw', False)
 
                 frame:
                     style "empty"
-                    xalign 0.85
-                    yalign 0.45
+                    xalign 0.83
+                    yalign 0.47
                     imagebutton auto "gui/screen_skills/screen_skills_charisma_%s.png":
                         focus_mask None
                         xpos 0 
@@ -216,8 +270,9 @@ screen skills_and_inventory:
                         hovered [
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", xpos=-60, ypos=-50, xsize=110), 
-                                Text("Charisma", font="fonts/American Typewriter Regular.ttf", color="#eeeeee", size=20, text_align=0.5, xpos=-60, ypos=-58, min_width=110, yoffset=10), xmaximum=110, ymaximum=30))
+                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", style="skills_tooltip_frame", xsize=gui.text_size_multiplier*125+25), 
+                                Text("Charisma", style="skills_tooltip_text"), 
+                                xmaximum=200, ymaximum=45, ypos=-45))
                             ]
                         unhovered SetField(mtt, 'redraw', False)
 
@@ -233,8 +288,10 @@ screen skills_and_inventory:
                         hovered [
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", xpos=-60, ypos=45, xsize=140), 
-                                Text("Scholarship", font="fonts/American Typewriter Regular.ttf", color="#eeeeee", size=20, text_align=0.5, xpos=-60, ypos=38, min_width=140, yoffset=10), xmaximum=140, ymaximum=30))
+                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", style="skills_tooltip_frame", xsize=gui.text_size_multiplier*175+25), 
+                                Text("Scholarship", style="skills_tooltip_text"), 
+                                xmaximum=270, ymaximum=45, ypos=-45))
+                                
                             ]
                         unhovered SetField(mtt, 'redraw', False)
                 
@@ -250,15 +307,16 @@ screen skills_and_inventory:
                         hovered [
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", xpos=-60, ypos=45, xsize=104), 
-                                Text("Survival", font="fonts/American Typewriter Regular.ttf", color="#eeeeee", size=20, text_align=0.5, xpos=-60, ypos=38, min_width=104, yoffset=10), xmaximum=104, ymaximum=30))
+                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", style="skills_tooltip_frame", xsize=gui.text_size_multiplier*125+25), 
+                                Text("Survival", style="skills_tooltip_text"), 
+                                xmaximum=200, ymaximum=45, ypos=-45))                                
                             ]
                         unhovered SetField(mtt, 'redraw', False)
 
                 frame:
                     style "empty"
-                    xalign 0.15
-                    yalign 0.45
+                    xalign 0.18
+                    yalign 0.47
                     imagebutton auto "gui/screen_skills/screen_skills_vigor_%s.png":
                         focus_mask None
                         xpos 0 
@@ -267,8 +325,9 @@ screen skills_and_inventory:
                         hovered [
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", xpos=-60, ypos=-50, xsize=104), 
-                                Text("Vigor", font="fonts/American Typewriter Regular.ttf", color="#eeeeee", size=20, text_align=0.5, xpos=-60, ypos=-58, min_width=104, yoffset=10), xmaximum=104, ymaximum=30))
+                                Frame("gui/screen_skills/screen_skills_tooltip_bg.png", style="skills_tooltip_frame", xsize=gui.text_size_multiplier*75+35), 
+                                Text("Vigor", style="skills_tooltip_text"), 
+                                xmaximum=140, ymaximum=45, ypos=-45))
                             ]
                         unhovered SetField(mtt, 'redraw', False)
 
@@ -278,13 +337,13 @@ screen skills_and_inventory:
             ### inventory
             frame:
                 style "empty"
-                background Frame("gui/screen_skills/screen_skills_inventory.png")
-                xsize 923
-                ysize 299
+                # background Frame("gui/screen_skills/screen_skills_inventory.png")
+                xsize 945
+                ysize 310
                 xpadding 0
                 ypadding 0
-                xpos 155
-                ypos 745
+                xpos 120
+                ypos 770
 
                 ### header
                 frame:
@@ -299,7 +358,7 @@ screen skills_and_inventory:
                     cols 5
                     spacing 15
                     draggable True
-                    mousewheel True
+                    mousewheel True   
                     xsize 923
                     ysize 169 #199
                     xpos 100
@@ -312,11 +371,13 @@ screen skills_and_inventory:
                     else: 
                         for i in inventory:
                             imagebutton auto "gui/screen_skills/items/"+i+"_%s.png":
+                                selected_idle "gui/screen_skills/items/"+i+"_hover.png"
                                 action [
                                     SetVariable("item_name", item_data[i][0]),
                                     SetVariable("item_description", item_data[i][1]),
                                     SetVariable("item_zoom", "gui/screen_skills/items/"+i+"_zoom.png")
                                     ]
+                                
                                                 
 
                     # for i in range(1, 21):                    
@@ -330,47 +391,53 @@ screen skills_and_inventory:
                 vbar id "vbar_inventory":             
                     value YScrollValue("vp_inventory")
                     bar_vertical True
+                    unscrollable "hide"
                     thumb "#c4b5a2" #scrollbar color or image
                     base_bar "#d7cfcc" #scrollbar background or image                
                     ymaximum 231 # scrollbar height                
-                    xalign 0.987
-                    yalign 0.98
+                    xalign 0.981
+                    yalign 0.88
                     
 
 
-            ### item
-            frame:
-                style "empty"
-                background Frame("gui/screen_skills/screen_skills_item.png")
-                xsize 622
-                ysize 330
-                xpadding 0
-                ypadding 0
-                xpos 1120
-                ypos 720
+            transform:
+                rotate -2
+                xpos 1140
+                ypos 570
 
-                ### header
+                ### item
                 frame:
                     style "empty"
-                    xalign 0.5
-                    top_padding 28
-                    text "{=item_header}[item_name]{/}" 
+                    # background Frame("gui/screen_skills/screen_skills_item.png")
+                    xsize 622
+                    ysize 330
+                    xpadding 0
+                    ypadding 0
+                    xpos 1180
+                    ypos 750
 
-                ### header
-                frame:
-                    style "empty"
-                    yalign 0.5
-                    left_padding 35
-                    right_padding 300
+                    ### header
+                    frame:
+                        style "empty"
+                        xalign 0.5
+                        top_padding 25
+                        text "{=item_header}[item_name]{/}" 
 
-                    text "{=item_description}[item_description]{/}" 
+                    ### description
+                    frame:
+                        style "empty"
+                        ypos 100
+                        left_padding 50
+                        right_padding 300
 
-                ### item closeup
-                frame:
-                    style "empty"  
-                    xalign 0.95
-                    yalign 0.8
-                    xsize 282
-                    ysize 243
-                    background Frame([item_zoom])   
+                        text "{=item_description}[item_description]{/}" 
+
+                    ### item closeup
+                    frame:
+                        style "empty"  
+                        xalign 0.9
+                        yalign 0.85
+                        xsize 275
+                        ysize 235
+                        background Frame([item_zoom])   
 

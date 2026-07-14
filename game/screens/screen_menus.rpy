@@ -9,59 +9,91 @@
 
 screen navigation():
 
-    vbox:
-        style_prefix "navigation"
+    # rotates nav buttons
+    transform:
+        xanchor 0
+        yanchor 0
+        rotate_pad False
+        rotate -2.5
+        xpos 172
+        ypos 190 #215       
 
-        xpos gui.navigation_xpos
-        yalign 0.5
+        vbox:
+            style_prefix "navigation"
 
-        spacing gui.navigation_spacing
+            xalign 0
+            yalign 0
 
-        if main_menu:
+            spacing 20 # gui.navigation_spacing
 
-            textbutton _("Start") action Start()
+            if main_menu:
 
-        else:
+                textbutton _("START") action Start()
 
-            textbutton _("History") action ShowMenu("history")
+            else:
 
-            textbutton _("Save") action ShowMenu("save")
+                textbutton _("HISTORY") action ShowMenu("history")
 
-        textbutton _("Load") action ShowMenu("load")
+                textbutton _("SAVE") action ShowMenu("save")
 
-        textbutton _("Preferences") action ShowMenu("preferences")
+            textbutton _("LOAD") action ShowMenu("load")
 
-        if _in_replay:
+            textbutton _("SETTINGS") action ShowMenu("preferences")
 
-            textbutton _("End Replay") action EndReplay(confirm=True)
+            if _in_replay:
 
-        elif not main_menu:
+                textbutton _("END REPLAY") action EndReplay(confirm=True)
 
-            textbutton _("Main Menu") action MainMenu()
+            elif not main_menu:
 
-        textbutton _("About") action ShowMenu("about")
+                textbutton _("MAIN MENU") action MainMenu()
 
-        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+            textbutton _("ABOUT") action ShowMenu("about")
 
-            ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Help") action ShowMenu("help")
+            if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
-        if renpy.variant("pc"):
+                ## Help isn't necessary or relevant to mobile devices.
+                textbutton _("HELP") action ShowMenu("help")
 
-            ## The quit button is banned on iOS and unnecessary on Android and
-            ## Web.
-            textbutton _("Quit") action Quit(confirm=not main_menu)
+            if renpy.variant("pc"):
+
+                ## The quit button is banned on iOS and unnecessary on Android and
+                ## Web.
+                textbutton _("QUIT") action Quit(confirm=not main_menu)
+
+    # rotates main menu label
+    transform:  
+        xanchor 0
+        yanchor 0
+        rotate_pad False
+        rotate 5.5
+        xpos 625 #600
+        ypos 860 #825     
+
+        textbutton _("RETURN"):
+            style "return_button"
+            text_color "#111"
+            text_size 65
+            action Return()
 
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
 
 style navigation_button:
-    size_group "navigation"
+    size_group None #"navigation"
     properties gui.button_properties("navigation_button")
+    hover_background Frame("gui/underline.png")
+    selected_background Frame("gui/underline.png")
 
 style navigation_button_text:
+    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+    size 67
+    color "#111"
     properties gui.text_properties("navigation_button")
+
+
+    
 
 ## Game Menu screen ############################################################
 ##
@@ -75,14 +107,26 @@ style navigation_button_text:
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     style_prefix "game_menu"
-
-    if main_menu:
+    
+    if main_menu:        
         add gui.main_menu_background
     else:
         add gui.game_menu_background
 
+    ## menu background design
     frame:
         style "game_menu_outer_frame"
+
+        ## changes background depending on the menu screen
+        if renpy.get_screen("help") or renpy.get_screen("preferences"):
+            add "gui/screen_menus/screen_menu_tab_contents.png":
+                xsize 782
+                ysize 851
+                xanchor 0
+                yanchor 0
+                rotate_pad False
+                xpos 1080
+                ypos 15
 
         hbox:
 
@@ -90,54 +134,17 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
             frame:
                 style "game_menu_navigation_frame"
 
+            ## Reserve space for the menu screen contents.
             frame:
                 style "game_menu_content_frame"
+                
+                ## Contents of each menu go here
+                ## moved the viewport/vpgrid into the code of each menu
+                ## because they have different displayable areas
 
-                if scroll == "viewport":
-
-                    viewport:
-                        yinitial yinitial
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-
-                        side_yfill True
-
-                        vbox:
-                            spacing spacing
-
-                            transclude
-
-                elif scroll == "vpgrid":
-
-                    vpgrid:
-                        cols 1
-                        yinitial yinitial
-
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-
-                        side_yfill True
-
-                        spacing spacing
-
-                        transclude
-
-                else:
-
-                    transclude
+                transclude
 
     use navigation
-
-    textbutton _("Return"):
-        style "return_button"
-
-        action Return()
-
-    label title
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -157,25 +164,27 @@ style return_button is navigation_button
 style return_button_text is navigation_button_text
 
 style game_menu_outer_frame:
-    bottom_padding 45
-    top_padding 180
-
-    background "gui/overlay/game_menu.png"
+    xsize 1920
+    ysize 1080
+    background Frame("gui/screen_menus/screen_menu_bg.png")
+    # background "gui/overlay/game_menu.png"
 
 style game_menu_navigation_frame:
-    xsize 420
+    xsize 960 # 420
     yfill True
 
 style game_menu_content_frame:
-    left_margin 60
-    right_margin 30
-    top_margin 15
+    left_margin 0 #60
+    right_margin 0 #30
+    top_margin 0 #15
+    xsize 960
+    ysize 1080
 
 style game_menu_viewport:
-    xsize 1380
-
-style game_menu_vscrollbar:
-    unscrollable gui.unscrollable
+    xalign 0
+    yalign 0
+    xsize 825 #1380    
+    ysize 962
 
 style game_menu_side:
     spacing 15
@@ -188,8 +197,3 @@ style game_menu_label_text:
     size gui.title_text_size
     color gui.accent_color
     yalign 0.5
-
-style return_button:
-    xpos gui.navigation_xpos
-    yalign 1.0
-    yoffset -45

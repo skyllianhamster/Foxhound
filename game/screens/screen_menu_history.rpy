@@ -15,33 +15,78 @@ screen history():
 
     use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0, spacing=gui.history_spacing):
 
+        ## everything below this goes into the 'transclude' part of screen game_menu()
+
         style_prefix "history"
 
-        for h in _history_list:
+        ## rotates menu contents
+        transform:
+            xanchor 0
+            yanchor 0
+            rotate_pad False
+            rotate -1.65
+            xpos 80
+            ypos -130
 
-            window:
+            ## menu title on top of the page
+            text "HISTORY\n":
+                style "history_header"
+                xpos 30
+                ypos 15
 
-                ## This lays things out properly if history_height is None.
-                has fixed:
-                    yfit True
+            ## constrains the menu contents to a specific area of the page
+            frame:       
+                # background Frame("gui/overlay/black_overlay.png") 
+                style "empty"                 
+                xanchor 0
+                yanchor 0 
+                xpos 2
+                ypos 85                  
+                xsize 825   
+                ysize 895      
+                left_padding 37
+                right_padding 20
+                top_padding 10
+                bottom_padding 20
+                
+                ## the scrollable area
+                vpgrid:                    
+                    cols 1
+                    yinitial 1.0
+                    xalign 0
+                    yalign 0
+                    scrollbars "vertical"
+                    mousewheel True
+                    draggable True
+                    pagekeys True
 
-                if h.who:
+                    side_yfill True
 
-                    label h.who:
-                        style "history_name"
-                        substitute False
+                    for h in _history_list:
 
-                        ## Take the color of the who text from the Character, if
-                        ## set.
-                        if "color" in h.who_args:
-                            text_color h.who_args["color"]
+                        window:
 
-                $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                text what:
-                    substitute False
+                            ## This lays things out properly if history_height is None.
+                            has fixed:
+                                yfit True
 
-        if not _history_list:
-            label _("The dialogue history is empty.")
+                            if h.who:
+
+                                label h.who:
+                                    style "history_name"
+                                    substitute False
+
+                                    ## Take the color of the who text from the Character, if
+                                    ## set.
+                                    # if "color" in h.who_args:
+                                    #     text_color h.who_args["color"]
+
+                            $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
+                            text what:
+                                substitute False
+
+                    if not _history_list:
+                        label _("The dialogue history is empty.")
 
 
 ## This determines what tags are allowed to be displayed on the history screen.
@@ -58,25 +103,31 @@ style history_text is gui_text
 style history_label is gui_label
 style history_label_text is gui_label_text
 
+style history_header:
+    font gui.text_font_header
+    size 45*gui.text_size_multiplier
+
 style history_window:
     xfill True
-    ysize gui.history_height
+    ysize 200 #gui.history_height
 
 style history_name:
     xpos gui.history_name_xpos
     xanchor gui.history_name_xalign
     ypos gui.history_name_ypos
     xsize gui.history_name_width
+    color gui.accent_color
 
 style history_name_text:
-    min_width gui.history_name_width
+    min_width 180 #gui.history_name_width
+    xsize 180    
     textalign gui.history_name_xalign
 
 style history_text:
-    xpos gui.history_text_xpos
+    xpos 230# gui.history_text_xpos
     ypos gui.history_text_ypos
     xanchor gui.history_text_xalign
-    xsize gui.history_text_width
+    xsize 470 # gui.history_text_width
     min_width gui.history_text_width
     textalign gui.history_text_xalign
     layout ("subtitle" if gui.history_text_xalign else "tex")
@@ -86,3 +137,11 @@ style history_label:
 
 style history_label_text:
     xalign 0.5
+
+style history_vscrollbar:
+    xpos 45   
+    ypos -138
+    ymaximum 525
+    thumb "#c4b5a2" #scrollbar color or image
+    base_bar "#d7cfcc" #scrollbar background or image 
+    unscrollable "hide" #gui.unscrollable

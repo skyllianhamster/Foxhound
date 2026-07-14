@@ -248,7 +248,9 @@ label demo_crimescene:
     window hide
     $ textbox_type = "dialogue"
     
-    show black overlay with dissolve #darkens background while characters are onscreen
+    show black overlay:
+        alpha 0.7
+    with dissolve #darkens background while characters are onscreen
 
     show caitlyn enforcer concerned demo zorder 1 at left20 
     with dissolve
@@ -281,7 +283,8 @@ label demo_crimescene:
 
     label cs00_device:     
         window auto   
-        show black overlay
+        show black overlay:
+            alpha 0.7
         if cs00_device_found == False:
             show cs00 device closeup zorder 1 with dissolve
         
@@ -331,7 +334,8 @@ label demo_crimescene:
 
     label cs00_keys:        
         window auto
-        show black overlay
+        show black overlay:
+            alpha 0.7
         if cs00_keys_found == False:
             show cs00 keys closeup zorder 1 with dissolve
         
@@ -388,9 +392,11 @@ label demo_crimescene:
 
     label cs00_paper:  
         $ textbox_type = "cinematic"
-        window auto      
 
-        show black overlay
+        window auto   
+
+        show black overlay:
+            alpha 0.7
 
         show screen object_text_button(cs00_paper_text)
 
@@ -416,7 +422,8 @@ label demo_crimescene:
         $ textbox_type = "cinematic"
         window auto    
 
-        show black overlay
+        show black overlay:
+            alpha 0.7
 
         show screen object_text_button(cs00_rods_text)
 
@@ -442,7 +449,8 @@ label demo_crimescene:
         $ textbox_type = "cinematic" 
         window auto     
 
-        show black overlay
+        show black overlay:
+            alpha 0.7
 
         if cs00_shoes_found == False:
             show cs00 shoes closeup zorder 1 with dissolve
@@ -466,7 +474,8 @@ label demo_crimescene:
         $ textbox_type = "cinematic"     
         window auto 
 
-        show black overlay
+        show black overlay:
+            alpha 0.7
 
         if cs00_window_found == False:
             show cs00 window closeup zorder 1 with dissolve
@@ -497,7 +506,9 @@ label demo_crimescene:
         As you twist the key, there is a ticking sound from inside the chest.
         """
 
-        show black overlay with dissolve
+        show black overlay:
+            alpha 0.7 
+        with dissolve
 
         window hide
         $ textbox_type = "dialogue"

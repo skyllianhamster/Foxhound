@@ -11,6 +11,66 @@ init offset = -2
 init python:
     gui.init(1920, 1080)
 
+    ## config.ftfont_scale scales the font; this section makes all fonts as close
+    ## to the same size as possible so they can be swapped without having to adjust
+    ## sizes individually
+
+    ## config.ftfont_vertical_extent_scale adjusts the vertical position of the font
+    ## as some fonts can sit higher or lower from the baseline
+
+
+    config.ftfont_scale["fonts/header/Arsenal-Bold.ttf"] = 1
+    config.ftfont_scale["fonts/header/Arsenal-BoldItalic.ttf"] = 1
+    config.ftfont_scale["fonts/header/Arsenal-Italic.ttf"] = 1
+    config.ftfont_scale["fonts/header/Arsenal-Regular.ttf"] = 1
+    config.ftfont_vertical_extent_scale["fonts/header/Arsenal-Bold.ttf"] = .75
+    config.ftfont_vertical_extent_scale["fonts/header/Arsenal-BoldItalic.ttf"] = .75
+    config.ftfont_vertical_extent_scale["fonts/header/Arsenal-Italic.ttf"] = .75
+    config.ftfont_vertical_extent_scale["fonts/header/Arsenal-Regular.ttf"] = .75
+    
+
+    config.ftfont_scale["fonts/typewriter/CourierPrime-Bold.ttf"] = 1
+    config.ftfont_scale["fonts/typewriter/CourierPrime-BoldItalic.ttf"] = 1
+    config.ftfont_scale["fonts/typewriter/CourierPrime-Italic.ttf"] = 1
+    config.ftfont_scale["fonts/typewriter/CourierPrime-Regular.ttf"] = 1
+
+    config.ftfont_scale["fonts/dialogue/DMSans-Italic-VariableFont_opsz,wght.ttf"] = 0.9
+    config.ftfont_scale["fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"] = 0.9
+    config.ftfont_vertical_extent_scale["fonts/dialogue/DMSans-Italic-VariableFont_opsz,wght.ttf"] = 0.9
+    config.ftfont_vertical_extent_scale["fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"] = 0.9
+
+    config.ftfont_scale["fonts/header/JosefinSans-Italic-VariableFont_wght.ttf"] = 0.9
+    config.ftfont_scale["fonts/header/JosefinSans-VariableFont_wght.ttf"] = 0.9
+    config.ftfont_vertical_extent_scale["fonts/header/JosefinSans-Italic-VariableFont_wght.ttf"] = 1.1
+    config.ftfont_vertical_extent_scale["fonts/header/JosefinSans-VariableFont_wght.ttf"] = 1.1
+
+    config.ftfont_scale["fonts/dialogue/LeagueSpartan-Bold.otf"] = 1
+    config.ftfont_scale["fonts/dialogue/LeagueSpartan-Medium.otf"] = 1
+    config.ftfont_scale["fonts/dialogue/LeagueSpartan-Regular.otf"] = 1
+    config.ftfont_scale["fonts/dialogue/LeagueSpartan-Semibold.otf"] = 1
+
+    config.ftfont_scale["fonts/handwritten/PatrickHand-Regular.ttf"] = 1
+    config.ftfont_vertical_extent_scale["fonts/handwritten/PatrickHand-Regular.ttf"] = .8
+
+    config.ftfont_scale["fonts/typewriter/SpecialElite-Regular.ttf"] = 1
+    config.ftfont_vertical_extent_scale["fonts/typewriter/SpecialElite-Regular.ttf"] = 1.1
+    
+
+    config.ftfont_scale["fonts/handwritten/SS Soapy Hands Bold Italic.otf"] = 1.1
+    config.ftfont_scale["fonts/handwritten/SS Soapy Hands Bold.otf"] = 1.1
+    config.ftfont_scale["fonts/handwritten/SS Soapy Hands Italic.otf"] = 1.1
+    config.ftfont_scale["fonts/handwritten/SS Soapy Hands Medium Italic.otf"] = 1.1
+    config.ftfont_scale["fonts/handwritten/SS Soapy Hands Medium.otf"] = 1.1
+    config.ftfont_scale["fonts/handwritten/SS Soapy Hands Regular.otf"] = 1.1
+
+    config.ftfont_vertical_extent_scale["fonts/handwritten/SS Soapy Hands Bold Italic.otf"] = .9
+    config.ftfont_vertical_extent_scale["fonts/handwritten/SS Soapy Hands Bold.otf"] = .9
+    config.ftfont_vertical_extent_scale["fonts/handwritten/SS Soapy Hands Italic.otf"] = .9
+    config.ftfont_vertical_extent_scale["fonts/handwritten/SS Soapy Hands Medium Italic.otf"] = .9
+    config.ftfont_vertical_extent_scale["fonts/handwritten/SS Soapy Hands Medium.otf"] = .9
+    config.ftfont_vertical_extent_scale["fonts/handwritten/SS Soapy Hands Regular.otf"] = .9
+
+
 ## Enable checks for invalid or unstable properties in screens or transforms
 define config.check_conflicting_properties = True
 
@@ -28,7 +88,7 @@ define config.check_conflicting_properties = True
 define gui.name_color = '#eeeeee'
 
 ## An accent color used throughout the interface to label and highlight text.
-define gui.accent_color = '#0099ff'
+define gui.accent_color = '#900' #'#0099ff'
 
 ## The color used for a text button when it is neither selected nor hovered.
 define gui.idle_color = '#707070'
@@ -56,29 +116,41 @@ define gui.hover_muted_color = '#99d6ff'
 define gui.text_color = '#404040'
 define gui.interface_text_color = '#404040'
 
+## Accessibility ########################################################
+
+define gui.text_size_multiplier = gui.preference("text_size_multiplier", 1)
+
+define gui.alt_text = gui.preference("alt_text", False) 
+define gui.reduce_clutter = gui.preference("reduce_clutter", False) 
 
 ## Fonts and Font Sizes ########################################################
 
+# Font swapping in Preferences
+define gui.text_font_header = gui.preference("font_header", "fonts/header/Arsenal-Regular.ttf") 
+define gui.text_font_handwritten = gui.preference("font_handwritten", "fonts/handwritten/SS Soapy Hands Medium.otf") 
+define gui.text_font_typewriter = gui.preference("font_typewriter", "fonts/typewriter/CourierPrime-Regular.ttf")
+define gui.text_font_dialogue = gui.preference("font_dialogue", "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf")
+
 ## The font used for in-game text.
-define gui.text_font = "LeagueSpartan-SemiBold.otf" #"DejaVuSans.ttf"
+define gui.text_font = gui.text_font_dialogue #"DejaVuSans.ttf"
 
 ## The font used for character names.
-define gui.name_text_font = "LeagueSpartan-Bold.otf" #"DejaVuSans.ttf"
+define gui.name_text_font = gui.text_font_header #"DejaVuSans.ttf"
 
 ## The font used for out-of-game text.
-define gui.interface_text_font = "Junction-regular.otf" #"DejaVuSans.ttf"
+define gui.interface_text_font = gui.text_font_dialogue #"DejaVuSans.ttf"
 
 ## The size of normal dialogue text.
-define gui.text_size = 33
+define gui.text_size = 33*gui.text_size_multiplier
 
 ## The size of character names.
-define gui.name_text_size = 35
+define gui.name_text_size = 35*gui.text_size_multiplier
 
 ## The size of text in the game's user interface.
-define gui.interface_text_size = 33
+define gui.interface_text_size = 33*gui.text_size_multiplier
 
 ## The size of labels in the game's user interface.
-define gui.label_text_size = 36
+define gui.label_text_size = 36*gui.text_size_multiplier
 
 ## The size of text on the notify screen.
 define gui.notify_text_size = 24
@@ -92,7 +164,7 @@ define gui.title_text_size = 75
 ## The images used for the main and game menus.
 define gui.main_menu_background = "gui/screen_main/screen_main.png"
 define gui.game_menu_background = "gui/game_menu.png"
-define gui.main_menu_title = "gui/screen_main/screen_main_title.png" #CUSTOM ADDITION
+define gui.main_menu_title = "gui/screen_main/screen_main_title.png"
 
 
 ## Dialogue ####################################################################
@@ -115,11 +187,12 @@ define gui.name_ypos = 0
 
 ## The horizontal alignment of the character's name. This can be 0.0 for left-
 ## aligned, 0.5 for centered, and 1.0 for right-aligned.
-define gui.name_xalign = 0.0
+define gui.name_xalign = 0.5
 
 ## The vertical alignment of the character's name. This can be 0.0 for left-
 ## aligned, 0.5 for centered, and 1.0 for right-aligned.
-define gui.name_yalign = 0.5
+#define gui.name_yalign = 0.9
+define gui.name_ypos = gui.preference("name_ypos", 28) 
 
 ## The width, height, and borders of the box containing the character's name, or
 ## None to automatically size it.
@@ -138,8 +211,9 @@ define gui.namebox_tile = False
 ## The placement of dialogue relative to the textbox. These can be a whole
 ## number of pixels relative to the left or top side of the textbox, or 0.5 to
 ## center.
-define gui.dialogue_xpos = 402
-define gui.dialogue_ypos = 75
+define gui.dialogue_xpos = 540 #402
+# define gui.dialogue_ypos = 75
+define gui.dialogue_ypos = gui.preference("dialogue_ypos", 75) 
 
 ## The maximum width of dialogue text, in pixels.
 define gui.dialogue_width = 1116

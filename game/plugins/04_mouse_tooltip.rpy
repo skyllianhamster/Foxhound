@@ -1,3 +1,5 @@
+# https://github.com/jsfehler/renpy-mouse-tooltip/
+
 default mtt = MouseTooltip(Text(""), padding={"x": 10, "y": -10})
 
 init -1500 python:

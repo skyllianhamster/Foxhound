@@ -18,18 +18,16 @@ This project was created under Riot Games' \"Legal Jibber Jabber\"
 \n\nThis is a volunteer-created, non-commercial project dedicated to 
 \nthe community that has loved Caitlyn and Vi now and since.""")
 
-define gui.declaration_about = _p("""
-This project was created under Riot Games' \"Legal Jibber Jabber\" 
-policy using characters and settings owned by Riot Games. 
-Riot Games does not endorse or sponsor this project.""")
-
 ### TODO: ask contributors for preferred display names (currently using discord names)
 ### and links to personal work if they want
 ### subject to change if we create a custom screen for contributors
 define gui.contributors = _p("""
-Contributors: corvus, postarcaneanhedonia, skyllianhamster, taqueets, 
-Jules Ackleow, Batstronaut, Meg Noel Art, PeachesPlace, ...
+{u}Contributors{/u}
 
+Organization: postarcaneanhedonia\n
+UI/UX: Jules Ackleow, Batstronaut, {a=https://x.com/PeachesPlace}PeachesPlace{/a}\n
+Coding: corvus, skyllianhamster, taqueets\n
+Testing: Lucerni, king julian, GeekyEleanor, Nightworldlove, krearrr, hope_88, Archerslayer203, RedWind
 """)
 
 ### SKILLS TEXT #########################################################
@@ -74,7 +72,7 @@ Science can move in ways beyond the physical. Understanding
 this connection is vital to the security of our future.
 """)
 define craftsman_background_description = _p("""
-The legacy of Stanwick Padidly continues in the works of his students. 
+The legacy of Stanwick Padidly lives on in his students. 
 Hextech and chemtech pave the way for the extraordinary.
 """)
 define shadow_background_description = _p("""

@@ -1,4 +1,4 @@
-# from: https://github.com/yukinogatari/Ren-Py-FancyText
+# https://github.com/yukinogatari/Ren-Py-FancyText
 #
 # see usage examples in script.rpy
 #

@@ -3,6 +3,11 @@
 #define = constant variables
 #default = regular variables
 
+### UI/UX ####################################
+
+
+default y_adj = ui.adjustment() ## stores viewport x/y values to prevent jumping back up a scrollable page
+
 ### PLAYER CUSTOMIZATION #####################
 
 ## given name TODO: set to "", defaults for testing only
@@ -56,7 +61,7 @@ default item_zoom = "gui/screen_skills/items/item_zoom.png" # icon location + fi
 default item_data = { 
     "item_demo_keys": ["KEYS", "A set of three keys: brass, iron, and steel."],
     "item_demo_note": ["NOTE", "A note signed by \"C\"."],
-    "item_demo_rods": ["ALUMINUM RODS", "Aluminum rods from Cadwalder Foundry."]
+    "item_demo_rods": ["ALUMINUM RODS", "From Cadwalder Foundry."]
     }
 
 ## actual list of items in player's inventory

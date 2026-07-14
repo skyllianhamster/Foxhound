@@ -37,15 +37,10 @@ init -1:
             fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect
 
 style demo_button_colors:
-    font "JustAnotherHand-Regular.ttf"
-    idle_color "#555555"
-    hover_color "#ff0000"
-    size 60
-
-style demo_button_text:
-    font "JustAnotherHand-Regular.ttf"
-    color "#222222"
-    size 60
+    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+    idle_color "#eee"
+    hover_color "#ec0"
+    size 50
 
 ### HIDE ALL SCREENS ################################################
 label clear_screens:
@@ -95,8 +90,8 @@ screen error_screen(error_msg):
 #####################################################################
 screen return_button:
     zorder 100
-    textbutton "Return": 
-        text_style "demo_button_colors"
+    textbutton "RETURN": 
+        text_style "demo_button_colors"        
         xalign 0.95 
         yalign 0.95 
         action MainMenu()
@@ -107,8 +102,8 @@ screen return_button:
 ### ###################################################################
 screen object_text_button(object):
     zorder 10
-    textbutton _("Read"):
-        text_style "demo_button_colors"
+    textbutton _("READ"):
+        text_style "demo_button_colors"  
         xalign 0.85 
         yalign 0.95 
         action ShowMenu("object_text", object)
@@ -118,7 +113,7 @@ screen object_text_button(object):
 ### ###################################################################
 screen object_text(object):
     zorder 10
-    add "gui/overlay/black_overlay.png"
+    add "gui/overlay/black_overlay.png" alpha 0.85
     hbox:
         xalign 0.5
         yalign 0.3
@@ -126,7 +121,7 @@ screen object_text(object):
 
         text "{color=#eeeeee}[object]{/color}"
 
-    textbutton _("Back"): 
+    textbutton _("BACK"): 
         text_style "demo_button_colors"
         xalign 0.85 
         yalign 0.95 

@@ -14,27 +14,83 @@ screen about():
     ## screen.
     use game_menu(_("About"), scroll="viewport"):
 
-        style_prefix "about"
+        ## everything below this goes into the 'transclude' part of screen game_menu()
 
-        vbox:
+        style_prefix "about"   
 
-            label "[config.name!t]"
-            text _("Version [config.version!t]\n")
+        ## rotates menu contents
+        transform:
+            xanchor 0
+            yanchor 0
+            rotate_pad False
+            rotate -1.65
+            xpos 80
+            ypos -130
 
-            ## gui.about is usually set in options.rpy.
-            if gui.about:
-                text "[gui.about!t]\n"
+            ## menu title on top of the page
+            text "ABOUT\n":
+                style "about_header"
+                xpos 30
+                ypos 15
 
-            text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]\n")
-            
-            text "{i}[gui.declaration_about!t]{/i}\n"
-            text "[gui.contributors!t]\n"
-            
+            ## constrains the menu contents to a specific area of the page
+            frame:       
+                # background Frame("gui/overlay/black_overlay.png") 
+                style "empty"                 
+                xanchor 0
+                yanchor 0 
+                xpos 2
+                ypos 85                  
+                xsize 825   
+                ysize 895      
+                left_padding 37
+                right_padding 20
+                top_padding 10
+                bottom_padding 20
 
+                ## the scrollable area
+                viewport:  
+                    # add "gui/overlay/black_overlay.png" alpha 0.4
+                    xalign 0
+                    yalign 0
+                    scrollbars "vertical"          
+                    mousewheel True
+                    draggable True
+                    pagekeys True   
+
+                    side_yfill True    
+
+                    ## menu contents
+                    vbox:  
+
+                        text _("[config.name!t] version [config.version!t]\n")
+
+                        ## gui.about is usually set in options.rpy.
+                        if gui.about:
+                            text "[gui.about!t]\n\n[gui.contributors!t]\n"
+
+                        text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]\n") 
 
 style about_label is gui_label
 style about_label_text is gui_label_text
 style about_text is gui_text
 
+style about_header:
+    font gui.text_font_header
+    size 45*gui.text_size_multiplier
+
+style about_text:
+    font gui.interface_text_font
+    size gui.text_size
+    line_spacing 10
+
 style about_label_text:
     size gui.label_text_size
+
+style about_vscrollbar:
+    xpos 45   
+    ypos -138
+    ymaximum 525
+    thumb "#c4b5a2" #scrollbar color or image
+    base_bar "#d7cfcc" #scrollbar background or image 
+    unscrollable "hide" #gui.unscrollable

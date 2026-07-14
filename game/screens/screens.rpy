@@ -18,6 +18,7 @@ style input:
     adjust_spacing False
 
 style hyperlink_text:
+    font gui.interface_text_font
     properties gui.text_properties("hyperlink", accent=True)
     hover_underline True
 
@@ -171,16 +172,17 @@ style namebox:
 #position of name within namebox
 style say_label:
     properties gui.text_properties("name", accent=True)
-    xalign 0.5 #gui.name_xalign
-    yalign 0.75 #gui.name_yalign
+    xalign gui.name_xalign
+    ypos gui.name_ypos
+    # yalign gui.name_yalign
 
 #position of text within dialogue textbox
 style say_dialogue:
     properties gui.text_properties("dialogue")
 
-    xpos 540 #gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos 75 #gui.dialogue_ypos
+    xpos gui.dialogue_xpos
+    ypos gui.dialogue_ypos
+    xsize gui.dialogue_width    
 
     adjust_spacing False
 
@@ -217,40 +219,6 @@ style input_prompt:
 style input:
     xalign gui.dialogue_text_xalign
     xmaximum gui.dialogue_width
-
-
-## Choice screen ###############################################################
-##
-## This screen is used to display the in-game choices presented by the menu
-## statement. The one parameter, items, is a list of objects, each with caption
-## and action fields.
-##
-## https://www.renpy.org/doc/html/screen_special.html#choice
-
-screen choice(items):
-    style_prefix "choice"
-
-    vbox:
-        for i in items:
-            textbutton i.caption action i.action
-
-
-style choice_vbox is vbox
-style choice_button is button
-style choice_button_text is button_text
-
-style choice_vbox:
-    xalign 0.5
-    ypos 405
-    yanchor 0.5
-
-    spacing gui.choice_spacing
-
-style choice_button is default:
-    properties gui.button_properties("choice_button")
-
-style choice_button_text is default:
-    properties gui.text_properties("choice_button")
 
 
 ## Quick Menu screen ###########################################################
@@ -319,7 +287,7 @@ screen confirm(message, yes_action, no_action):
 
     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
+    add "gui/overlay/black_overlay.png" alpha 0.7
 
     frame:
 
@@ -338,12 +306,12 @@ screen confirm(message, yes_action, no_action):
 
                 textbutton _("YES"): 
                     action yes_action
-                    text_font "JustAnotherHand-Regular.ttf"
+                    text_font "fonts/handwritten/JustAnotherHand-Regular.ttf"
                     text_size 60
 
                 textbutton _("NO"):
                     action no_action
-                    text_font "JustAnotherHand-Regular.ttf"
+                    text_font "fonts/handwritten/JustAnotherHand-Regular.ttf"
                     text_size 60
 
     ## Right-click and escape answer "no".
@@ -367,7 +335,7 @@ style confirm_frame:
 style confirm_prompt_text:
     textalign 0.5    
     layout "subtitle"
-    font "JustAnotherHand-Regular.ttf"
+    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
     size 60
 
 style confirm_button:

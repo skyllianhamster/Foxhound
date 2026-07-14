@@ -1,14 +1,11 @@
-
-define pronouns_list = [ 'they/them', 'she/her', 'he/him']
-default pronoun_list_index = 0
-
 ### NAME & PRONOUNS #################################################
 ### text input and pronoun selection
 #####################################################################
 screen player_name_and_pronouns():
+
     modal True
     zorder 100
-
+    
     ## background
     frame:
         xalign 0.5 
@@ -47,12 +44,8 @@ screen player_name_and_pronouns():
                 yalign 0.5
 
                 ## arrow buttons cycle through pronoun array
-                textbutton "<<<":
-                    action If(
-                                pronoun_list_index==0, 
-                                true=SetVariable('pronoun_list_index', len(pronouns_list)-1), 
-                                false=SetVariable('pronoun_list_index', pronoun_list_index-1)
-                            )                                                        
+                textbutton "<<<":  
+                    action CycleVariable("pronoun", ["they/them", "she/her", "he/him"], reverse=True)                                           
                     xalign 0.5
                     yalign 0.5
                     text_style "button_customization"
@@ -62,37 +55,38 @@ screen player_name_and_pronouns():
                     xsize 150
                     ysize 50
 
-                    text "[pronouns_list[pronoun_list_index]]":
+                    text "[pronoun]":
                         xalign 0.5
                         yalign 0.5
                         style "text_customization"
 
                 textbutton ">>>":
-                    action If(
-                                pronoun_list_index==len(pronouns_list)-1, 
-                                true=SetVariable('pronoun_list_index', 0), 
-                                false=SetVariable('pronoun_list_index', pronoun_list_index+1)
-                            )
+                    action CycleVariable("pronoun", ["they/them", "she/her", "he/him"])
                     xalign 0.5
                     yalign 0.5
                     text_style "button_customization"
 
-        ## back to main menu button
-        textbutton "<<<":
-            xalign 0.18
-            yalign 0.95
-            action MainMenu()
-            text_style "button_nav"                  
+    ## back to main menu button
+    textbutton "<<<":
+        xalign 0.01
+        yalign 0.995
+        text_outlines [(5, "#331806", 1, 1)]
+        # xalign 0.18
+        # yalign 0.95
+        action MainMenu()
+        text_style "button_nav"                  
 
-        ## check if name and pronouns are valid 
-        textbutton ">>>":
-            xalign 0.825
-            yalign 0.95
-            action [
-                    SetVariable("pronoun", pronouns_list[pronoun_list_index]), 
-                    Call("check_name_and_pronouns")
-                    ]
-            text_style "button_nav"
+    ## check if name and pronouns are valid 
+    textbutton ">>>":
+        xalign 0.99
+        yalign 0.995
+        text_outlines [(5, "#331806", 1, 1)]
+        # xalign 0.825
+        # yalign 0.95
+        action Call("check_name_and_pronouns")
+        text_style "button_nav"
+
+    use quick_menu()
 
 ### CHECK FUNCTION #########################################
 ### checks text input and pronoun selection
@@ -136,141 +130,80 @@ screen player_name_and_pronouns_confirm():
         yalign 0.6        
         background Frame("gui/screen_player_customization/screen_player_customization_postit.png")  
 
-        ## rotates post-it text
-        transform:
-            rotate 5   
+    ## rotates post-it text
+    transform:
+        xanchor 0
+        yanchor 0
+        rotate_pad False
+        rotate 5
+        xpos 1090
+        ypos 311              
 
-            vbox:
-                xalign -0.6
-                yalign 0
+        frame:
+            style "empty"
+            # background Frame("gui/overlay/confirm.png", alpha=0.4) # checks the frame borders for text wrapping
+            xanchor 0
+            yanchor 0
+            xsize 478
+            ysize 478            
+            xpadding 30
+            ypadding 60
+
+
+            vbox:                    
                 
                 textbutton "[player_name!u],\n    [pronoun!u]":
                     text_style "text_customization_confirm"
-                    background Frame("gui/circled_question.png", xsize=350, ysize=200, xalign=0.5, yalign=0.5)
+                    background Frame("gui/circled_question.png", xsize=250, ysize=150, xalign=0.5, yalign=0.5)
                     xalign 0.5
 
-                text "\n just triple checking—sheriff's orders\n     paperwork's annoying to re-file":
+                text "\njust triple checking—sheriff's orders. paperwork's annoying to re-file\n":
                     style "text_customization_confirm"
+                    
+                hbox:
+                    xalign 0.5
+                    spacing 75
 
-            ## hides this screen
-            textbutton "change":
-                xalign -0.15
-                yalign 0.6
-                action Hide("player_name_and_pronouns_confirm")
-                hover_background Frame("gui/underline.png")
-                text_style "button_customization_confirm"  
+                    ## hides this screen
+                    textbutton "change":                        
+                        action Hide("player_name_and_pronouns_confirm")
+                        hover_background Frame("gui/underline.png")
+                        text_style "button_customization_confirm"  
 
-            ## move on to the rest of the game
-            textbutton "confirm":
-                xalign 0.5
-                yalign 0.6
-                action [
-                        Hide("player_name_and_pronouns_confirm"), 
-                        Hide("player_name_and_pronouns"),
-                        Jump("demo_dialogue")
-                ]
-                hover_background Frame("gui/underline.png")
-                text_style "button_customization_confirm"
+                    ## move on to the rest of the game
+                    textbutton "confirm":
+                        action [
+                                Hide("player_name_and_pronouns_confirm"), 
+                                Hide("player_name_and_pronouns"),
+                                Jump("demo_dialogue")
+                        ]
+                        hover_background Frame("gui/underline.png")
+                        text_style "button_customization_confirm"
 
 ### Define button and text colors
 style button_customization:
-    font "American Typewriter Regular.ttf"
+    font gui.text_font_typewriter
     idle_color "#888888"
     hover_color "#f00"
     selected_color "#222222"        
     size 27
 
 style text_customization:
-    font "American Typewriter Regular.ttf"
+    font gui.text_font_typewriter
     size 25
 
 style button_nav:
-    font "fonts/DOMCO 02.otf"    
+    font "fonts/handwritten/SS Soapy Hands Bold.otf"  
     idle_color "#ff9900"
     hover_color "#eeeeee"
-    size 80
+    size 100
 
 style text_customization_confirm:
-    font "JustAnotherHand-Regular.ttf" 
-    size 50 
+    font gui.text_font_handwritten
+    size 36
 
 style button_customization_confirm:    
-    font "JustAnotherHand-Regular.ttf"    
+    font gui.text_font_handwritten
     idle_color "#555555"
     hover_color "#222222"
-    size 60
-
-### original added by corvus
-
-        # vbox:
-        #     spacing 30
-        #     xalign 0.5
-        #     yalign 0.25
-            
-        #     text "[player_input_name]" size 50 xalign 0.5 yalign 0.5 color "#fff" 
-
-        #     hbox:
-        #         spacing 20
-        #         xalign 0.5
-        #         yalign 0.5
-                    
-        #         # textbutton "Tala":
-        #         #     action SetVariable("player_name", "Tala")
-        #         #     text_style "button_colors"
-                    
-        #         # textbutton "Alon":
-        #         #     action SetVariable("player_name", "Alon")
-        #         #     text_style "button_colors"
-                    
-        #         # textbutton "Ilaya":
-        #         #     action SetVariable("player_name", "Ilaya")
-        #         #     text_style "button_colors"                
-
-        #         input:
-        #             id "input"
-        #             value VariableInputValue("player_name")
-        #             allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'-"
-        #             length 16
-        #             xalign 0.5
-        #             yalign 0.5
-        #             color "#520ffbff"
-        #             size 40
-
-        # vbox:
-        #     spacing 30
-        #     xalign 0.5
-        #     yalign 0.5
-
-        #     text "Chose your preferred pronouns" size 50 xalign 0.5 yalign 0.7 color "#fff"
-                
-        #     hbox:
-        #         spacing 20
-        #         xalign 0.5
-        #         yalign 0.5
-                    
-        #         textbutton "They/Them":
-        #             action SetVariable("pronoun", "they/them")
-        #             text_style "button_colors"
-                    
-        #         textbutton "She/Her":
-        #             action SetVariable("pronoun", "she/her")
-        #             text_style "button_colors"
-                    
-        #         textbutton "He/Him":
-        #             action SetVariable("pronoun", "he/him")
-        #             text_style "button_colors"
-
-        # textbutton "Confirm":
-        #     xalign 0.6
-        #     yalign 0.75
-        #     action Return()
-        #     text_style "button_colors"
-
-        # textbutton "Return":
-        #     xalign 0.4
-        #     yalign 0.75
-        #     action MainMenu()
-        #     text_style "button_colors"
-
-
-
+    size 36

@@ -5,25 +5,30 @@ init -1:
     $ textbox_type = "dialogue"    
 
 ### Pre-title screen on startup ###############################################
+style splashscreen_text:
+    font "fonts/handwritten/Junction-regular.otf"
+    color '#fff'
+    size gui.text_size
+
 label splashscreen:
 
     scene black
 
     ### Legal Jibber Jabber
     with Pause(1)
-    show text "{font=Junction-regular.otf}{color=#bbbbbb}{size=-5}[gui.declaration_splash!t]{/size}{/color}{/font}" with dissolve 
+    show text "{=splashscreen_text}[gui.declaration_splash!t]{/}" with dissolve 
     with Pause(10)
     hide text with dissolve
 
     ### X presents
     with Pause(1)
-    show text "{font=Junction-regular.otf}{color=#ffffff}{size=+5}THR{/size} \npresents{/color}{/font}" with dissolve
+    show text "{=splashscreen_text}THR presents{/}" with dissolve
     with Pause(2)
     hide text with dissolve
 
     ### a Y production
     with Pause(1)
-    show text "{font=Junction-regular.otf}{color=#ffffff}a {size=+5}Piltover's Finest{/size} \nproduction{/color}{/font}" with dissolve
+    show text "{=splashscreen_text}a {size=+5}Piltover's Finest{/size} \nproduction{/}" with dissolve    
     with Pause(2)
     hide text with dissolve
 
@@ -35,11 +40,17 @@ label splashscreen:
 ### The game starts here. ###############################################
 label start:    
 
-    call reset_skills_and_inventory() #clears skill values and inventory
-    
-    call gameplay_demo #plays story/demo.rpy for testing
+    ## store viewport x/y values to prevent jumping back up a scrollable page
+    $ y_adj = ui.adjustment() 
 
-### For demo purposes only 
+    ## clears skill values and inventory
+    call reset_skills_and_inventory() 
+    
+    ## plays story/demo.rpy for testing
+    ## TODO: replace with story starting point
+    call gameplay_demo 
+
+### For demo purposes only ###############################################
 label gameplay_demo:
 
     while exitloop == False:

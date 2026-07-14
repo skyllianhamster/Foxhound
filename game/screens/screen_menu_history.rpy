@@ -26,7 +26,7 @@ screen history():
             rotate_pad False
             rotate -1.65
             xpos 80
-            ypos -130
+            ypos 50
 
             ## menu title on top of the page
             text "HISTORY\n":

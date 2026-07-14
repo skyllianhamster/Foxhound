@@ -68,7 +68,7 @@ screen navigation():
         rotate_pad False
         rotate 5.5
         xpos 625 #600
-        ypos 860 #825     
+        ypos 825 
 
         textbutton _("RETURN"):
             style "return_button"
@@ -126,7 +126,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
                 yanchor 0
                 rotate_pad False
                 xpos 1080
-                ypos 15
+                ypos 195
 
         hbox:
 

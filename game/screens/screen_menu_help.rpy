@@ -23,7 +23,7 @@ screen help():
             rotate_pad False
             rotate -1.65
             xpos 80
-            ypos -130            
+            ypos 50           
             
             ## menu title on top of the page
             text "HELP":
@@ -34,7 +34,7 @@ screen help():
             ## adds a Keyboard, Mouse, and Accessibility tab
             hbox:                
                 xpos 50
-                ypos 95
+                ypos 93
                 spacing 23          
                    
                 textbutton _("KEYBOARD") action SetScreenVariable("device", "keyboard")

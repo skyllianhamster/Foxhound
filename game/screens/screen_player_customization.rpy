@@ -44,11 +44,12 @@ screen player_name_and_pronouns():
                 yalign 0.5
 
                 ## arrow buttons cycle through pronoun array
-                textbutton "<<<":  
+                textbutton "←":  
                     action CycleVariable("pronoun", ["they/them", "she/her", "he/him"], reverse=True)                                           
                     xalign 0.5
                     yalign 0.5
                     text_style "button_customization"
+                    
             
                 frame:
                     style "empty"
@@ -60,7 +61,7 @@ screen player_name_and_pronouns():
                         yalign 0.5
                         style "text_customization"
 
-                textbutton ">>>":
+                textbutton "→":
                     action CycleVariable("pronoun", ["they/them", "she/her", "he/him"])
                     xalign 0.5
                     yalign 0.5
@@ -182,7 +183,7 @@ screen player_name_and_pronouns_confirm():
 
 ### Define button and text colors
 style button_customization:
-    font gui.text_font_typewriter
+    font gui.text_font_dialogue
     idle_color "#888888"
     hover_color "#f00"
     selected_color "#222222"        

@@ -34,13 +34,21 @@ screen preferences():
                 ypos 15
 
             ## adds a Game tab and an Accessibility tab
-            hbox:                
-                xpos 50
-                ypos 93
-                spacing 23          
-                   
-                textbutton _("GAME") action SetScreenVariable("pref_tab", "game")
-                textbutton _("ACCESSIBILITY") action SetScreenVariable("pref_tab", "accessibility")
+            transform:
+                xanchor 0
+                yanchor 0
+                rotate_pad False
+                rotate -0.3
+                xpos 35
+                ypos 91 
+
+                hbox:                
+                    # xpos 35
+                    # ypos 92
+                    spacing 15          
+                    
+                    textbutton _(" GAME      ") action SetScreenVariable("pref_tab", "game") style "pref_short_button"
+                    textbutton _(" ACCESSIBILITY  ") action SetScreenVariable("pref_tab", "accessibility") style "pref_long_button"
 
             ## constrains the menu contents to a specific area of the page
             frame:       
@@ -306,19 +314,40 @@ style pref_label_text:
 # style pref_vbox:
 #     xsize 338
 
-style pref_button:
-    properties gui.text_properties("pref_button")
-    idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png" )
-    hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png") 
-    selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png")
-    size_group "pref"
+# style pref_button:
+#     properties gui.text_properties("pref_button")
+#     idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png" )
+#     hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png") 
+#     selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png")
 
-style pref_button_text:
+style pref_short_button:
+    properties gui.text_properties("pref_button")
+    idle_background "gui/screen_menus/screen_menu_tab_short_idle.png"
+    hover_background "gui/screen_menus/screen_menu_tab_short_selected.png"
+    selected_background "gui/screen_menus/screen_menu_tab_short_selected.png"
+
+style pref_long_button:
+    properties gui.text_properties("pref_button")
+    idle_background "gui/screen_menus/screen_menu_tab_long_idle.png"
+    hover_background "gui/screen_menus/screen_menu_tab_long_selected.png"
+    selected_background "gui/screen_menus/screen_menu_tab_long_selected.png"
+
+style pref_short_button_text:
     properties gui.text_properties("pref_button")
     color "#111"
     hover_color gui.accent_color    
     size 40
-    yalign 1.0
+    xpos 0
+    ypos 25
+    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+
+style pref_long_button_text:
+    properties gui.text_properties("pref_button")
+    color "#111"
+    hover_color gui.accent_color    
+    size 40
+    xpos 0
+    ypos 25
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
 
 style mute_all_button:    

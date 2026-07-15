@@ -32,16 +32,24 @@ screen help():
                 ypos 15
 
             ## adds a Keyboard, Mouse, and Accessibility tab
-            hbox:                
-                xpos 50
-                ypos 93
-                spacing 23          
-                   
-                textbutton _("KEYBOARD") action SetScreenVariable("device", "keyboard")
-                textbutton _("MOUSE") action SetScreenVariable("device", "mouse")
+            transform:
+                xanchor 0
+                yanchor 0
+                rotate_pad False
+                rotate -0.2
+                xpos 35
+                ypos 91 
 
-                if GamepadExists():
-                    textbutton _("GAMEPAD") action SetScreenVariable("device", "gamepad")
+                hbox:                
+                    # xpos 50
+                    # ypos 93
+                    spacing 15          
+                    
+                    textbutton _(" KEYBOARD     ") action SetScreenVariable("device", "keyboard") style "help_medium_button"
+                    textbutton _(" MOUSE    ") action SetScreenVariable("device", "mouse") style "help_short_button"
+
+                    if GamepadExists():
+                        textbutton _(" GAMEPAD     ") action SetScreenVariable("device", "gamepad") style "help_medium_button"
 
             ## constrains the menu contents to a specific area of the page
             frame:       
@@ -206,21 +214,52 @@ style help_vscrollbar:
     base_bar "#d7cfcc" #scrollbar background or image 
     unscrollable "hide" #gui.unscrollable
 
-style help_button:
-    size_group "help"
-    properties gui.button_properties("help_button")
-    xmargin 12
-    idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png" )
-    hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png") 
-    selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png")
+# style help_button:
+#     size_group "help"
+#     properties gui.button_properties("help_button")
+#     xmargin 12
+#     idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png" )
+#     hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png") 
+#     selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png")
 
-style help_button_text:
-    properties gui.text_properties("help_button")
+# style help_button_text:
+#     properties gui.text_properties("help_button")
+#     color "#111"
+#     hover_color gui.accent_color    
+#     size 40
+#     yalign 1.0
+#     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+
+style help_short_button:
+    properties gui.text_properties("pref_button")
+    idle_background "gui/screen_menus/screen_menu_tab_short_idle.png"
+    hover_background "gui/screen_menus/screen_menu_tab_short_selected.png"
+    selected_background "gui/screen_menus/screen_menu_tab_short_selected.png"
+
+style help_medium_button:
+    properties gui.text_properties("pref_button")
+    idle_background "gui/screen_menus/screen_menu_tab_medium_idle.png"
+    hover_background "gui/screen_menus/screen_menu_tab_medium_selected.png"
+    selected_background "gui/screen_menus/screen_menu_tab_medium_selected.png"
+
+style help_short_button_text:
+    properties gui.text_properties("pref_button")
     color "#111"
     hover_color gui.accent_color    
     size 40
-    yalign 1.0
+    xpos 0
+    ypos 25
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+
+style help_medium_button_text:
+    properties gui.text_properties("pref_button")
+    color "#111"
+    hover_color gui.accent_color    
+    size 40
+    xpos 0
+    ypos 25
+    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+
 
 style help_calibrate_button:    
     hover_background Frame("gui/underline.png") 

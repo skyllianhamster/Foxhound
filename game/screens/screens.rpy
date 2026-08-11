@@ -146,14 +146,17 @@ style namebox_label is say_label
 
 style window:    
     xfill True
-    #xalign 0.5
     #yalign gui.textbox_yalign
-    xpos 193
-    ypos 703
+    xanchor 0.0
+    yanchor 0.0  
+    xpos 522
+    ypos 672
     ysize gui.textbox_height
-    right_padding 1100 #wraps dialogue text
+    left_padding -330    
+    right_padding 1370  
+    top_padding 10
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    # background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
 
 ### TODO: see if there's a better way to position the namebox
 style namebox:  
@@ -162,10 +165,10 @@ style namebox:
     ysize 70 #gui.namebox_height
     #xpos gui.name_xpos
     #ypos gui.name_ypos    
-    xalign 0.85 #gui.name_xalign
-    yalign -0.45       
+    xalign 0.80 #gui.name_xalign
+    yalign -0.36     
 
-    background Frame("gui/namebox.png")
+    # background Frame("gui/namebox.png")
     #background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     #padding gui.namebox_borders.padding
 
@@ -180,6 +183,7 @@ style say_label:
 style say_dialogue:
     properties gui.text_properties("dialogue")
 
+    yanchor 0
     xpos gui.dialogue_xpos
     ypos gui.dialogue_ypos
     xsize gui.dialogue_width    
@@ -290,6 +294,10 @@ screen confirm(message, yes_action, no_action):
     add "gui/overlay/black_overlay.png" alpha 0.7
 
     frame:
+        if gui.dark_mode:
+            background Frame("gui/screen_confirm/screen_confirm_frame_dark.png", gui.confirm_frame_borders, tile=gui.frame_tile)
+        else:
+            background Frame("gui/screen_confirm/screen_confirm_frame.png", gui.confirm_frame_borders, tile=gui.frame_tile)
 
         vbox:
             xalign .5
@@ -304,15 +312,16 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 70
 
+                if gui.dark_mode:
+                    style_prefix "confirm_dark"
+                else:
+                    style_prefix "confirm"
+
                 textbutton _("YES"): 
-                    action yes_action
-                    text_font "fonts/handwritten/JustAnotherHand-Regular.ttf"
-                    text_size 60
+                    action yes_action                    
 
                 textbutton _("NO"):
-                    action no_action
-                    text_font "fonts/handwritten/JustAnotherHand-Regular.ttf"
-                    text_size 60
+                    action no_action                    
 
     ## Right-click and escape answer "no".
     key "game_menu" action no_action
@@ -324,8 +333,11 @@ style confirm_prompt_text is gui_prompt_text
 style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
-style confirm_frame:
-    background Frame([ "gui/screen_confirm/screen_confirm_frame.png", "gui/screen_confirm/frame_default.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+style confirm_dark_button is gui_medium_button
+style confirm_dark_button_text is gui_medium_button_text
+
+style confirm_frame:    
+    # background Frame([ "gui/screen_confirm/screen_confirm_frame.png", "gui/screen_confirm/frame_default.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
@@ -335,14 +347,28 @@ style confirm_frame:
 style confirm_prompt_text:
     textalign 0.5    
     layout "subtitle"
-    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+    font "fonts/handwritten/SS Soapy Hands Regular.otf"
     size 60
 
 style confirm_button:
     properties gui.button_properties("confirm_button")
-
+    hover_background Frame("gui/underline.png")
+    
 style confirm_button_text:
     properties gui.text_properties("confirm_button")
+    font "fonts/handwritten/SS Soapy Hands Regular.otf"
+    size 60
+    color gui.text_color
+
+style confirm_dark_button:
+    properties gui.button_properties("confirm_button")
+    hover_background Frame("gui/underline_dark.png")
+    
+style confirm_dark_button_text:
+    properties gui.text_properties("confirm_button")
+    font "fonts/handwritten/SS Soapy Hands Regular.otf"
+    size 60
+    color gui.text_color
 
 
 ## Skip indicator screen #######################################################

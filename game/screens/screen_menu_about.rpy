@@ -16,7 +16,10 @@ screen about():
 
         ## everything below this goes into the 'transclude' part of screen game_menu()
 
-        style_prefix "about"   
+        if gui.dark_mode:
+            style_prefix "about_dark"
+        else:
+            style_prefix "about"
 
         ## rotates menu contents
         transform:
@@ -67,7 +70,7 @@ screen about():
 
                         ## gui.about is usually set in options.rpy.
                         if gui.about:
-                            text "[gui.about!t]\n\n[gui.contributors!t]\n"
+                            text "[gui.about!t]\n\n[gui.contributors!t]\n\n[gui.credits!t]\n"                        
 
                         text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]\n") 
 
@@ -89,8 +92,16 @@ style about_label_text:
 
 style about_vscrollbar:
     xpos 45   
-    ypos -138
-    ymaximum 525
-    thumb "#c4b5a2" #scrollbar color or image
-    base_bar "#d7cfcc" #scrollbar background or image 
+    ypos -139
+    ymaximum 527
+    thumb Frame("gui/scrollbar/vthumb.png")
+    base_bar Frame("gui/scrollbar/vbar.png")
+    unscrollable "hide" #gui.unscrollable
+
+style about_dark_vscrollbar:
+    xpos 45   
+    ypos -139
+    ymaximum 527
+    thumb Frame("gui/scrollbar/vthumb_dark.png")
+    base_bar Frame("gui/scrollbar/vbar_dark.png")
     unscrollable "hide" #gui.unscrollable

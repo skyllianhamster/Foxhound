@@ -14,7 +14,10 @@ screen help():
 
         ## everything below this goes into the 'transclude' part of screen game_menu()
 
-        style_prefix "help"
+        if gui.dark_mode:
+            style_prefix "help_dark"
+        else:   
+            style_prefix "help"
 
         ## rotates menu contents
         transform:
@@ -36,20 +39,19 @@ screen help():
                 xanchor 0
                 yanchor 0
                 rotate_pad False
-                rotate -0.2
+                rotate -0.15
                 xpos 35
-                ypos 91 
+                ypos 147 
 
-                hbox:                
-                    # xpos 50
-                    # ypos 93
-                    spacing 15          
+                hbox:       
+                    style_prefix "help"
+                    spacing 5                           
                     
-                    textbutton _(" KEYBOARD     ") action SetScreenVariable("device", "keyboard") style "help_medium_button"
-                    textbutton _(" MOUSE    ") action SetScreenVariable("device", "mouse") style "help_short_button"
+                    textbutton _(" KEYBOARD    ") action SetScreenVariable("device", "keyboard")
+                    textbutton _(" MOUSE    ") action SetScreenVariable("device", "mouse")
 
-                    if GamepadExists():
-                        textbutton _(" GAMEPAD     ") action SetScreenVariable("device", "gamepad") style "help_medium_button"
+                    # if GamepadExists():
+                    #     textbutton _(" GAMEPAD    ") action SetScreenVariable("device", "gamepad")
 
             ## constrains the menu contents to a specific area of the page
             frame:       
@@ -90,13 +92,15 @@ screen help():
                             use keyboard_help
                         elif device == "mouse":
                             use mouse_help
-                        elif device == "gamepad":
-                            use gamepad_help
+                        # elif device == "gamepad":
+                        #     use gamepad_help
 
                         null height (4 * gui.pref_spacing)
 
 ## shown if the KEYBOARD tab is clicked
 screen keyboard_help():
+
+    style_prefix "help"
 
     hbox:
         label _("Enter")
@@ -150,6 +154,8 @@ screen keyboard_help():
 ## shown if the MOUSE tab is clicked
 screen mouse_help():
 
+    style_prefix "help"
+
     hbox:
         label _("Left Click")
         text _("Advances dialogue and activates the interface.")
@@ -173,12 +179,14 @@ screen mouse_help():
 ## shown if the GAMEPAD tab is clicked
 screen gamepad_help():
 
+    style_prefix "help"
+
     hbox:
-        label _("Right Trigger\nA/Bottom Button")
+        label _("RT\nA/Bottom Button")
         text _("Advances dialogue and activates the interface.")
 
     hbox:
-        label _("Left Trigger\nLeft Shoulder")
+        label _("LT\nLeft Shoulder")
         text _("Rolls back to earlier dialogue.")
 
     hbox:
@@ -197,7 +205,12 @@ screen gamepad_help():
         label _("Y/Top Button")
         text _("Hides the user interface.")
 
-    textbutton _("Calibrate") action GamepadCalibrate() style "help_calibrate_button"
+    textbutton _("Calibrate"): 
+        if gui.dark_mode:
+            style "help_calibrate_dark_button"
+        else:
+            style "help_calibrate_button"
+        action GamepadCalibrate() 
 
 
 style help_button is gui_button
@@ -208,65 +221,50 @@ style help_text is gui_text
 
 style help_vscrollbar:
     xpos 90   
-    ypos -211
-    ymaximum 525
-    thumb "#c4b5a2" #scrollbar color or image
-    base_bar "#d7cfcc" #scrollbar background or image 
+    ypos -212
+    ymaximum 527
+    thumb Frame("gui/scrollbar/vthumb.png") # "#c4b5a2"
+    base_bar Frame("gui/scrollbar/vbar.png") # "#d7cfcc"
     unscrollable "hide" #gui.unscrollable
 
-# style help_button:
-#     size_group "help"
-#     properties gui.button_properties("help_button")
-#     xmargin 12
-#     idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png" )
-#     hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png") 
-#     selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png")
+style help_dark_vscrollbar:
+    xpos 90   
+    ypos -212
+    ymaximum 527
+    thumb Frame("gui/scrollbar/vthumb_dark.png") #"#363739"
+    base_bar Frame("gui/scrollbar/vbar_dark.png") #"#1b1b1c"
+    unscrollable "hide" #gui.unscrollable
 
-# style help_button_text:
-#     properties gui.text_properties("help_button")
-#     color "#111"
-#     hover_color gui.accent_color    
-#     size 40
-#     yalign 1.0
-#     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+style help_button:
+    # size_group "help"
+    properties gui.button_properties("help_button")
+    yanchor 1.0
+    idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png", Borders(50,0,100,0))
+    hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png", Borders(50,0,100,0))
+    selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png", Borders(50,0,100,0))
 
-style help_short_button:
+
+style help_button_text:
     properties gui.text_properties("pref_button")
-    idle_background "gui/screen_menus/screen_menu_tab_short_idle.png"
-    hover_background "gui/screen_menus/screen_menu_tab_short_selected.png"
-    selected_background "gui/screen_menus/screen_menu_tab_short_selected.png"
-
-style help_medium_button:
-    properties gui.text_properties("pref_button")
-    idle_background "gui/screen_menus/screen_menu_tab_medium_idle.png"
-    hover_background "gui/screen_menus/screen_menu_tab_medium_selected.png"
-    selected_background "gui/screen_menus/screen_menu_tab_medium_selected.png"
-
-style help_short_button_text:
-    properties gui.text_properties("pref_button")
-    color "#111"
+    color gui.text_color 
     hover_color gui.accent_color    
-    size 40
-    xpos 0
-    ypos 25
-    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
-
-style help_medium_button_text:
-    properties gui.text_properties("pref_button")
-    color "#111"
-    hover_color gui.accent_color    
-    size 40
-    xpos 0
-    ypos 25
-    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
-
+    size 40*gui.text_size_multiplier
+    font gui.text_font_header
 
 style help_calibrate_button:    
     hover_background Frame("gui/underline.png") 
     selected_background Frame("gui/underline.png")
 
 style help_calibrate_button_text:  
-    color "#111"
+    color gui.text_color 
+    hover_color gui.accent_color 
+
+style help_calibrate_dark_button:    
+    hover_background Frame("gui/underline_dark.png") 
+    selected_background Frame("gui/underline_dark.png")
+
+style help_calibrate_dark_button_text:  
+    color gui.text_color 
     hover_color gui.accent_color 
 
 style help_label:

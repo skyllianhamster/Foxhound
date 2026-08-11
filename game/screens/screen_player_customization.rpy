@@ -25,7 +25,7 @@ screen player_name_and_pronouns():
                 value VariableInputValue("player_name")
                 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'-^`ÄÅÇÉÑÖÜáàâäãåçéèêëíìîïñóòôöõúùûü´¨ÆØæøÀÃÕŒœÿŸﬁﬂÂÊÁËÈÍÎÏÌÓÔÒÚÛÙıˆ˜˘˙˚¸˝˛ˇ̀ ́ ̂ ̃ ̄ ̆ ̇ ̈ ̋ ̊ ̌ ̧ ̨  "
                 length 12                
-                color "#222222"                
+                color gui.text_color              
                 xalign 0.5
                 yalign 0.5
                 copypaste True
@@ -33,7 +33,8 @@ screen player_name_and_pronouns():
 
         ## pronoun selection
         frame:
-            style "empty"            
+            style "empty"    
+            background "#00000044"        
             xsize 280
             ysize 40
             xpos 540
@@ -44,7 +45,7 @@ screen player_name_and_pronouns():
                 yalign 0.5
 
                 ## arrow buttons cycle through pronoun array
-                textbutton "←":  
+                textbutton "◄":  
                     action CycleVariable("pronoun", ["they/them", "she/her", "he/him"], reverse=True)                                           
                     xalign 0.5
                     yalign 0.5
@@ -155,6 +156,7 @@ screen player_name_and_pronouns_confirm():
                 
                 textbutton "[player_name!u],\n    [pronoun!u]":
                     text_style "text_customization_confirm"
+                    text_size 40
                     background Frame("gui/circled_question.png", xsize=250, ysize=150, xalign=0.5, yalign=0.5)
                     xalign 0.5
 
@@ -183,11 +185,12 @@ screen player_name_and_pronouns_confirm():
 
 ### Define button and text colors
 style button_customization:
-    font gui.text_font_dialogue
+    font "DejaVuSans.ttf" # gui.text_font_dialogue
     idle_color "#888888"
     hover_color "#f00"
-    selected_color "#222222"        
-    size 27
+    selected_color gui.text_color       
+    size 36
+    ypos -8
 
 style text_customization:
     font gui.text_font_typewriter
@@ -201,10 +204,11 @@ style button_nav:
 
 style text_customization_confirm:
     font gui.text_font_handwritten
+    color gui.text_color 
     size 36
 
 style button_customization_confirm:    
     font gui.text_font_handwritten
-    idle_color "#555555"
-    hover_color "#222222"
+    idle_color gui.text_color 
+    hover_color gui.text_color 
     size 36

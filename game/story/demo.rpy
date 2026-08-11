@@ -264,7 +264,7 @@ label demo_crimescene:
 
     window show
     vi "What's a Ferros apprenta doing in a run-down Entresol apartment?"
-    caitlyn "Quite often... things outlawed by the Academy."
+    caitlyn "Quite often things outlawed by the Academy."
     window hide
 
     $ textbox_type = "cinematic"

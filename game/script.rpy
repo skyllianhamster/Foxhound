@@ -12,6 +12,8 @@ style splashscreen_text:
 
 label splashscreen:
 
+    play music bgm_main_menu
+
     scene black
 
     ### Legal Jibber Jabber
@@ -38,7 +40,9 @@ label splashscreen:
     return 
 
 ### The game starts here. ###############################################
-label start:    
+label start:  
+
+    play music bgm_main_menu  
 
     ## store viewport x/y values to prevent jumping back up a scrollable page
     $ y_adj = ui.adjustment() 

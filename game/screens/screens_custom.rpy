@@ -12,12 +12,19 @@ init -1:
             id "window"
 
             ### changes textbox design
+            ### style in screens.rpy under "window" and "namebox"
             if textbox_type == "cinematic":
-                left_margin -193
-                bottom_margin -100
+                xalign 0.5
+                yalign 1.0                
                 left_padding -80
                 right_padding 100
                 background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
+            elif textbox_type == "dialogue": # the default textbox style           
+                if gui.dark_mode:
+                    background Image("gui/textbox_dark.png")
+                else:
+                    background Image("gui/textbox.png")
+
 
             if who is not None:
 
@@ -26,7 +33,12 @@ init -1:
 
                     ### changes namebox design based on textbox type
                     if textbox_type == "cinematic":
-                        background Image("gui/namebox_cinematic.png", xalign=0.5, yalign=1.0)
+                        background Image("gui/namebox_cinematic.png")
+                    elif textbox_type == "dialogue":    
+                        if gui.dark_mode:
+                            background Image("gui/namebox_dark.png")
+                        else:
+                            background Image("gui/namebox.png")
 
                     style "namebox"
                     text who id "who"

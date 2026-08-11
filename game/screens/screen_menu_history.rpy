@@ -50,12 +50,13 @@ screen history():
                 bottom_padding 20
                 
                 ## the scrollable area
-                vpgrid:                    
+                vpgrid id "vp_history":
+                             
                     cols 1
                     yinitial 1.0
                     xalign 0
                     yalign 0
-                    scrollbars "vertical"
+                    # scrollbars "vertical"
                     mousewheel True
                     draggable True
                     pagekeys True
@@ -86,7 +87,13 @@ screen history():
                                 substitute False
 
                     if not _history_list:
-                        label _("The dialogue history is empty.")
+                        label _("The dialogue history is empty.")                
+
+                vbar value YScrollValue("vp_history"):
+                    if gui.dark_mode:
+                        style "history_dark_vscrollbar"
+                    else:
+                        style "history_vscrollbar"     
 
 
 ## This determines what tags are allowed to be displayed on the history screen.
@@ -139,9 +146,19 @@ style history_label_text:
     xalign 0.5
 
 style history_vscrollbar:
-    xpos 45   
-    ypos -138
-    ymaximum 525
-    thumb "#c4b5a2" #scrollbar color or image
-    base_bar "#d7cfcc" #scrollbar background or image 
+    xpos 795
+    ypos -139
+    ymaximum 527
+    thumb Frame("gui/scrollbar/vthumb.png")
+    base_bar Frame("gui/scrollbar/vbar.png")
     unscrollable "hide" #gui.unscrollable
+
+style history_dark_vscrollbar:
+    xpos 795
+    ypos -139
+    ymaximum 527
+    thumb Frame("gui/scrollbar/vthumb_dark.png")
+    base_bar Frame("gui/scrollbar/vbar_dark.png")
+    unscrollable "hide" #gui.unscrollable
+
+    

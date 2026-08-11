@@ -479,43 +479,43 @@ translate None strings:
 
     # renpy/common/00gui.rpy:449
     old "Are you sure you want to delete this save?"
-    new "ARE YOU SURE YOU WANT TO DELETE THIS SAVE?"
+    new "Are you sure you want to delete this save?"
 
     # renpy/common/00gui.rpy:450
     old "Are you sure you want to overwrite your save?"
-    new "ARE YOU SURE YOU WANT TO OVERWRITE YOUR SAVE?"
+    new "Are you sure you want to overwrite your save?"
 
     # renpy/common/00gui.rpy:451
     old "Loading will lose unsaved progress.\nAre you sure you want to do this?"
-    new "LOADING WILL LOSE UNSAVED PROGRESS. CONTINUE?"
+    new "Loading will lose unsaved progress. Continue?"
 
     # renpy/common/00gui.rpy:452
     old "Are you sure you want to quit?"
-    new "ARE YOU SURE YOU WANT TO QUIT TO DESKTOP?"
+    new "Are you sure you want to quit to desktop?"
 
     # renpy/common/00gui.rpy:453
     old "Are you sure you want to return to the main menu?\nThis will lose unsaved progress."
-    new "RETURN TO THE MAIN MENU? THIS WILL LOSE UNSAVED PROGRESS."    
+    new "Return to the Main Menu? This will lose unsaved progress."    
 
     # renpy/common/00gui.rpy:454
     old "Are you sure you want to continue where you left off?"
-    new "ARE YOU SURE YOU WANT TO CONTINUE WHERE YOU LEFT OFF?"
+    new "Are you sure you want to continue where you left off?"
 
     # renpy/common/00gui.rpy:455
     old "Are you sure you want to end the replay?"
-    new "ARE YOU SURE YOU WANT TO END THE REPLAY?"
+    new "Are you sure you want to end the replay?"
 
     # renpy/common/00gui.rpy:456
     old "Are you sure you want to begin skipping?"
-    new "ARE YOU SURE YOU WANT TO BEGIN SKIPPING?"
+    new "Are you sure you want to begin skipping?"
 
     # renpy/common/00gui.rpy:457
     old "Are you sure you want to skip to the next choice?"
-    new "ARE YOU SURE YOU WANT TO SKIP TO THE NEXT CHOICE?"
+    new "Are you sure you want to skip to the next choice?"
 
     # renpy/common/00gui.rpy:458
     old "Are you sure you want to skip unseen dialogue to the next choice?"
-    new "ARE YOU SURE YOU WANT TO SKIP UNSEEN DIALOGUE?"
+    new "Are you sure you want to skip unseen dialogue?"
 
     # renpy/common/00gui.rpy:459
     old "This save was created on a different device. Maliciously constructed save files can harm your computer. Do you trust this save's creator and everyone who could have changed the file?"

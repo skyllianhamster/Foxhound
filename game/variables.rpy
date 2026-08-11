@@ -67,7 +67,7 @@ default item_data = {
 ## actual list of items in player's inventory
 ## append with: call add_to_inventory("item_key")
 ## item_key must be the filename without the _idle.png and _hover.png
-## e.g. call add_to_inventory("item_demo_keys") references item_demo_keys_idle.png
+## e.g. call add_to_inventory("item_demo_keys") references item_demo_keys.png
 ## and connects it with its data in item_data 
 default inventory = []
 

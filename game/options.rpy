@@ -24,6 +24,9 @@ define gui.show_name = False
 
 define config.version = "1.0"
 
+## Splash screen to Main Menu transition
+
+define config.end_splash_transition = Dissolve(2.0)
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
@@ -51,19 +54,23 @@ define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
 
+define config.default_music_volume = 1.0
+define config.default_sfx_volume = 1.0
+define config.default_voice_volume = 1.0
 
 ## To allow the user to play a test sound on the sound or voice channel,
 ## uncomment a line below and use it to set a sample sound to play.
 
-# define config.sample_sound = "sample-sound.ogg"
-# define config.sample_voice = "sample-voice.ogg"
+#TODO: change sound clips
+define config.sample_sound = "sample-sound.ogg"
+define config.sample_voice = "sample-voice.ogg"
 
 
 ## Uncomment the following line to set an audio file that will be played while
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+define config.main_menu_music = audio.bgm_main_menu #"main-menu-theme.ogg"
 
 
 ## Transitions #################################################################

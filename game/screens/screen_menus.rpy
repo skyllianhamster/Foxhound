@@ -19,7 +19,10 @@ screen navigation():
         ypos 190 #215       
 
         vbox:
-            style_prefix "navigation"
+            if gui.dark_mode:
+                style_prefix "navigation_dark"
+            else:
+                style_prefix "navigation"
 
             xalign 0
             yalign 0
@@ -71,14 +74,18 @@ screen navigation():
         ypos 825 
 
         textbutton _("RETURN"):
-            style "return_button"
-            text_color "#111"
-            text_size 65
+            if gui.dark_mode:
+                style_prefix "navigation_dark"
+            else:
+                style_prefix "navigation"
             action Return()
 
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
+
+style navigation_dark_button is gui_button
+style navigation_dark_button_text is gui_button_text
 
 style navigation_button:
     size_group None #"navigation"
@@ -89,7 +96,19 @@ style navigation_button:
 style navigation_button_text:
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
     size 67
-    color "#111"
+    color gui.text_color 
+    properties gui.text_properties("navigation_button")
+
+style navigation_dark_button:
+    size_group None #"navigation"
+    properties gui.button_properties("navigation_button")
+    hover_background Frame("gui/underline_dark.png")
+    selected_background Frame("gui/underline_dark.png")
+
+style navigation_dark_button_text:
+    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
+    size 67
+    color gui.text_color 
     properties gui.text_properties("navigation_button")
 
 
@@ -115,6 +134,14 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     ## menu background design
     frame:
+        if gui.dark_mode:
+            background Frame("gui/screen_menus/screen_menu_bg_dark.png")
+            if not gui.reduce_clutter:
+                add "gui/screen_menus/screen_menu_crest_dark.png"
+        else:
+            background Frame("gui/screen_menus/screen_menu_bg.png")
+            if not gui.reduce_clutter:
+                add "gui/screen_menus/screen_menu_crest.png"
         style "game_menu_outer_frame"
 
         ## changes background depending on the menu screen
@@ -160,14 +187,10 @@ style game_menu_scrollbar is gui_vscrollbar
 style game_menu_label is gui_label
 style game_menu_label_text is gui_label_text
 
-style return_button is navigation_button
-style return_button_text is navigation_button_text
-
 style game_menu_outer_frame:
     xsize 1920
     ysize 1080
-    background Frame("gui/screen_menus/screen_menu_bg.png")
-    # background "gui/overlay/game_menu.png"
+    # background Frame("gui/screen_menus/screen_menu_bg.png")
 
 style game_menu_navigation_frame:
     xsize 960 # 420

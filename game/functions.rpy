@@ -359,7 +359,53 @@ label calculate_dc(required_skill_value, player_skill_value): ### TODO: add dc m
         $ dc = 0   
     return  
     
+### SAVE AND LOAD PERSISTENT DATA ###########################
+### USAGE: save and retrive persistent data displayed in the save and load screens
+### Display: background or name to used in the FileName (name will only be used in case we don't have the background)
+### Playtime: how much time the player spent at that specific save
+##################################################
+init python:
+    # Sets and saves persistent data specific to each slot about adulthood_background, player name and playtime_seconds
+    def save_custom_metadata(metadata):
+        metadata["adulthood_background"] = adulthood_background
+        metadata["player_name"] = player_name
+        metadata["playtime_seconds"] = playtime_seconds
+    
+    config.save_json_callbacks.append(save_custom_metadata)
 
+    # Verifies if the slot has a loadable file or if it's empty
+    # then checks and returns the metadata saved in adulthood_bg and player_name to be used in FileName
+    # Added the player_name in case the save doesn't have the background info yet
+    def get_slot_display_name(slot):
+        if not FileLoadable(slot):
+            return ""
+
+        bg = FileJson(slot, "adulthood_background")
+        if bg:
+            return str(bg).capitalize()
+
+        player_name = FileJson(slot, "player_name")
+        if player_name:
+            return str(player_name).capitalize()
+
+        return ""
+    
+    # Turns seconds into hours and minutes so we can display properly in the screen
+    def format_playtime(seconds):
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+
+        if hours:
+            return _("{hours} hour(s) {minutes} minutes").format(hours=hours, minutes=minutes)
+        
+        return _("{minutes} minutes" if minutes else "0 minutes").format(minutes=minutes)
+    
+    if "playtime_counter" not in config.overlay_screens:
+        config.overlay_screens.append("playtime_counter")
+
+# Loop that has a 1 second trigger to increment by 1 the variable playtime_seconds. The total is later used in format_playtime
+screen playtime_counter():
+    timer 1.0 repeat True action SetVariable("playtime_seconds", playtime_seconds + 1)
 
 # label run_skill_check:
 

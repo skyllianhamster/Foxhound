@@ -97,3 +97,6 @@ default cs00_keys_found = False
 
 default cs00_lockbox_taken = False
 
+
+### LOAD/SAVE PLAYTIME #####################
+default playtime_seconds = 0

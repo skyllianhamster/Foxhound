@@ -365,7 +365,7 @@ define config.thumbnail_width = 384
 define config.thumbnail_height = 216
 
 ## The number of columns and rows in the grid of save slots.
-define gui.file_slot_cols = 3
+define gui.file_slot_cols = 1
 define gui.file_slot_rows = 2
 
 
@@ -400,7 +400,7 @@ define gui.pref_button_spacing = 0
 define gui.page_spacing = 0
 
 ## The spacing between file slots.
-define gui.slot_spacing = 15
+define gui.slot_spacing = 30
 
 ## The position of the main menu text.
 define gui.main_menu_text_xalign = 1.0

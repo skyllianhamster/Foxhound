@@ -1,6 +1,7 @@
 # files to ignore
 *.txt
 .vscode/
+.idea/
 art/
 *.rpymc
 *.rpyb
@@ -9,6 +10,7 @@ art/
 *.sai
 *.sai2
 *.save
+*.saves
 
 # # Byte-compiled / optimized / DLL files
 # __pycache__/

@@ -79,23 +79,41 @@ screen error_screen(error_msg):
 
     frame:
         style "empty"
-        background Frame("gui/screen_confirm/screen_confirm_frame.png")
+        if gui.dark_mode:
+            background Frame("gui/screen_confirm/screen_confirm_frame_dark.png")
+        else:
+            background Frame("gui/screen_confirm/screen_confirm_frame.png")
         xalign 0.5
         yalign 0.5
         xsize 684
         ysize 361
         padding (10, 5)
 
-        text "[error_msg!u]":
-            xalign 0.5
-            yalign 0.4
-            style "demo_button_colors"                           
+        text "[error_msg]" style "error_screen_text"                                       
 
-        textbutton "RETURN":
-            text_style "demo_button_colors"
-            xalign 0.5 
-            yalign 0.95
+        textbutton "Return":
+            style "error_screen_button"  
+            if gui.dark_mode:
+                hover_background Frame("gui/underline_dark.png")
+            else:
+                hover_background Frame("gui/underline.png")
             action [Call("clear_screens"), Return()]
+
+style error_screen_text is gui_text:
+    font gui.text_font_handwritten
+    xalign 0.5
+    yalign 0.4
+    size 50
+
+style error_screen_button is gui_button:
+    xalign 0.5 
+    yalign 0.95
+
+style error_screen_button_text is gui_button_text:
+    font gui.text_font_handwritten
+    color gui.text_color
+    hover_color gui.accent_color
+    size 50
 
 ### RETURN TO MAIN MENU BUTTON ######################################
 ### for testing purposes 

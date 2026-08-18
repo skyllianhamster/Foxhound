@@ -332,10 +332,12 @@ define gui.quick_button_text_selected_color = gui.accent_color
 ##
 ## Choice buttons are used in the in-game menus.
 
+define gui.choice_special_icon_size = 66
+
 define gui.choice_button_width = 1185
 define gui.choice_button_height = None
 define gui.choice_button_tile = False
-define gui.choice_button_borders = Borders(150, 8, 150, 8)
+define gui.choice_button_borders = Borders(175, 25, 175, 25)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
@@ -365,7 +367,7 @@ define config.thumbnail_width = 384
 define config.thumbnail_height = 216
 
 ## The number of columns and rows in the grid of save slots.
-define gui.file_slot_cols = 3
+define gui.file_slot_cols = 1
 define gui.file_slot_rows = 2
 
 
@@ -385,7 +387,7 @@ define gui.skip_ypos = 15
 define gui.notify_ypos = 68
 
 ## The spacing between menu choices.
-define gui.choice_spacing = 33
+define gui.choice_spacing = 5
 
 ## Buttons in the navigation section of the main and game menus.
 define gui.navigation_spacing = 6
@@ -400,7 +402,7 @@ define gui.pref_button_spacing = 0
 define gui.page_spacing = 0
 
 ## The spacing between file slots.
-define gui.slot_spacing = 15
+define gui.slot_spacing = 30
 
 ## The position of the main menu text.
 define gui.main_menu_text_xalign = 1.0

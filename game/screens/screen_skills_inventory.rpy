@@ -10,7 +10,7 @@ screen skills_and_inventory_button:
         xalign 0.95
         yalign 0.07
         idle "gui/screen_skills/screen_skills_closed_idle.png"
-        hover "gui/screen_skills/screen_skills_closed_hover.png"       
+        hover "gui/screen_skills/screen_skills_closed_hover.png"  
         action ShowMenu("skills_and_inventory")
 
 ### SKILLS & INVENTORY SCREEN #######################################
@@ -18,6 +18,7 @@ screen skills_and_inventory_button:
 #####################################################################
     
 screen skills_and_inventory:    
+    zorder 10
 
     ### skills and inventory screen background
     frame:
@@ -499,6 +500,7 @@ style skills_header_frame is empty:
 
 style skill_tooltip_text:
     color '#eee'  
+    # bold True
     font gui.text_font_typewriter
     size 26*gui.text_size_multiplier 
     xanchor 0.5

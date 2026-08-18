@@ -62,12 +62,12 @@ label demo_dialogue:
             vi "You do lots of fighting, then?"        
             menu:
                 extend " "
-                "That's where the scars come from. (WAR +2, VIG +2)":
+                "That's where the scars come from. (WAR +2, VIG +2)" (special=soldier): 
                     call set_initial_skill_points('soldier')
                     call set_adulthood_background('soldier')
                     "Vi grins and nods with approval."
                     vi "That makes two of us."
-                "I'm better with a bird's eye view. (WAR +2, SCH +1, VIG +1)":
+                "I'm better with a bird's eye view. (WAR +2, SCH +1, VIG +1)" (special=strategist):
                     call set_initial_skill_points('strategist')
                     call set_adulthood_background('strategist')
                     vi "Cait-- I mean, the Sheriff'll appreciate having someone else to bounce ideas off of."
@@ -75,11 +75,11 @@ label demo_dialogue:
             vi "Ugh, politicians."
             menu:
                 extend " "
-                "Not exactly, but let's just say I'm pretty good at getting what I want. (CHA +2, SUR +1, VIG +1)":
+                "Not exactly, but let's just say I'm pretty good at getting what I want. (CHA +2, SUR +1, VIG +1)" (special=deceiver):
                     call set_initial_skill_points('deceiver')
                     call set_adulthood_background('deceiver')
                     vi "That can come in handy."
-                "Talking often is the path of least resistance. (CHA +2, WAR +1, SCH +1)":
+                "Talking often is the path of least resistance. (CHA +2, WAR +1, SCH +1)" (special=diplomat):
                     call set_initial_skill_points('diplomat')
                     call set_adulthood_background('diplomat')
                     vi "Debatable."
@@ -87,11 +87,11 @@ label demo_dialogue:
             vi "Yeah? What kind?"
             menu:
                 extend " "
-                "Theory and research. (SCH +2, CHA +1, SUR +1)":
+                "Theory and research. (SCH +2, CHA +1, SUR +1)" (special=scientist):
                     call set_initial_skill_points('scientist')
                     call set_adulthood_background('scientist')
                     vi "We could use more people in R&D and analysis."
-                "Schematics and application. (SCH +2, VIG +2)":
+                "Schematics and application. (SCH +2, VIG +2)" (special=craftsman):
                     call set_initial_skill_points('craftsman')
                     call set_adulthood_background('craftsman')
                     vi "Nice, Chief Zevi could use a hand if you can work Hextech."
@@ -99,11 +99,11 @@ label demo_dialogue:
             vi "Depends how you can be useful."
             menu:
                 extend " "
-                "People often don't notice me. (SUR +2, WAR +1, CHA +1)":
+                "People often don't notice me. (SUR +2, WAR +1, CHA +1)" (special=shadow):
                     call set_initial_skill_points('shadow')
                     call set_adulthood_background('shadow')
                     vi "Best way to stay alive."
-                "I notice people. A lot. And things about them. (SUR +2, CHA +1, VIG +1)":
+                "I notice people. A lot. And things about them. (SUR +2, CHA +1, VIG +1)" (special=streetrat):
                     call set_initial_skill_points('streetrat')
                     call set_adulthood_background('streetrat')
                     vi "That makes you both reliable and dangerous."

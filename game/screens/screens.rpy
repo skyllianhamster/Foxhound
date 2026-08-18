@@ -179,6 +179,7 @@ style say_label:
     ypos gui.name_ypos
     # yalign gui.name_yalign
 
+### TODO: see if the text anchor can be changed to top left (xanchor 0.0, yanchor 0.0)
 #position of text within dialogue textbox
 style say_dialogue:
     properties gui.text_properties("dialogue")
@@ -251,6 +252,7 @@ screen quick_menu():
             textbutton _("Q.Save") action QuickSave()
             textbutton _("Q.Load") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("DevTools") action Show('dev_tools')
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -268,6 +270,7 @@ style quick_button:
 
 style quick_button_text:
     properties gui.text_properties("quick_button")
+    idle_color "#fff"
 
 ################################################################################
 ## Additional screens

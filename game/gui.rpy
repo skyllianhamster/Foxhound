@@ -321,6 +321,10 @@ define gui.quick_button_text_size = 21
 define gui.quick_button_text_idle_color = gui.idle_small_color
 define gui.quick_button_text_selected_color = gui.accent_color
 
+define gui.quick_button_idle_size = 60
+define gui.quick_button_hover_size = 63
+define gui.quick_button_insensitive_alpha = 0.4
+
 ## You can also add your own customizations, by adding properly-named variables.
 ## For example, you can uncomment the following line to set the width of a
 ## navigation button.

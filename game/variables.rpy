@@ -30,7 +30,7 @@ default warfare = 1
 default charisma = 1
 default scholarship = 1
 default survival = 1
-default vigor = 1
+default vigor = 1            
 
 default warfare_dc_modifier = 0
 default charisma_dc_modifier = 0
@@ -117,14 +117,48 @@ default item_name = ""
 default item_description = ""
 default item_zoom = "gui/screen_skills/items/item_zoom.png" # icon location + filename (no selected item shows blank png)
 
-## dictionary of all possible items that can be picked up
-## format:  "item_key" : [ "item_name", "item_description" ]
-## access with: [item_data[inventory[i]][0]] for item_name and so on in a loop where i is a counter
-default item_data = { 
-    "item_demo_keys": ["KEYS", "A set of three keys: brass, iron, and steel."],
-    "item_demo_note": ["NOTE", "A note signed by \"C\"."],
-    "item_demo_rods": ["ALUMINUM RODS", "From Cadwalder Foundry."]
-    }
+
+init python:
+    class Item:
+        def __init__(self, key, name, description, icon, icon_closeup):
+            self.key = key
+            self.name = name
+            self.description = description
+            self.icon = icon
+            self.icon_closeup = icon_closeup
+
+default no_item = Item("", "", "", "", "gui/screen_skills/items/item_zoom.png")
+default demo_keys = Item(
+    "item_demo_keys", 
+    "Keys", 
+    "A set of three keys: brass, iron, and steel.",
+    "gui/screen_skills/items/item_demo_keys.png",
+    "gui/screen_skills/items/item_demo_keys_zoom.png"
+    )
+default demo_note = Item(
+    "item_demo_note", 
+    "Note", 
+    "A note signed by \"C\".",
+    "gui/screen_skills/items/item_demo_note.png",
+    "gui/screen_skills/items/item_demo_note_zoom.png"
+    )
+default demo_rods = Item(
+    "item_demo_rods", 
+    "Aluminum Rods", 
+    "From Cadwalder Foundry.",
+    "gui/screen_skills/items/item_demo_rods.png",
+    "gui/screen_skills/items/item_demo_rods_zoom.png"
+    )
+
+
+# ## dictionary of all possible items that can be picked up
+# ## format:  "item_key" : [ "item_name", "item_description" ]
+# ## access with: [item_data[inventory[i]][0]] for item_name and so on in a loop where i is a counter
+# default item_data = { 
+#     "item_demo_keys": ["KEYS", "A set of three keys: brass, iron, and steel."],
+#     "item_demo_note": ["NOTE", "A note signed by \"C\"."],
+#     "item_demo_rods": ["ALUMINUM RODS", "From Cadwalder Foundry."]
+#     }
 
 ## actual list of items in player's inventory
 ## append with: call add_to_inventory("item_key")

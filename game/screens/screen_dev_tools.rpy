@@ -47,156 +47,238 @@ screen dev_tools:
                         
             vbar value YScrollValue("vp_dev_tools")
 
-screen dev_tools_player: 
+screen dev_tools_player:   
+    style_prefix "dev_tools_var"
 
-    label "--- PLAYER VARIABLES ---"   
-    hbox:        
-        text "player_name" style "dev_tools_variable_name"
-        text " : [player_name]" style "dev_tools_variable_value"
+    label "--- PLAYER VARIABLES ---"  
+
+    hbox:    
+        frame:     
+            text "player_name" 
+        frame: 
+            text " : [player_name]" 
     hbox:
-        text "pronoun" style "dev_tools_variable_name"
-        text " : [pronoun]" style "dev_tools_variable_value"
+        frame: 
+            text "pronoun" 
+        frame: 
+            text " : [pronoun]" 
 
     null height 20
 
     label "--- BACKGROUND VARIABLES ---"   
+    hbox:        
+        frame:            
+            text "adulthood_ background" 
+        frame:            
+            text " : [adulthood_background]"
     hbox:
-        text "adulthood_background"
-        text " : [adulthood_background]" style "dev_tools_variable_value"
+        frame:
+            text "childhood_ background"
+        frame:    
+            text " : [childhood_background]" 
     hbox:
-        text "childhood_background"
-        text " : [childhood_background]" style "dev_tools_variable_value"
+        frame:
+            text "adulthood_ background_ description"
+        frame:
+            text " : [adulthood_background_description]" 
     hbox:
-        text "adulthood_background_\ndescription"
-        text " : [adulthood_background_description]" style "dev_tools_variable_value"
+        frame:
+            text "childhood_ background_ description"
+        frame:
+            text " : [childhood_background_description]" 
     hbox:
-        text "childhood_background_\ndescription"
-        text " : [childhood_background_description]" style "dev_tools_variable_value"
-    hbox:
-        text "childhood_background_\ndescription_add"
-        text " : [childhood_background_description_add]" style "dev_tools_variable_value"
+        frame:
+            text "childhood_ background_ description_add"
+        frame:
+            text " : [childhood_background_description_add]" 
     
     null height 20
 
     label "--- SKILL VARIABLES ---"   
     hbox:
-        text "warfare"
-        text " : [warfare]" style "dev_tools_variable_value"
+        frame:
+            text "warfare"
+        frame:
+            text " : [warfare]" 
     hbox:
-        text "charisma"
-        text " : [charisma]" style "dev_tools_variable_value"
+        frame:
+            text "charisma"
+        frame:
+            text " : [charisma]" 
     hbox:
-        text "scholarship"
-        text " : [scholarship]" style "dev_tools_variable_value"
+        frame:
+            text "scholarship"
+        frame:
+            text " : [scholarship]" 
     hbox:
-        text "survival"
-        text " : [survival]" style "dev_tools_variable_value"
+        frame:
+            text "survival"
+        frame:
+            text " : [survival]" 
     hbox:
-        text "vigor"
-        text " : [vigor]" style "dev_tools_variable_value"
+        frame:
+            text "vigor"
+        frame:
+            text " : [vigor]" 
     hbox:
-        text "warfare_dc_modifier"
-        text " : [warfare_dc_modifier]" style "dev_tools_variable_value"
+        frame:
+            text "warfare_dc_modifier"
+        frame:
+            text " : [warfare_dc_modifier]" 
     hbox:
-        text "charisma_dc_modifier"
-        text " : [charisma_dc_modifier]" style "dev_tools_variable_value"
+        frame:
+            text "charisma_dc_modifier"
+        frame:
+            text " : [charisma_dc_modifier]" 
     hbox:
-        text "scholarship_dc_modifier"
-        text " : [scholarship_dc_modifier]" style "dev_tools_variable_value"
+        frame:
+            text "scholarship_dc_modifier"
+        frame:
+            text " : [scholarship_dc_modifier]" 
     hbox:
-        text "survival_dc_modifier"
-        text " : [survival_dc_modifier]" style "dev_tools_variable_value"
+        frame:
+            text "survival_dc_modifier"
+        frame:
+            text " : [survival_dc_modifier]" 
     hbox:
-        text "vigor_dc_modifier"
-        text " : [vigor_dc_modifier]" style "dev_tools_variable_value"      
+        frame:
+            text "vigor_dc_modifier"
+        frame:
+            text " : [vigor_dc_modifier]"       
     
     null height 20
 
     label "--- INVENTORY VARIABLES ---"   
     hbox: 
-        text "item_name"
-        text " : [item_name]" style "dev_tools_variable_value"
+        frame:
+            text "item_name"
+        frame:
+            text " : [item_name]" 
     hbox:
-        text "item_description"
-        text " : [item_description]" style "dev_tools_variable_value"
+        frame:
+            text "item_description"
+        frame:
+            text " : [item_description]" 
     hbox:
-        text "item_zoom"
-        text " : [item_zoom]" style "dev_tools_variable_value"
+        frame:
+            text "item_zoom"
+        frame:
+            text " : [item_zoom]"
+
+    $ inventory_text = ""
+
+    for i in inventory:
+        $ inventory_text = i.key + ", " + inventory_text
+
     hbox:   
-        text "inventory"
-        text " : [inventory]" style "dev_tools_variable_value"
+        frame:
+            text "inventory"
+        frame:
+            text " : [inventory_text]"
+            
+
+            
     
     null height 20
 
 screen dev_tools_gameplay:    
+    style_prefix "dev_tools_var"
 
     label "--- DICE ROLL VARIABLES ---"   
     hbox:
-        text "skill_check_type"        
-        text " : [skill_check_type]" style "dev_tools_variable_value"
+        frame:
+            text "skill_check_type" 
+        frame:       
+            text " : [skill_check_type]" 
     hbox:
-        text "skill_check_success"
-        text " : [skill_check_success]" style "dev_tools_variable_value"
+        frame:
+            text "skill_check_success"
+        frame:
+            text " : [skill_check_success]" 
     hbox:
-        text "dc"
-        text " : [dc]" style "dev_tools_variable_value"
+        frame:
+            text "dc"
+        frame:
+            text " : [dc]" 
     hbox:
-        text "roll"
-        text " : [roll]" style "dev_tools_variable_value"
+        frame:
+            text "roll"
+        frame:
+            text " : [roll]" 
 
     label "--- CRIME SCENE 00 (DEMO) VARIABLES ---"   
     hbox:
-        text "cs00_done"        
-        text " : [cs00_done]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_done"
+        frame:    
+            text " : [cs00_done]" 
     hbox:
-        text "cs00_window_found"
-        text " : [cs00_window_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_window_found"
+        frame:
+            text " : [cs00_window_found]" 
     hbox:
-        text "cs00_paper_found"
-        text " : [cs00_paper_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_paper_found"
+        frame:
+            text " : [cs00_paper_found]"
     hbox:
-        text "cs00_rods_found"
-        text " : [cs00_rods_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_rods_found"
+        frame:
+            text " : [cs00_rods_found]"
     hbox:
-        text "cs00_lockbox_found"
-        text " : [cs00_lockbox_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_lockbox_found"
+        frame:
+            text " : [cs00_lockbox_found]"
     hbox:
-        text "cs00_device_found"
-        text " : [cs00_device_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_device_found"
+        frame:
+            text " : [cs00_device_found]"
     hbox:
-        text "cs00_shoes_found"
-        text " : [cs00_shoes_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_shoes_found"
+        frame:
+            text " : [cs00_shoes_found]"
     hbox:
-        text "cs00_keys_found"
-        text " : [cs00_keys_found]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_keys_found"
+        frame:
+            text " : [cs00_keys_found]"
     hbox:
-        text "cs00_lockbox_taken"
-        text " : [cs00_lockbox_taken]" style "dev_tools_variable_value"
+        frame:
+            text "cs00_lockbox_taken"
+        frame:
+            text " : [cs00_lockbox_taken]"
     
     null height 20
 
 screen dev_tools_game:    
+    style_prefix "dev_tools_var"
 
-    label "--- GAME VARIABLES ---"    
-    # vpgrid:
-    #     cols 2
-    #     spacing 5 
-    #     xmaximum 450
-    #     xfill True   
-    #     draggable False
-    #     mousewheel False  
+    label "--- GAME VARIABLES ---"     
     hbox:
-        text "forbidden_names"        
-        text " : [forbidden_names]" style "dev_tools_variable_value"
+        frame:
+            text "forbidden_names"      
+        frame:  
+            text " : [forbidden_names]"
     hbox:
-        text "textbox_type"
-        text " : [textbox_type]" style "dev_tools_variable_value"
+        frame:
+            text "textbox_type"
+        frame:
+            text " : [textbox_type]" 
     hbox:
-        text "exitloop"
-        text " : [exitloop]" style "dev_tools_variable_value"
+        frame:
+            text "exitloop"
+        frame:
+            text " : [exitloop]"
     hbox:
-        text "playtime_seconds"
-        text " : [playtime_seconds]" style "dev_tools_variable_value"
+        frame:
+            text "playtime_seconds"
+        frame:
+            text " : [playtime_seconds]"
     
     null height 20
 
@@ -215,8 +297,21 @@ style dev_tools_text is gui_text:
     color "#fff"
     size 22
 
-style dev_tools_label is gui_label
-style dev_tools_label_text is gui_label_text:
+style dev_tools_var_hbox is empty:
+    spacing 5
+    yfill False
+
+style dev_tools_var_frame is empty:
+    # background "#f004"
+    xsize 250
+
+style dev_tools_var_text is gui_text:
+    xsize 450
+    color "#fff"
+    size 22
+
+style dev_tools_var_label is gui_label
+style dev_tools_var_label_text is gui_label_text:
     color "#fff"
     size 27
     underline True
@@ -247,12 +342,3 @@ style dev_tools_close_button_text is gui_button_text:
     idle_color "#fff"
     hover_color "#0099ff"
 
-style dev_tools_variable_name is gui_text:
-    xsize 450
-    color "#fff"
-    size 22
-
-style dev_tools_variable_value is gui_text:
-    xsize 350
-    color "#6be"
-    size 22

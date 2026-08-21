@@ -305,45 +305,87 @@ screen skills_and_inventory:
                     xpos 100
                     ypos 100 
 
-                    if list == False: # no items in inventory
-                        default item_name = ""
-                        default item_description = ""
-                        default item_zoom = "gui/screen_skills/items/item_zoom.png"
-                    else: 
+
+                    if inventory == False:
+                        default item_name = no_item.name
+                        default item_description = no_item.name.description
+                        default item_zoom = no_item.icon_closeup
+                    else:
                         for i in inventory:
                             imagebutton: 
-                                idle "gui/screen_skills/items/"+i+".png"
+                                idle i.icon
                                 if gui.dark_mode:
                                     hover Composite(
                                         (130,130), 
                                         (0,0), "gui/screen_skills/items/item_hover_dark.png",
-                                        (0,0), "gui/screen_skills/items/"+i+".png",
+                                        (0,0), i.icon,
                                         (0,0), "gui/screen_skills/items/item_border_dark.png"
                                     )
                                     selected_idle Composite(
                                         (130,130), 
                                         (0,0), "gui/screen_skills/items/item_hover_dark.png",
-                                        (0,0), "gui/screen_skills/items/"+i+".png",
+                                        (0,0), i.icon,
                                         (0,0), "gui/screen_skills/items/item_border_dark.png"
                                     )
                                 else:
                                     hover Composite(
                                         (130,130), 
                                         (0,0), "gui/screen_skills/items/item_hover.png",
-                                        (0,0), "gui/screen_skills/items/"+i+".png",
+                                        (0,0), i.icon,
                                         (0,0), "gui/screen_skills/items/item_border.png"
                                     )
                                     selected_idle Composite(
                                         (130,130), 
                                         (0,0), "gui/screen_skills/items/item_hover.png",
-                                        (0,0), "gui/screen_skills/items/"+i+".png",
+                                        (0,0), i.icon,
                                         (0,0), "gui/screen_skills/items/item_border.png"
                                     )
                                 action [
-                                    SetVariable("item_name", item_data[i][0]),
-                                    SetVariable("item_description", item_data[i][1]),
-                                    SetVariable("item_zoom", "gui/screen_skills/items/"+i+"_zoom.png")
+                                    SetVariable("item_name", i.name),
+                                    SetVariable("item_description", i.description),
+                                    SetVariable("item_zoom", i.icon_closeup)
                                     ]         
+
+
+                    # if list == False: # no items in inventory
+                    #     default item_name = ""
+                    #     default item_description = ""
+                    #     default item_zoom = "gui/screen_skills/items/item_zoom.png"
+                    # else: 
+                    #     for i in inventory:
+                    #         imagebutton: 
+                    #             idle "gui/screen_skills/items/"+i+".png"
+                    #             if gui.dark_mode:
+                    #                 hover Composite(
+                    #                     (130,130), 
+                    #                     (0,0), "gui/screen_skills/items/item_hover_dark.png",
+                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
+                    #                     (0,0), "gui/screen_skills/items/item_border_dark.png"
+                    #                 )
+                    #                 selected_idle Composite(
+                    #                     (130,130), 
+                    #                     (0,0), "gui/screen_skills/items/item_hover_dark.png",
+                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
+                    #                     (0,0), "gui/screen_skills/items/item_border_dark.png"
+                    #                 )
+                    #             else:
+                    #                 hover Composite(
+                    #                     (130,130), 
+                    #                     (0,0), "gui/screen_skills/items/item_hover.png",
+                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
+                    #                     (0,0), "gui/screen_skills/items/item_border.png"
+                    #                 )
+                    #                 selected_idle Composite(
+                    #                     (130,130), 
+                    #                     (0,0), "gui/screen_skills/items/item_hover.png",
+                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
+                    #                     (0,0), "gui/screen_skills/items/item_border.png"
+                    #                 )
+                    #             action [
+                    #                 SetVariable("item_name", item_data[i][0]),
+                    #                 SetVariable("item_description", item_data[i][1]),
+                    #                 SetVariable("item_zoom", "gui/screen_skills/items/"+i+"_zoom.png")
+                    #                 ]         
 
                     # for i in range(1, 21):                    
 

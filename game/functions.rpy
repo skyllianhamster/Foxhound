@@ -33,8 +33,8 @@ label reset_skills_and_inventory():
     return
 
 ### add an item to the inventory
-label add_to_inventory(item_key):
-    $ inventory.append(item_key)
+label add_to_inventory(item):
+    $ inventory.append(item)
     return
 
 ### BACKGROUNDS ####################################################

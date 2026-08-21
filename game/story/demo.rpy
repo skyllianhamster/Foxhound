@@ -145,9 +145,13 @@ label demo_dialogue:
                     call set_initial_skill_points('streetrat')
                     call set_childhood_background('streetrat')
     
-    call add_to_inventory("item_demo_note")
-    call add_to_inventory("item_demo_rods")
-    call add_to_inventory("item_demo_keys")
+    # call add_to_inventory("item_demo_note")
+    # call add_to_inventory("item_demo_rods")
+    # call add_to_inventory("item_demo_keys")
+
+    call add_to_inventory(demo_note)
+    call add_to_inventory(demo_rods)
+    call add_to_inventory(demo_keys)
 
     """Click the skills button on the upper right to see the skills screen.
     

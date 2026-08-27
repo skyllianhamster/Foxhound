@@ -1,3 +1,9 @@
+################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
 ## History screen ##############################################################
 ##
 ## This is a screen that displays the dialogue history to the player. While
@@ -89,12 +95,7 @@ screen history():
                     if not _history_list:
                         label _("The dialogue history is empty.")                
 
-                vbar value YScrollValue("vp_history"):
-                    if gui.dark_mode:
-                        style "history_dark_vscrollbar"
-                    else:
-                        style "history_vscrollbar"     
-
+                vbar value YScrollValue("vp_history")
 
 ## This determines what tags are allowed to be displayed on the history screen.
 
@@ -116,7 +117,7 @@ style history_header:
 
 style history_window:
     xfill True
-    ysize 200 #gui.history_height
+    ysize gui.history_height
 
 style history_name:
     xpos gui.history_name_xpos
@@ -149,16 +150,7 @@ style history_vscrollbar:
     xpos 795
     ypos -139
     ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb.png")
-    base_bar Frame("gui/scrollbar/vbar.png")
-    unscrollable "hide" #gui.unscrollable
-
-style history_dark_vscrollbar:
-    xpos 795
-    ypos -139
-    ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb_dark.png")
-    base_bar Frame("gui/scrollbar/vbar_dark.png")
-    unscrollable "hide" #gui.unscrollable
-
+    thumb Frame("gui/scrollbar/vthumb_[persistent.theme].png")
+    base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
+    unscrollable gui.unscrollable
     

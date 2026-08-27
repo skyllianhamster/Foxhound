@@ -1,7 +1,8 @@
 ### Define variables here
 
-#define = constant variables
-#default = regular variables
+#define = constant variables - equivalent to using "init python:"
+#default = regular variables - equivalent to using "label labelName: $ variable = ..." - created right after the game starts or loads
+# default persistent - work differently from default statements - persistent data is loaded before init python blocks are run
 
 ### UI/UX ####################################
 
@@ -26,6 +27,7 @@ define forbidden_names = ["no", "caitlyn", "vi"]
 default textbox_type = "dialogue" #dialogue or cinematic
 
 ### PLAYER SKILLS #####################
+
 default warfare = 1
 default charisma = 1
 default scholarship = 1
@@ -49,65 +51,47 @@ default childhood_background_description_add = '' # situational if player select
 
 init python:
     class PlayerBackground:
-        def __init__(self, key, name, description, description2, light_icon, dark_icon):
+        def __init__(self, key, name, description, description2):
             self.key = key
             self.name = name
             self.description = description
             self.description2 = description2
-            self.light_icon = light_icon
-            self.dark_icon = dark_icon
 
 
-default no_bg = PlayerBackground("", "", "", "", "", "")
+default no_bg = PlayerBackground("", "", "", "")
 
 ##TODO: Narrative team - change background blurbs
 default soldier = PlayerBackground("soldier", "Soldier", 
     "War is a dance and the best dancers are rewarded witha continued existence.",
-    "Additional paragraph for the soldier background here.",
-    "gui/screen_skills/backgrounds/bg_soldier.png",
-    "gui/screen_skills/backgrounds/bg_soldier_dark.png"
+    "Additional paragraph for the soldier background here."
     )
 default strategist = PlayerBackground("strategist", "Strategist", 
     "Victory is won not only by sword or spear, but through understanding the enemy.",
-    "Additional paragraph for the strategist background here.",
-    "gui/screen_skills/backgrounds/bg_strategist.png",
-    "gui/screen_skills/backgrounds/bg_strategist_dark.png"
+    "Additional paragraph for the strategist background here."
     )
 default diplomat = PlayerBackground("diplomat", "Diplomat", 
     "The wolf may win wars, but the fox ensures they never have to happen.",
-    "Additional paragraph for the diplomat background here.",
-    "gui/screen_skills/backgrounds/bg_diplomat.png",
-    "gui/screen_skills/backgrounds/bg_diplomat_dark.png"
+    "Additional paragraph for the diplomat background here."
     )
 default deceiver = PlayerBackground("deceiver", "Deceiver", 
     "Perception is truth, and the truth is what people believe it to be.",
-    "Additional paragraph for the deceiver background here.",
-    "gui/screen_skills/backgrounds/bg_deceiver.png",
-    "gui/screen_skills/backgrounds/bg_deceiver_dark.png"
+    "Additional paragraph for the deceiver background here."
     )
 default scientist = PlayerBackground("scientist", "Scientist", 
     "Science can move in ways beyond the physical. Understanding this connection is vital to the security of our future.",
-    "Additional paragraph for the scientist background here.",
-    "gui/screen_skills/backgrounds/bg_scientist.png",
-    "gui/screen_skills/backgrounds/bg_scientist_dark.png"
+    "Additional paragraph for the scientist background here."
     )
 default craftsman = PlayerBackground("craftsman", "Craftsman", 
     "The legacy of Stanwick Padidly lives on in his students. Hextech and chemtech pave the way for the extraordinary.",
-    "Additional paragraph for the craftsman background here.",
-    "gui/screen_skills/backgrounds/bg_craftsman.png",
-    "gui/screen_skills/backgrounds/bg_craftsman_dark.png"
+    "Additional paragraph for the craftsman background here."
     )
 default shadow = PlayerBackground("shadow", "Shadow", 
     "The ignored, thousands strong. They are everywhere and see everything, but remain unseen to the world.",
-    "Additional paragraph for the shadow background here.",
-    "gui/screen_skills/backgrounds/bg_shadow.png",
-    "gui/screen_skills/backgrounds/bg_shadow_dark.png"
+    "Additional paragraph for the shadow background here."
     )
 default streetrat = PlayerBackground("streetrat", "Street Rat", 
     "Wares from the land, and wares from the sea; the best wares are the ones set free.",
-    "Additional paragraph for the street rat background here.",
-    "gui/screen_skills/backgrounds/bg_.png",
-    "gui/screen_skills/backgrounds/bg_streetrat_dark.png"
+    "Additional paragraph for the street rat background here."
     )
 
 ### INVENTORY #####################
@@ -115,7 +99,7 @@ default streetrat = PlayerBackground("streetrat", "Street Rat",
 ## stores and displays data of clicked items in the inventory
 default item_name = ""
 default item_description = ""
-default item_zoom = "gui/screen_skills/items/item_zoom.png" # icon location + filename (no selected item shows blank png)
+default item_zoom = "gui/transparent.png" #"gui/screen_skills/items/item_zoom.png" # icon location + filename (no selected item shows blank png)
 
 
 init python:
@@ -127,7 +111,7 @@ init python:
             self.icon = icon
             self.icon_closeup = icon_closeup
 
-default no_item = Item("", "", "", "", "gui/screen_skills/items/item_zoom.png")
+default no_item = Item("", "", "", "", "gui/transparent.png")
 default demo_keys = Item(
     "item_demo_keys", 
     "Keys", 

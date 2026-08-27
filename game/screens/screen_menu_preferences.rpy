@@ -1,3 +1,9 @@
+################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
 ## Preferences screen ##########################################################
 ##
 ## The preferences screen allows the player to configure the game to better suit
@@ -16,10 +22,7 @@ screen preferences():
 
         ## everything below this goes into the 'transclude' part of screen game_menu()
 
-        if gui.dark_mode:
-            style_prefix "pref_dark"
-        else:
-            style_prefix "pref"  
+        style_prefix "pref"  
 
         ## rotates menu contents
         transform:
@@ -99,19 +102,13 @@ screen game_prefs():
         if renpy.variant("pc") or renpy.variant("web"):
 
             vbox:
-                if gui.dark_mode:
-                    style_prefix "radio_dark"
-                else:
-                    style_prefix "radio"
+                style_prefix "radio"
                 label _("Display")
                 textbutton _("Window") action Preference("display", "window")
                 textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
         vbox:
-            if gui.dark_mode:
-                style_prefix "check_dark"
-            else:
-                style_prefix "check"            
+            style_prefix "check"            
             label _("Skip")
             textbutton _("Unseen Text") action Preference("skip", "toggle")
             textbutton _("After Choices") action Preference("after choices", "toggle")
@@ -133,16 +130,8 @@ screen game_prefs():
             hbox:     
                 ypos -8
                 text "    "
-                if gui.dark_mode:
-                    bar value FieldValue(persistent, "brig", 2., style="slider_dark_slider", offset=-1, min=-0.7, max=0.7)
-                else:
-                    bar value FieldValue(persistent, "brig", 2., style="slider_slider", offset=-1, min=-0.7, max=0.7)
-            textbutton "   Reset": 
-                if gui.dark_mode:
-                    style_prefix "slider_dark"
-                else:
-                    style_prefix "slider"
-                action SetField(persistent, "brig", 0)
+                bar value FieldValue(persistent, "brig", 2., style="slider_slider", offset=-1, min=-0.7, max=0.7)
+            textbutton "   Reset" action SetField(persistent, "brig", 0)
 
         vbox:
             ## Contrast setting
@@ -152,17 +141,9 @@ screen game_prefs():
                 label _("    [persistent.cont:.2f]") text_underline False
             hbox:
                 ypos -8         
-                text "    "    
-                if gui.dark_mode:
-                    bar value FieldValue(persistent, "cont", 2., style="slider_dark_slider", min=0.2, max=1.8)
-                else:
-                    bar value FieldValue(persistent, "cont", 2., style="slider_slider", min=0.2, max=1.8)
-            textbutton "   Reset":
-                if gui.dark_mode:
-                    style_prefix "slider_dark"
-                else:
-                    style_prefix "slider"
-                action SetField(persistent, "cont", 1)
+                text "    "  
+                bar value FieldValue(persistent, "cont", 2., style="slider_slider", min=0.2, max=1.8)
+            textbutton "   Reset" action SetField(persistent, "cont", 1)
 
         vbox:
             ## Text speed setting
@@ -173,16 +154,8 @@ screen game_prefs():
             hbox:
                 ypos -8 
                 text "    "
-                if gui.dark_mode:
-                    bar value Preference("text speed") style "slider_dark_slider"
-                else:
-                    bar value Preference("text speed") style "slider_slider"
-            textbutton "   Reset":
-                if gui.dark_mode:
-                    style_prefix "slider_dark"
-                else:
-                    style_prefix "slider"
-                action SetVariable("preferences.text_cps", 100)
+                bar value Preference("text speed")
+            textbutton "   Reset" action SetVariable("preferences.text_cps", 100)
                 
         vbox:
             ## Auto forward speed setting
@@ -193,16 +166,8 @@ screen game_prefs():
             hbox:
                 ypos -8
                 text "    "
-                if gui.dark_mode:
-                    bar value Preference("auto-forward time")  style "slider_dark_slider"
-                else:
-                    bar value Preference("auto-forward time")  style "slider_slider"
-            textbutton "   Reset":
-                if gui.dark_mode:
-                    style_prefix "slider_dark"
-                else:
-                    style_prefix "slider"
-                action SetVariable("preferences.afm_time", 15)    
+                bar value Preference("auto-forward time")
+            textbutton "   Reset" action SetVariable("preferences.afm_time", 15)    
         
         vbox:
             ## Global sound setting
@@ -213,16 +178,8 @@ screen game_prefs():
             hbox:
                 ypos -8
                 text "    "
-                if gui.dark_mode:
-                    bar value Preference("mixer main volume") style "slider_dark_slider"
-                else:
-                    bar value Preference("mixer main volume") style "slider_slider"
-            textbutton "   Reset":
-                if gui.dark_mode:
-                    style_prefix "slider_dark"
-                else:
-                    style_prefix "slider"
-                action Preference("mixer main volume", 1.0)    
+                bar value Preference("mixer main volume")
+            textbutton "   Reset" action Preference("mixer main volume", 1.0)    
 
         if config.has_music:
             vbox:
@@ -236,16 +193,8 @@ screen game_prefs():
                 hbox:
                     ypos -8
                     text "    "
-                    if gui.dark_mode:
-                        bar value Preference("music volume") style "slider_dark_slider"
-                    else:
-                        bar value Preference("music volume") style "slider_slider"
-                textbutton "   Reset":
-                    if gui.dark_mode:
-                        style_prefix "slider_dark"
-                    else:
-                        style_prefix "slider"
-                    action Preference("music volume", config.default_music_volume)             
+                    bar value Preference("music volume")
+                textbutton "   Reset" action Preference("music volume", config.default_music_volume)             
 
         if config.has_sound:
             vbox:
@@ -257,22 +206,14 @@ screen game_prefs():
                 hbox:
                     ypos -8
                     text "    "
-                    if gui.dark_mode:
-                        bar value Preference("sound volume") style "slider_dark_slider"
-                    else:
-                        bar value Preference("sound volume") style "slider_slider"
+                    bar value Preference("sound volume")
                 hbox:                    
                     xanchor 1.0
                     xpos 525
                     spacing 40
-                    if gui.dark_mode:
-                        style_prefix "slider_dark"
-                    else:
-                        style_prefix "slider"
                     if config.sample_sound:
                         textbutton _("   Test") action Play("sound", config.sample_sound)
-                    textbutton "   Reset":                        
-                        action Preference("sound volume", config.default_sfx_volume)                
+                    textbutton "   Reset" action Preference("sound volume", config.default_sfx_volume)                
 
 
         if config.has_voice:
@@ -285,37 +226,21 @@ screen game_prefs():
                 hbox:
                     ypos -8
                     text "    "
-                    if gui.dark_mode:
-                        bar value Preference("voice volume") style "slider_dark_slider"
-                    else:
-                        bar value Preference("voice volume") style "slider_slider"
+                    bar value Preference("voice volume")
                 hbox:
                     xanchor 1.0
                     xpos 525
                     spacing 40
-                    if gui.dark_mode:
-                        style_prefix "slider_dark"
-                    else:
-                        style_prefix "slider"
                     if config.sample_voice:
                         textbutton _("   Test") action Play("voice", config.sample_voice)
-                    textbutton "   Reset":
-                        if gui.dark_mode:
-                            style_prefix "slider_dark"
-                        else:
-                            style_prefix "slider"
-                        action Preference("voice volume", config.default_voice_volume)
+                    textbutton "   Reset" action Preference("voice volume", config.default_voice_volume)
 
         if config.has_music or config.has_sound or config.has_voice:
             null height gui.pref_spacing
 
             textbutton _("   Mute All"):
-                action Preference("all mute", "toggle")
-                if gui.dark_mode:
-                    style "mute_all_dark_button"
-                else:
-                    style "mute_all_button"
-
+                style "mute_all_button"
+                action Preference("all mute", "toggle") 
         
         null height (4 * gui.pref_spacing)
 
@@ -327,78 +252,73 @@ screen accessibility_prefs():
         xspacing 50         
     
         vbox:            
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
+            ## TODO: find a way to implement this without using conditional statements
             label _("Reduce visual clutter")
             # text "Remove some elements that may interfere with text readability"  
-            textbutton _("Off") action gui.SetPreference("reduce_clutter", False)
-            textbutton _("On") action gui.SetPreference("reduce_clutter", True)
+            textbutton _("Off") action SetVariable("persistent.reduce_clutter", False) # gui.SetPreference("reduce_clutter", False)
+            textbutton _("On") action SetVariable("persistent.reduce_clutter", True) # gui.SetPreference("reduce_clutter", True)
 
         vbox:         
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("High contrast text")
             # text "Force a solid background on all text elements (engine override)"
             textbutton _("Off") action Preference("high contrast text", "disable") #style_suffix "radio_button"
             textbutton _("On") action Preference("high contrast text", "enable") #style_suffix "radio_button"
 
         vbox:
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("Alt text")
             # text "Include alt text descriptions in between narrative elements"  
-            textbutton _("Off") action gui.SetPreference("alt_text", False)
-            textbutton _("On") action gui.SetPreference("alt_text", True)       
+            textbutton _("Off") action SetVariable("persistent.alt_text", False)
+            textbutton _("On") action SetVariable("persistent.alt_text", True)
 
         vbox:
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("Dark mode")
             # text "Invert color scheme"
             textbutton _("Off"): 
                 action [
-                    gui.SetPreference("dark_mode", False),
-                    gui.SetPreference("text_color", '#000'),
-                    gui.SetPreference("idle_color", '#555'),
-                    gui.SetPreference("accent_color", '#900')
+                    SetVariable("persistent.theme", "light"),
+                    SetVariable("persistent.namebox", "gui/namebox_light.png"),                    
+                    SetVariable("persistent.textbox", "gui/textbox_light.png"),
+                    
+                    gui.SetPreference("text_color", '#000', rebuild=False),
+                    gui.SetPreference("idle_color", '#555', rebuild=False),
+                    gui.SetPreference("accent_color", '#900')          
                 ]
 
             textbutton _("On"):
                 action [
-                    gui.SetPreference("dark_mode", True),
-                    gui.SetPreference("text_color", '#fff'),
-                    gui.SetPreference("idle_color", '#bbb'),
-                    gui.SetPreference("accent_color", '#90caf9')
+                    SetVariable("persistent.theme", "dark"),
+                    SetVariable("persistent.namebox", "gui/namebox_dark.png"),
+                    SetVariable("persistent.textbox", "gui/textbox_dark.png"),
+                    
+                    gui.SetPreference("text_color", '#fff', rebuild=False),
+                    gui.SetPreference("idle_color", '#bbb', rebuild=False),
+                    gui.SetPreference("accent_color", '#90caf9')             
                 ]
 
         vbox:
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("Font size")
             textbutton _("Regular"):
                 action [ 
+                    SetVariable("persistent.text_size_multiplier", 1),
                     gui.SetPreference("text_size_multiplier", 1), #changes text size
                     gui.SetPreference("name_ypos", 28), # adjusts name within namebox as text changes size
                     gui.SetPreference("dialogue_ypos", 75) # adjusts text w/in dialogue box as text changes size
                 ]
             textbutton _("Medium"): 
                 action [
+                    SetVariable("persistent.text_size_multiplier", 1.2),
                     gui.SetPreference("text_size_multiplier", 1.2),
                     gui.SetPreference("name_ypos", 25),
                     gui.SetPreference("dialogue_ypos", 60)
                 ]
             textbutton _("Large"): 
                 action [
+                    SetVariable("persistent.text_size_multiplier", 1.4),
                     gui.SetPreference("text_size_multiplier", 1.4),
                     gui.SetPreference("name_ypos", 21),
                     gui.SetPreference("dialogue_ypos", 55)
@@ -409,10 +329,7 @@ screen accessibility_prefs():
         xspacing 75
 
         vbox:            
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("Headers")                                  
             textbutton _("ARSENAL"):            
                 text_font "fonts/header/Arsenal-Regular.ttf"
@@ -422,10 +339,7 @@ screen accessibility_prefs():
                 action gui.SetPreference("font_header", "fonts/header/JosefinSans-VariableFont_wght.ttf")
 
         vbox:            
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("Handwritten")
             textbutton _("SS Soapy Hands"):
                 text_font "fonts/handwritten/SS Soapy Hands Medium.otf"
@@ -435,10 +349,7 @@ screen accessibility_prefs():
                 action gui.SetPreference("font_handwritten", "fonts/handwritten/PatrickHand-Regular.ttf")
 
         vbox:            
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+            style_prefix "radio"
             label _("Typewriter")
             textbutton _("Courier Prime"):
                 text_font "fonts/typewriter/CourierPrime-Regular.ttf"
@@ -447,11 +358,8 @@ screen accessibility_prefs():
                 text_font "fonts/typewriter/SpecialElite-Regular.ttf"
                 action gui.SetPreference("font_typewriter", "fonts/typewriter/SpecialElite-Regular.ttf")
 
-        vbox:        
-            if gui.dark_mode:
-                style_prefix "radio_dark"
-            else:
-                style_prefix "radio"
+        vbox: 
+            style_prefix "radio"
             label _("Dialogue")
             textbutton _("DM Sans"):
                 text_font "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"
@@ -477,23 +385,11 @@ style radio_button is gui_button
 style radio_button_text is gui_button_text
 style radio_vbox is pref_vbox
 
-style radio_dark_label is pref_label
-style radio_dark_label_text is pref_label_text
-style radio_dark_button is gui_button
-style radio_dark_button_text is gui_button_text
-style radio_dark_vbox is pref_vbox
-
 style check_label is pref_label
 style check_label_text is pref_label_text
 style check_button is gui_button
 style check_button_text is gui_button_text
 style check_vbox is pref_vbox
-
-style check_dark_label is pref_label
-style check_dark_label_text is pref_label_text
-style check_dark_button is gui_button
-style check_dark_button_text is gui_button_text
-style check_dark_vbox is pref_vbox
 
 style slider_label is pref_label
 style slider_label_text is pref_label_text
@@ -502,23 +398,13 @@ style slider_button is gui_button
 style slider_button_text is gui_button_text
 style slider_pref_vbox is pref_vbox
 
-style slider_dark_slider is gui_slider
-
 style pref_vscrollbar:
     xpos 90   
     ypos -212
     ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb.png") # "#c4b5a2" #scrollbar color or image
-    base_bar Frame("gui/scrollbar/vbar.png") # "#d7cfcc" #scrollbar background or image 
-    unscrollable "hide" #gui.unscrollable
-
-style pref_dark_vscrollbar:
-    xpos 90   
-    ypos -212
-    ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb_dark.png") #"#363739" #scrollbar color or image
-    base_bar Frame("gui/scrollbar/vbar_dark.png") #"#1b1b1c" #scrollbar background or image 
-    unscrollable "hide" #gui.unscrollable
+    thumb Frame("gui/scrollbar/vthumb_[persistent.theme].png")
+    base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
+    unscrollable gui.unscrollable
 
 style pref_header:
     font gui.text_font_header
@@ -548,22 +434,13 @@ style pref_button_text:
     color gui.text_color 
     hover_color gui.accent_color    
     size 40*gui.text_size_multiplier
-    font gui.text_font_header #"fonts/handwritten/SS Soapy Hands Regular.otf"
+    font gui.text_font_header
 
 style mute_all_button:    
-    hover_background Frame("gui/button/radio_selected_foreground.png", Borders(70, 0, 0, 0))
-    selected_background Frame("gui/button/radio_selected_foreground.png", Borders(70, 0, 0, 0))
+    hover_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(70, 0, 0, 0))
+    selected_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(70, 0, 0, 0))
 
 style mute_all_button_text:  
-    color gui.idle_color 
-    hover_color gui.text_color 
-    selected_color gui.text_color 
-
-style mute_all_dark_button:    
-    hover_background Frame("gui/button/radio_dark_selected_foreground.png", Borders(70, 0, 0, 0))
-    selected_background Frame("gui/button/radio_dark_selected_foreground.png", Borders(70, 0, 0, 0))
-
-style mute_all_dark_button_text:  
     color gui.idle_color 
     hover_color gui.text_color 
     selected_color gui.text_color 
@@ -573,25 +450,13 @@ style radio_vbox:
 
 style radio_button:    
     properties gui.button_properties("radio_button")
-    size_group None    
+    size_group None
+    hover_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(70, 100, 0, 0))
     selected_background None
-    hover_background Frame("gui/button/radio_selected_foreground.png", Borders(70, 100, 0, 0))
-    foreground "gui/button/radio_[prefix_]foreground.png"
+    selected_foreground "gui/button/radio_[persistent.theme]_selected_foreground.png"
+    # foreground "gui/button/radio_[prefix_]foreground.png"
 
 style radio_button_text:
-    properties gui.text_properties("radio_button")
-    color gui.idle_color
-    hover_color gui.text_color
-    selected_color gui.text_color
-
-style radio_dark_button:    
-    properties gui.button_properties("radio_button")
-    size_group None    
-    selected_background None
-    hover_background Frame("gui/button/radio_dark_selected_foreground.png", Borders(70, 100, 0, 0))
-    foreground "gui/button/radio_dark_[prefix_]foreground.png" 
-
-style radio_dark_button_text:
     properties gui.text_properties("radio_button")
     color gui.idle_color
     hover_color gui.text_color
@@ -602,10 +467,11 @@ style check_vbox:
 
 style check_button:
     properties gui.button_properties("check_button")
-    size_group None
+    size_group None    
+    hover_background Frame("gui/button/check_[persistent.theme]_selected_foreground.png", Borders(70, 100, 0, 0))
     selected_background None
-    hover_background Frame("gui/button/check_selected_foreground.png", Borders(70, 100, 0, 0))
-    foreground "gui/button/check_[prefix_]foreground.png"    
+    selected_foreground "gui/button/check_[persistent.theme]_selected_foreground.png"
+    # foreground "gui/button/check_[prefix_]foreground.png"    
 
 style check_button_text:
     properties gui.text_properties("check_button")
@@ -613,56 +479,24 @@ style check_button_text:
     hover_color gui.text_color
     selected_color gui.text_color 
 
-style check_dark_button:
-    properties gui.button_properties("check_button")
-    size_group None
-    selected_background None
-    hover_background Frame("gui/button/check_dark_selected_foreground.png", Borders(70, 100, 0, 0))
-    foreground "gui/button/check_dark_[prefix_]foreground.png"    
-
-style check_dark_button_text:
-    properties gui.text_properties("check_button")
-    color gui.idle_color
-    hover_color gui.text_color
-    selected_color gui.text_color
-
 style slider_slider:
     xsize 491
     ysize 95        
-    right_bar  "gui/slider/bar_empty.png" # the 'empty' side of the bar
-    left_bar   "gui/slider/bar_full.png" # the 'full' side of the bar representing the value
-    thumb "gui/slider/thumb.png" # the draggable element of the slider
+    right_bar "gui/slider/bar_empty_[persistent.theme].png" # the 'empty' side of the bar
+    left_bar "gui/slider/bar_full_[persistent.theme].png" # the 'full' side of the bar representing the value
+    thumb "gui/slider/bar_thumb_[persistent.theme].png" # the draggable element of the slider
     thumb_offset 25.5 # To have the left and right bars continue unbroken, set this to half the width of the thumb in pixels
-
-style slider_dark_slider:
-    xsize 491
-    ysize 95        
-    right_bar  "gui/slider/bar_empty_dark.png"
-    left_bar   "gui/slider/bar_full_dark.png"
-    thumb "gui/slider/thumb_dark.png"
-    thumb_offset 25.5 
 
 style slider_button: 
     properties gui.button_properties("slider_button")
     xalign 0.74
     ypos -35
-    hover_background Frame("gui/button/radio_selected_foreground.png", Borders(50, 100, 0, 0))
+    hover_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(50, 100, 0, 0))
 
 style slider_button_text:
     properties gui.text_properties("slider_button")
     color gui.idle_color 
     hover_color gui.text_color 
-
-style slider_dark_button: 
-    properties gui.button_properties("slider_button")
-    xalign 0.74
-    ypos -35
-    hover_background Frame("gui/button/radio_dark_selected_foreground.png", Borders(50, 100, 0, 0))
-
-style slider_dark_button_text:
-    properties gui.text_properties("slider_button")
-    color gui.idle_color 
-    hover_color gui.text_color  
 
 style slider_vbox:
     xsize 675

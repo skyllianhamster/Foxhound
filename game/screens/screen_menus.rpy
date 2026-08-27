@@ -1,4 +1,10 @@
 ################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
+################################################################################
 ## Main and Game Menu Screens
 ################################################################################
 
@@ -8,6 +14,8 @@
 ## to other menus, and to start the game.
 
 screen navigation():
+
+    style_prefix "navigation"
 
     # rotates nav buttons
     transform:
@@ -19,11 +27,6 @@ screen navigation():
         ypos 190 #215       
 
         vbox:
-            if gui.dark_mode:
-                style_prefix "navigation_dark"
-            else:
-                style_prefix "navigation"
-
             xalign 0
             yalign 0
 
@@ -73,46 +76,23 @@ screen navigation():
         xpos 625 #600
         ypos 825 
 
-        textbutton _("RETURN"):
-            if gui.dark_mode:
-                style_prefix "navigation_dark"
-            else:
-                style_prefix "navigation"
-            action Return()
+        textbutton _("RETURN") action Return()
 
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
 
-style navigation_dark_button is gui_button
-style navigation_dark_button_text is gui_button_text
-
 style navigation_button:
     size_group None #"navigation"
     properties gui.button_properties("navigation_button")
-    hover_background Frame("gui/underline.png")
-    selected_background Frame("gui/underline.png")
+    hover_background Frame("gui/underline_[persistent.theme].png")
+    selected_background Frame("gui/underline_[persistent.theme].png")
 
 style navigation_button_text:
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
     size 67
     color gui.text_color 
-    properties gui.text_properties("navigation_button")
-
-style navigation_dark_button:
-    size_group None #"navigation"
-    properties gui.button_properties("navigation_button")
-    hover_background Frame("gui/underline_dark.png")
-    selected_background Frame("gui/underline_dark.png")
-
-style navigation_dark_button_text:
-    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
-    size 67
-    color gui.text_color 
-    properties gui.text_properties("navigation_button")
-
-
-    
+    properties gui.text_properties("navigation_button")    
 
 ## Game Menu screen ############################################################
 ##
@@ -127,22 +107,18 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     style_prefix "game_menu"
     
-    if main_menu:        
-        add gui.main_menu_background
-    else:
-        add gui.game_menu_background
+    # if main_menu:        
+    #     add gui.main_menu_background
+    # else:
+    #     add gui.game_menu_background
 
     ## menu background design
     frame:
-        if gui.dark_mode:
-            background Frame("gui/screen_menus/screen_menu_bg_dark.png")
-            if not gui.reduce_clutter:
-                add "gui/screen_menus/screen_menu_crest_dark.png"
-        else:
-            background Frame("gui/screen_menus/screen_menu_bg.png")
-            if not gui.reduce_clutter:
-                add "gui/screen_menus/screen_menu_crest.png"
         style "game_menu_outer_frame"
+
+        ## adds piltover crest design
+        if not persistent.reduce_clutter:
+            add "gui/screen_menus/screen_menu_crest_[persistent.theme].png"     
 
         ## changes background depending on the menu screen
         if renpy.get_screen("help") or renpy.get_screen("preferences"):
@@ -188,9 +164,9 @@ style game_menu_label is gui_label
 style game_menu_label_text is gui_label_text
 
 style game_menu_outer_frame:
+    background Frame("gui/screen_menus/screen_menu_bg_[persistent.theme].png")
     xsize 1920
-    ysize 1080
-    # background Frame("gui/screen_menus/screen_menu_bg.png")
+    ysize 1080    
 
 style game_menu_navigation_frame:
     xsize 960 # 420

@@ -1,3 +1,9 @@
+################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
 ### custom generic / smaller screens 
 
 ### CUSTOM TEXT EFFECTS ###############################################
@@ -14,18 +20,15 @@ init -1:
             ### changes textbox design
             ### style in screens.rpy under "window" and "namebox"
             if textbox_type == "cinematic":
+                # background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
+                background Frame("#000d", xsize=1920, ysize=270, xalign=0, yalign=1.0)
+                left_padding -400
+                right_padding 650
                 xalign 0.5
-                yalign 1.0                
-                left_padding -80
-                right_padding 100
-                background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
+                yalign 1.0 
             elif textbox_type == "dialogue": # the default textbox style           
-                if gui.dark_mode:
-                    background Image("gui/textbox_dark.png")
-                else:
-                    background Image("gui/textbox.png")
-
-
+                background Image(persistent.textbox)
+                
             if who is not None:
 
                 window:
@@ -34,11 +37,8 @@ init -1:
                     ### changes namebox design based on textbox type
                     if textbox_type == "cinematic":
                         background Image("gui/namebox_cinematic.png")
-                    elif textbox_type == "dialogue":    
-                        if gui.dark_mode:
-                            background Image("gui/namebox_dark.png")
-                        else:
-                            background Image("gui/namebox.png")
+                    elif textbox_type == "dialogue":  
+                        background Image(persistent.namebox)
 
                     style "namebox"
                     text who id "who"
@@ -79,10 +79,7 @@ screen error_screen(error_msg):
 
     frame:
         style "empty"
-        if gui.dark_mode:
-            background Frame("gui/screen_confirm/screen_confirm_frame_dark.png")
-        else:
-            background Frame("gui/screen_confirm/screen_confirm_frame.png")
+        background Frame("gui/screen_confirm/screen_confirm_frame_[persistent.theme].png")        
         xalign 0.5
         yalign 0.5
         xsize 684
@@ -92,11 +89,7 @@ screen error_screen(error_msg):
         text "[error_msg]" style "error_screen_text"                                       
 
         textbutton "Return":
-            style "error_screen_button"  
-            if gui.dark_mode:
-                hover_background Frame("gui/underline_dark.png")
-            else:
-                hover_background Frame("gui/underline.png")
+            style "error_screen_button"              
             action [Call("clear_screens"), Return()]
 
 style error_screen_text is gui_text:
@@ -106,6 +99,7 @@ style error_screen_text is gui_text:
     size 50
 
 style error_screen_button is gui_button:
+    hover_background Frame("gui/underline_[persistent.theme].png")
     xalign 0.5 
     yalign 0.95
 

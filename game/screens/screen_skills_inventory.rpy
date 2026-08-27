@@ -7,8 +7,8 @@ screen skills_and_inventory_button:
     # imagebutton auto "gui/button/skills_%s.png" xalign 0.95 yalign 0.05 focus_mask None action ShowMenu("skills_and_inventory") 
     imagebutton: 
         focus_mask True
-        xalign 0.95
-        yalign 0.07
+        xalign 0.97 #0.95
+        yalign 0.04 #0.07
         idle "gui/screen_skills/screen_skills_closed_idle.png"
         hover "gui/screen_skills/screen_skills_closed_hover.png"  
         action ShowMenu("skills_and_inventory")
@@ -16,22 +16,17 @@ screen skills_and_inventory_button:
 ### SKILLS & INVENTORY SCREEN #######################################
 ### displays skills and inventory
 #####################################################################
-    
-screen skills_and_inventory:    
+
+
+screen skills_and_inventory:  
+
     zorder 10
 
     ### skills and inventory screen background
     frame:
-        style "screen_frame"
-        if gui.dark_mode:
-            background Frame("gui/screen_skills/screen_skills_bg_dark.png")
-            if not gui.reduce_clutter:
-                add "gui/screen_skills/screen_skills_stamp_dark.png" 
-        else:
-            background Frame("gui/screen_skills/screen_skills_bg.png")
-            if not gui.reduce_clutter:
-                add "gui/screen_skills/screen_skills_stamp.png"             
-        
+        style "skills_background_frame"
+        if not persistent.reduce_clutter:
+            add "gui/screen_skills/screen_skills_stamp_[persistent.theme].png"
 
         ### button that hides the screen
         imagebutton: 
@@ -65,10 +60,9 @@ screen skills_and_inventory:
                     ### icon
                     frame:
                         style "background_icon"
-                        if gui.dark_mode:
-                            background Frame("gui/screen_skills/backgrounds/bg_"+adulthood_background+"_dark.png")
-                        else:
-                            background Frame("gui/screen_skills/backgrounds/bg_"+adulthood_background+".png")                       
+
+                        if adulthood_background != '':                        
+                            background Frame("gui/screen_skills/backgrounds/bg_[adulthood_background]_[persistent.theme].png")                      
 
                     ### description                    
                     viewport id "vp_bg1":       
@@ -91,10 +85,7 @@ screen skills_and_inventory:
                                     text "[adulthood_background_description]" style "background_description"
                     
                     vbar value YScrollValue("vp_bg1"):
-                        if gui.dark_mode:
-                            style "background_dark_vscrollbar"
-                        else:
-                            style "background_vscrollbar"
+                        style "background_vscrollbar"
                         ypos -5
 
                 ### background 2 - childhood
@@ -105,10 +96,9 @@ screen skills_and_inventory:
                     ### icon
                     frame:
                         style "background_icon"
-                        if gui.dark_mode:
-                            background Frame("gui/screen_skills/backgrounds/bg_"+childhood_background+"_dark.png")
-                        else:
-                            background Frame("gui/screen_skills/backgrounds/bg_"+childhood_background+".png")
+
+                        if childhood_background != '':                        
+                            background Frame("gui/screen_skills/backgrounds/bg_[childhood_background]_[persistent.theme].png")                  
 
                     ### description                    
                     viewport id "vp_bg2":  
@@ -139,10 +129,7 @@ screen skills_and_inventory:
                                         text "[childhood_background_description_add]" style "background_description"
                         
                     vbar value YScrollValue("vp_bg2"):
-                        if gui.dark_mode:
-                            style "background_dark_vscrollbar"
-                        else:
-                            style "background_vscrollbar"
+                        style "background_vscrollbar"
                         ypos 0
 
             ### skills
@@ -154,133 +141,141 @@ screen skills_and_inventory:
                     style "skills_header_frame"                    
                     text "Skills" style "section_headers"
 
-                ### radar chart
-                if gui.dark_mode:
-                    add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#226ea8','#a3a8bc',1,350,True) xalign 0.5 yalign 0.70
+                ### radar chart                
+                if persistent.theme == 'light':
+                    add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#dea198','#736c64',1,350,True) xalign 0.5 yalign 0.70                    
                 else:
-                    add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#dea198','#736c64',1,350,True) xalign 0.5 yalign 0.70
+                    add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#226ea8','#a3a8bc',1,350,True) xalign 0.5 yalign 0.70               
                 
+                
+
                 ### skill icons with tooltip   
                 frame:
                     style "empty"
                     xalign 0.5
-                    yalign 0.2  
-                    imagebutton: # auto "gui/screen_skills/skills/skill_warfare_%s.png":
-                        if gui.dark_mode:
-                            idle "gui/screen_skills/skills/skill_warfare_idle_dark.png" 
-                            hover "gui/screen_skills/skills/skill_warfare_hover_dark.png"
-                        else:
-                            idle "gui/screen_skills/skills/skill_warfare_idle.png"
-                            hover "gui/screen_skills/skills/skill_warfare_hover.png"
+                    yalign 0.17  
+
+                    imagebutton:
+                        idle Frame("gui/screen_skills/skills/skill_warfare_[persistent.theme].png", style="skill_icon_idle")
+                        hover Frame("gui/screen_skills/skills/skill_warfare_[persistent.theme].png", style="skill_icon_hover")
                         focus_mask None
                         xpos 0 
-                        ypos 0
+                        ypos 0                    
                         action NullAction()
-                        hovered [
+                        hovered [                 
+                            Show("skill_value_indicator_warfare"),
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=gui.text_size_multiplier*50+100),
+                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(50*gui.text_size_multiplier)+100),
                                 Text("Warfare", style="skill_tooltip_text"), 
                                 xmaximum=170, ymaximum=45, ypos=-45))                           
                             ]
-                        unhovered SetField(mtt, 'redraw', False)
+                        unhovered [
+                            Hide("skill_value_indicator_warfare"),
+                            SetField(mtt, 'redraw', False) 
+                            ]                 
+
 
                 frame:
                     style "empty"
-                    xalign 0.83
+                    xalign 0.85
                     yalign 0.47
+
                     imagebutton:
-                        if gui.dark_mode:
-                            idle "gui/screen_skills/skills/skill_charisma_idle_dark.png" 
-                            hover "gui/screen_skills/skills/skill_charisma_hover_dark.png"
-                        else:
-                            idle "gui/screen_skills/skills/skill_charisma_idle.png"
-                            hover "gui/screen_skills/skills/skill_charisma_hover.png"
+                        idle Frame("gui/screen_skills/skills/skill_charisma_[persistent.theme].png", style="skill_icon_idle")
+                        hover Frame("gui/screen_skills/skills/skill_charisma_[persistent.theme].png", style="skill_icon_hover")
                         focus_mask None
                         xpos 0 
-                        ypos 0
+                        ypos 0                    
                         action NullAction()
                         hovered [
+                            Show("skill_value_indicator_charisma"),
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=gui.text_size_multiplier*125+25), 
+                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(125*gui.text_size_multiplier)+25), 
                                 Text("Charisma", style="skill_tooltip_text"), 
                                 xmaximum=200, ymaximum=45, ypos=-45))
                             ]
-                        unhovered SetField(mtt, 'redraw', False)
+                        unhovered [
+                            Hide("skill_value_indicator_charisma"),
+                            SetField(mtt, 'redraw', False)
+                            ]
 
                 frame:
                     style "empty"
                     xalign 0.7
-                    yalign 0.9
+                    yalign 0.92
+
                     imagebutton:
-                        if gui.dark_mode:
-                            idle "gui/screen_skills/skills/skill_scholarship_idle_dark.png" 
-                            hover "gui/screen_skills/skills/skill_scholarship_hover_dark.png"
-                        else:
-                            idle "gui/screen_skills/skills/skill_scholarship_idle.png"
-                            hover "gui/screen_skills/skills/skill_scholarship_hover.png"
+                        idle Frame("gui/screen_skills/skills/skill_scholarship_[persistent.theme].png", style="skill_icon_idle")
+                        hover Frame("gui/screen_skills/skills/skill_scholarship_[persistent.theme].png", style="skill_icon_hover")
                         focus_mask None
                         xpos 0 
                         ypos 0
                         action NullAction()
                         hovered [
+                            Show("skill_value_indicator_scholarship"),
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=gui.text_size_multiplier*175+25), 
+                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(175*gui.text_size_multiplier)+25), 
                                 Text("Scholarship", style="skill_tooltip_text"), 
-                                xmaximum=270, ymaximum=45, ypos=-45))
+                                xmaximum=270, ymaximum=45, ypos=65))
                                 
                             ]
-                        unhovered SetField(mtt, 'redraw', False)
+                        unhovered [
+                            Hide("skill_value_indicator_scholarship"),
+                            SetField(mtt, 'redraw', False)
+                            ]
                 
                 frame:
                     style "empty"
                     xalign 0.3
-                    yalign 0.9
+                    yalign 0.92
+
                     imagebutton:
-                        if gui.dark_mode:
-                            idle "gui/screen_skills/skills/skill_survival_idle_dark.png" 
-                            hover "gui/screen_skills/skills/skill_survival_hover_dark.png"
-                        else:
-                            idle "gui/screen_skills/skills/skill_survival_idle.png"
-                            hover "gui/screen_skills/skills/skill_survival_hover.png"
+                        idle Frame("gui/screen_skills/skills/skill_survival_[persistent.theme].png", style="skill_icon_idle")
+                        hover Frame("gui/screen_skills/skills/skill_survival_[persistent.theme].png", style="skill_icon_hover")
                         focus_mask None
                         xpos 0 
                         ypos 0
                         action NullAction()
                         hovered [
+                            Show("skill_value_indicator_survival"),
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=gui.text_size_multiplier*125+25), 
+                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(125*gui.text_size_multiplier)+25), 
                                 Text("Survival", style="skill_tooltip_text"), 
-                                xmaximum=200, ymaximum=45, ypos=-45))                                
+                                xmaximum=200, ymaximum=45, ypos=65))                                
                             ]
-                        unhovered SetField(mtt, 'redraw', False)
+                        unhovered [
+                            Hide("skill_value_indicator_survival"),
+                            SetField(mtt, 'redraw', False)
+                            ]
 
                 frame:
                     style "empty"
-                    xalign 0.18
+                    xalign 0.16
                     yalign 0.47
+
                     imagebutton:
-                        if gui.dark_mode:
-                            idle "gui/screen_skills/skills/skill_vigor_idle_dark.png" 
-                            hover "gui/screen_skills/skills/skill_vigor_hover_dark.png"
-                        else:
-                            idle "gui/screen_skills/skills/skill_vigor_idle.png"
-                            hover "gui/screen_skills/skills/skill_vigor_hover.png"
+                        idle Frame("gui/screen_skills/skills/skill_vigor_[persistent.theme].png", style="skill_icon_idle")
+                        hover Frame("gui/screen_skills/skills/skill_vigor_[persistent.theme].png", style="skill_icon_hover")
                         focus_mask None
                         xpos 0 
                         ypos 0
                         action NullAction()
                         hovered [
+                            Show("skill_value_indicator_vigor"),
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=gui.text_size_multiplier*75+35), 
+                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(75*gui.text_size_multiplier)+35), 
                                 Text("Vigor", style="skill_tooltip_text"), 
                                 xmaximum=140, ymaximum=45, ypos=-45))
                             ]
-                        unhovered SetField(mtt, 'redraw', False)
+                        unhovered [
+                            Hide("skill_value_indicator_vigor"),
+                            SetField(mtt, 'redraw', False)
+                            ]
 
                 add mtt # adds the tooltip on top of the icons
 
@@ -313,97 +308,35 @@ screen skills_and_inventory:
                     else:
                         for i in inventory:
                             imagebutton: 
-                                idle i.icon
-                                if gui.dark_mode:
-                                    hover Composite(
-                                        (130,130), 
-                                        (0,0), "gui/screen_skills/items/item_hover_dark.png",
-                                        (0,0), i.icon,
-                                        (0,0), "gui/screen_skills/items/item_border_dark.png"
-                                    )
-                                    selected_idle Composite(
-                                        (130,130), 
-                                        (0,0), "gui/screen_skills/items/item_hover_dark.png",
-                                        (0,0), i.icon,
-                                        (0,0), "gui/screen_skills/items/item_border_dark.png"
-                                    )
-                                else:
-                                    hover Composite(
-                                        (130,130), 
-                                        (0,0), "gui/screen_skills/items/item_hover.png",
-                                        (0,0), i.icon,
-                                        (0,0), "gui/screen_skills/items/item_border.png"
-                                    )
-                                    selected_idle Composite(
-                                        (130,130), 
-                                        (0,0), "gui/screen_skills/items/item_hover.png",
-                                        (0,0), i.icon,
-                                        (0,0), "gui/screen_skills/items/item_border.png"
-                                    )
+                                idle i.icon                                
+                                hover Composite(
+                                    (130,130), 
+                                    (0,0), "gui/screen_skills/items/item_hover_[persistent.theme].png",
+                                    (0,0), i.icon,
+                                    (0,0), "gui/screen_skills/items/item_border_[persistent.theme].png"
+                                )
+                                selected_idle Composite(
+                                    (130,130), 
+                                    (0,0), "gui/screen_skills/items/item_hover_[persistent.theme].png",
+                                    (0,0), i.icon,
+                                    (0,0), "gui/screen_skills/items/item_border_[persistent.theme].png"
+                                )                           
                                 action [
                                     SetVariable("item_name", i.name),
                                     SetVariable("item_description", i.description),
                                     SetVariable("item_zoom", i.icon_closeup)
-                                    ]         
-
-
-                    # if list == False: # no items in inventory
-                    #     default item_name = ""
-                    #     default item_description = ""
-                    #     default item_zoom = "gui/screen_skills/items/item_zoom.png"
-                    # else: 
-                    #     for i in inventory:
-                    #         imagebutton: 
-                    #             idle "gui/screen_skills/items/"+i+".png"
-                    #             if gui.dark_mode:
-                    #                 hover Composite(
-                    #                     (130,130), 
-                    #                     (0,0), "gui/screen_skills/items/item_hover_dark.png",
-                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
-                    #                     (0,0), "gui/screen_skills/items/item_border_dark.png"
-                    #                 )
-                    #                 selected_idle Composite(
-                    #                     (130,130), 
-                    #                     (0,0), "gui/screen_skills/items/item_hover_dark.png",
-                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
-                    #                     (0,0), "gui/screen_skills/items/item_border_dark.png"
-                    #                 )
-                    #             else:
-                    #                 hover Composite(
-                    #                     (130,130), 
-                    #                     (0,0), "gui/screen_skills/items/item_hover.png",
-                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
-                    #                     (0,0), "gui/screen_skills/items/item_border.png"
-                    #                 )
-                    #                 selected_idle Composite(
-                    #                     (130,130), 
-                    #                     (0,0), "gui/screen_skills/items/item_hover.png",
-                    #                     (0,0), "gui/screen_skills/items/"+i+".png",
-                    #                     (0,0), "gui/screen_skills/items/item_border.png"
-                    #                 )
-                    #             action [
-                    #                 SetVariable("item_name", item_data[i][0]),
-                    #                 SetVariable("item_description", item_data[i][1]),
-                    #                 SetVariable("item_zoom", "gui/screen_skills/items/"+i+"_zoom.png")
-                    #                 ]         
+                                    ]                         
 
                     # for i in range(1, 21):                    
 
                         # textbutton "[i]":
                         #     xysize (50, 50)
-                        #     action Return(i)    
-
-                        # if gui.dark_mode:
-                        #     image "gui/screen_skills/items/item_border_dark.png"
-                        # else: 
-                        #     image "gui/screen_skills/items/item_border.png"                        
+                        #     action Return(i)   
+                        
+                        # image "gui/screen_skills/items/item_border_[persistent.theme].png"                        
 
                 ### items grid scrollbar
-                vbar value YScrollValue("vp_inventory"):
-                    if gui.dark_mode:
-                        style "inventory_dark_vscrollbar"
-                    else:
-                        style "inventory_vscrollbar"
+                vbar value YScrollValue("vp_inventory") style "inventory_vscrollbar"
 
             transform:
                 rotate -2
@@ -428,33 +361,179 @@ screen skills_and_inventory:
                     frame:
                         style "item_closeup_frame"
                         if item_name == "":
-                            background Frame([item_zoom])
-                        else:
-                            if gui.dark_mode:
-                                background Composite(
-                                        (282,243),
-                                        (0,0), "[item_zoom]",
-                                        (0,0), "gui/circled_dark.png"
-                                    )
-                            else:
-                                background Composite(
-                                        (282,243),
-                                        (0,0), "[item_zoom]",
-                                        (0,0), "gui/circled.png"
-                                    )
+                            background Frame("[item_zoom]")
+                        else:                            
+                            background Composite(
+                                    (282,243),
+                                    (0,0), "[item_zoom]",
+                                    (0,0), "gui/circled_[persistent.theme].png"
+                                )    
 
     # use quick_menu()
 
+screen skill_value_indicator_warfare:
+
+    zorder 11
+
+    textbutton "[warfare]":
+        style "skill_value_indicator_button" 
+        if warfare == 6: 
+            xpos 1534
+            ypos 294
+        elif warfare == 5:
+            xpos 1534
+            ypos 323
+        elif warfare == 4:
+            xpos 1535
+            ypos 352
+        elif warfare == 3:
+            xpos 1535
+            ypos 381
+        elif warfare == 2:
+            xpos 1536
+            ypos 410
+        elif warfare == 1:
+            xpos 1536
+            ypos 439
+        action NullAction()
+
+screen skill_value_indicator_charisma:
+
+    zorder 11
+
+    textbutton "[charisma]":
+        style "skill_value_indicator_button" 
+        if charisma == 6: 
+            xpos 1700
+            ypos 410
+        elif charisma == 5:
+            xpos 1672
+            ypos 420
+        elif charisma == 4:
+            xpos 1644
+            ypos 430
+        elif charisma == 3:
+            xpos 1618
+            ypos 438
+        elif charisma == 2:
+            xpos 1590
+            ypos 449
+        elif charisma == 1:
+            xpos 1563
+            ypos 459
+        action NullAction()
+
+screen skill_value_indicator_scholarship:
+
+    zorder 11
+
+    textbutton "[scholarship]":
+        style "skill_value_indicator_button" 
+        if scholarship == 6: 
+            xpos 1640
+            ypos 606
+        elif scholarship == 5:
+            xpos 1622
+            ypos 582
+        elif scholarship == 4:
+            xpos 1605
+            ypos 559
+        elif scholarship == 3:
+            xpos 1588
+            ypos 536
+        elif scholarship == 2:
+            xpos 1571
+            ypos 513
+        elif scholarship == 1:
+            xpos 1554
+            ypos 490
+        action NullAction()
+
+screen skill_value_indicator_survival:
+
+    zorder 11
+
+    textbutton "[survival]":
+        style "skill_value_indicator_button" 
+        if survival == 6: 
+            xpos 1436
+            ypos 610
+        elif survival == 5:
+            xpos 1453
+            ypos 585
+        elif survival == 4:
+            xpos 1469
+            ypos 563
+        elif survival == 3:
+            xpos 1487
+            ypos 538
+        elif survival == 2:
+            xpos 1503
+            ypos 514
+        elif survival == 1:
+            xpos 1520
+            ypos 491
+        action NullAction()
+
+screen skill_value_indicator_vigor:
+
+    zorder 11
+
+    textbutton "[vigor]":
+        style "skill_value_indicator_button" 
+        if vigor == 6: 
+            xpos 1368
+            ypos 416
+        elif vigor == 5:
+            xpos 1398
+            ypos 425
+        elif vigor == 4:
+            xpos 1426
+            ypos 433
+        elif vigor == 3:
+            xpos 1453
+            ypos 442
+        elif vigor == 2:
+            xpos 1482
+            ypos 451
+        elif vigor == 1:
+            xpos 1510
+            ypos 460
+        action NullAction()
 
 ### STYLES #########################
 
-style screen_frame is empty:
+style skills_background_frame is empty:
+    background Frame("gui/screen_skills/screen_skills_bg_[persistent.theme].png")
     xsize 1920
     ysize 1080
     xpadding 0
     ypadding 0
     xpos 0
     ypos 0
+
+style skill_icon_idle is empty:
+    xsize 57
+    ysize 57
+
+style skill_icon_hover is empty:
+    xsize 60
+    ysize 60
+
+style skill_value_indicator_button is gui_button:
+    background Frame("gui/screen_skills/skills/circle_marker_[persistent.theme].png")
+    xsize int(22*gui.text_size_multiplier)
+    ysize int(22*gui.text_size_multiplier)
+    xanchor 0.5
+    yanchor 0.5
+
+style skill_value_indicator_button_text is gui_button_text:
+    size 22*gui.text_size_multiplier
+    font "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"
+    idle_color "#fff"
+    hover_color "#fff"
+    xalign 0.5
+    yalign 0.5
 
 style section_headers:
     color gui.text_color  
@@ -484,10 +563,11 @@ style background_frame is empty:
     xpos 60
 
 style background_icon is empty:
+    background Frame("gui/transparent.png")  
     xsize 156
     ysize 156
     xpos 45
-    ypos 10
+    ypos 10     
 
 style background_viewport is viewport:
     xsize 677
@@ -513,19 +593,10 @@ style background_description:
 
 style background_vscrollbar is vscrollbar:    
     xpos 935    
-    ymaximum 100
-    thumb Frame("gui/scrollbar/vthumb.png")  # "#c4b5a2cc"
-    base_bar Frame("gui/scrollbar/vbar.png") # "#d7cfcccc"
-    unscrollable "hide"   
-
-style background_dark_vscrollbar is vscrollbar:    
-    xpos 935    
-    ymaximum 100
-    thumb Frame("gui/scrollbar/vthumb_dark.png")
-    base_bar Frame("gui/scrollbar/vbar_dark.png")
-    unscrollable "hide"  
-
-
+    ymaximum 100   
+    thumb Frame("gui/scrollbar/vthumb_[persistent.theme].png")
+    base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
+    unscrollable gui.unscrollable
 
 style skills_group_frame is empty:    
     # background Frame("gui/screen_skills/screen_skills_skills.png")
@@ -550,11 +621,9 @@ style skill_tooltip_text:
     ypos 3
 
 style skill_tooltip_frame:
-    ysize gui.text_size_multiplier*25+10
+    ysize int(25*gui.text_size_multiplier)+10
     xanchor 0.5
     yanchor 0.5
-
-
 
 style inventory_group_frame is empty:
     # background Frame("gui/screen_skills/screen_skills_inventory.png")
@@ -573,17 +642,9 @@ style inventory_vscrollbar is vscrollbar:
     xpos 947
     ypos 51
     ymaximum 150 # scrollbar height 
-    thumb Frame("gui/scrollbar/vthumb.png")  # "#c4b5a2cc"
-    base_bar Frame("gui/scrollbar/vbar.png") # "#d7cfcccc"
-    unscrollable "hide" 
-
-style inventory_dark_vscrollbar is vscrollbar:  
-    xpos 947
-    ypos 51
-    ymaximum 150 # scrollbar height 
-    thumb Frame("gui/scrollbar/vthumb_dark.png")  # "#c4b5a2cc"
-    base_bar Frame("gui/scrollbar/vbar_dark.png") # "#d7cfcccc"
-    unscrollable "hide" 
+    thumb Frame("gui/scrollbar/vthumb_[persistent.theme].png")
+    base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
+    unscrollable gui.unscrollable
 
 style item_group_frame is empty:
     # background Frame("gui/screen_skills/screen_skills_item.png")

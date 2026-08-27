@@ -187,7 +187,7 @@ style say_dialogue:
     yanchor 0
     xpos gui.dialogue_xpos
     ypos gui.dialogue_ypos
-    xsize gui.dialogue_width    
+    # xsize gui.dialogue_width    
 
     adjust_spacing False
 
@@ -249,11 +249,8 @@ screen confirm(message, yes_action, no_action):
 
     add "gui/overlay/black_overlay.png" alpha 0.7
 
-    frame:
-        if gui.dark_mode:
-            background Frame("gui/screen_confirm/screen_confirm_frame_dark.png", gui.confirm_frame_borders, tile=gui.frame_tile)
-        else:
-            background Frame("gui/screen_confirm/screen_confirm_frame.png", gui.confirm_frame_borders, tile=gui.frame_tile)
+    frame:        
+        
 
         vbox:
             xalign .5
@@ -266,12 +263,7 @@ screen confirm(message, yes_action, no_action):
 
             hbox:
                 xalign 0.5
-                spacing 70
-
-                if gui.dark_mode:
-                    style_prefix "confirm_dark"
-                else:
-                    style_prefix "confirm"
+                spacing 70                
 
                 textbutton _("YES"): 
                     action yes_action                    
@@ -293,7 +285,7 @@ style confirm_dark_button is gui_medium_button
 style confirm_dark_button_text is gui_medium_button_text
 
 style confirm_frame:    
-    # background Frame([ "gui/screen_confirm/screen_confirm_frame.png", "gui/screen_confirm/frame_default.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame("gui/screen_confirm/screen_confirm_frame_[persistent.theme].png", gui.confirm_frame_borders, tile=gui.frame_tile)       
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
@@ -308,24 +300,13 @@ style confirm_prompt_text:
 
 style confirm_button:
     properties gui.button_properties("confirm_button")
-    hover_background Frame("gui/underline.png")
+    hover_background Frame("gui/underline_[persistent.theme].png")
     
 style confirm_button_text:
     properties gui.text_properties("confirm_button")
     font "fonts/handwritten/SS Soapy Hands Regular.otf"
     size 60
     color gui.text_color
-
-style confirm_dark_button:
-    properties gui.button_properties("confirm_button")
-    hover_background Frame("gui/underline_dark.png")
-    
-style confirm_dark_button_text:
-    properties gui.text_properties("confirm_button")
-    font "fonts/handwritten/SS Soapy Hands Regular.otf"
-    size 60
-    color gui.text_color
-
 
 ## Skip indicator screen #######################################################
 ##

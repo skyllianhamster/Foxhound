@@ -26,7 +26,7 @@ label reset_skills_and_inventory():
     $ dc = 0
     $ roll = 0
 
-    $ inventory = []
+    $ inventory.clear()
     $ item_name = ""
     $ item_description = ""
     $ item_zoom = "gui/screen_skills/items/item_zoom.png"
@@ -36,6 +36,17 @@ label reset_skills_and_inventory():
 label add_to_inventory(item):
     $ inventory.append(item)
     return
+
+## TODO: add a label wrapper for potential inventory actions?
+## listname.insert(index, item)
+## listname.remove(item)
+## listname.index(item)
+## listname.count(item)
+## listname.clear()
+## listname.pop()
+## listname.sort() # sorts ascending
+## listname.reverse() # reverses the list order
+
 
 ### BACKGROUNDS ####################################################
 ### USAGE: initial skill spread distribution

@@ -7,12 +7,8 @@ screen player_name_and_pronouns():
     zorder 10
     
     ## background
-    frame:        
-        if gui.dark_mode:
-            background Frame("gui/screen_player_customization/screen_player_customization_dark.png")
-        else:
-            background Frame("gui/screen_player_customization/screen_player_customization.png")      
-        
+    frame: 
+        background Frame("gui/screen_player_customization/screen_player_customization_[persistent.theme].png")
 
         text "PILTOVER WARDENS" style "player_customization_id_title"
 
@@ -209,8 +205,6 @@ style player_customization_input_small is gui_text:
     xalign 0.5
     yalign 0.0
 
-
-
 style player_customization_pronouns_button is gui_button:
     xalign 0.5    
 
@@ -274,17 +268,7 @@ screen player_name_and_pronouns_confirm():
     add "gui/overlay/black_overlay.png" alpha 0.4
     use quick_menu()
 
-    ## post-it note image
-    frame:
-        style "empty" 
-        xsize 560
-        ysize 560 
-        xalign 0.8 
-        yalign 0.6    
-        if gui.dark_mode:
-            background Frame("gui/screen_player_customization/screen_player_customization_postit_dark.png")  
-        else:    
-            background Frame("gui/screen_player_customization/screen_player_customization_postit.png")  
+                    
 
     ## rotates post-it text
     transform:
@@ -292,27 +276,20 @@ screen player_name_and_pronouns_confirm():
         yanchor 0
         rotate_pad False
         rotate 5
+        # xpos 1570
+        ypos 311
         xpos 1090
-        ypos 311              
+       
 
-        frame:
-            style "empty"
-            xanchor 0
-            yanchor 0
-            xsize 478
-            ysize 478            
-            xpadding 30
-            ypadding 60
-
+        ## post-it note image
+        frame:        
+            style "player_customization_postit"      
 
             vbox:                    
+                #xanchor 1.0        
+                #ypos 30  
                 
-                textbutton "[player_name!u],\n    [pronoun!u]":
-                    style "player_customization_review_button"       
-                    if gui.dark_mode:
-                        background Frame("gui/circled_question_dark.png", xsize=300, ysize=200, xalign=0.5, yalign=0.5)
-                    else:
-                        background Frame("gui/circled_question.png", xsize=300, ysize=200, xalign=0.5, yalign=0.5)                                   
+                textbutton "[player_name!u],\n   [pronoun!u]" style "player_customization_review_button"
 
                 text "\njust triple checking—sheriff's orders. paperwork's annoying to re-file\n":
                     style "player_customization_review_text"
@@ -323,42 +300,49 @@ screen player_name_and_pronouns_confirm():
 
                     ## hides this screen
                     textbutton "change":
-                        style "player_customization_confirm_button"  
-                        if gui.dark_mode:
-                            hover_background Frame("gui/underline_dark.png")                        
+                        style "player_customization_confirm_button"                          
                         action Hide("player_name_and_pronouns_confirm")
 
                     ## move on to the rest of the game
                     textbutton "confirm":
-                        style "player_customization_confirm_button"
-                        if gui.dark_mode:
-                            hover_background Frame("gui/underline_dark.png")
+                        style "player_customization_confirm_button"                        
                         action [
                                 Hide("player_name_and_pronouns_confirm"), 
                                 Hide("player_name_and_pronouns"),
                                 Jump("demo_dialogue")
                         ]
 
+style player_customization_postit is empty:
+    background Frame("gui/screen_player_customization/screen_player_customization_postit_[persistent.theme].png")
+    xpadding 30    
+    top_padding 40
+    bottom_padding 30
+    xsize 450
+    ysize int(450*gui.text_size_multiplier)
 
 style player_customization_review_button is gui_button:
-    background Frame("gui/circled_question.png", xsize=300, ysize=200, xalign=0.5, yalign=0.5)
+    background Frame("gui/circled_question_[persistent.theme].png", 
+        xpos=-50, ypos=-30, 
+        xsize=int(200*gui.text_size_multiplier)+120, 
+        ysize=int(75*gui.text_size_multiplier)+95
+        )
     xalign 0.5
 
 style player_customization_review_button_text is gui_button_text:
     font gui.text_font_handwritten
     color gui.text_color 
-    size 50
+    size 50*gui.text_size_multiplier
 
 style player_customization_review_text is gui_text:
     font gui.text_font_handwritten
     color gui.text_color 
-    size 36
+    size 36*gui.text_size_multiplier
 
 style player_customization_confirm_button is gui_button:
-    hover_background Frame("gui/underline.png")
+    hover_background Frame("gui/underline_[persistent.theme].png")
 
 style player_customization_confirm_button_text is gui_button_text:
     font gui.text_font_handwritten
     idle_color gui.text_color 
     hover_color gui.accent_color 
-    size 36
+    size 36*gui.text_size_multiplier

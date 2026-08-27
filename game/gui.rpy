@@ -161,13 +161,20 @@ define gui.insensitive_color = '#7070707f'
 define gui.muted_color = '#66c1ff'
 define gui.hover_muted_color = '#99d6ff'
 
+## GUI & Dark mode GUI ##################################################
+
+
 ## Accessibility ########################################################
 
 define gui.text_size_multiplier = gui.preference("text_size_multiplier", 1)
 
-define gui.alt_text = gui.preference("alt_text", False) 
-define gui.reduce_clutter = gui.preference("reduce_clutter", False) 
-define gui.dark_mode = gui.preference("dark_mode", False)
+default persistent.alt_text = False
+default persistent.reduce_clutter = False
+
+default persistent.text_size_multiplier = 1
+default persistent.theme = "light"
+default persistent.namebox = "gui/namebox_light.png"
+default persistent.textbox = "gui/textbox_light.png"
 
 ## Fonts and Font Sizes ########################################################
 
@@ -321,10 +328,6 @@ define gui.quick_button_text_size = 21
 define gui.quick_button_text_idle_color = gui.idle_small_color
 define gui.quick_button_text_selected_color = gui.accent_color
 
-define gui.quick_button_idle_size = 60
-define gui.quick_button_hover_size = 63
-define gui.quick_button_insensitive_alpha = 0.4
-
 ## You can also add your own customizations, by adding properly-named variables.
 ## For example, you can uncomment the following line to set the width of a
 ## navigation button.
@@ -338,10 +341,10 @@ define gui.quick_button_insensitive_alpha = 0.4
 
 define gui.choice_special_icon_size = 66
 
-define gui.choice_button_width = 1185
+define gui.choice_button_width = 700 #1185
 define gui.choice_button_height = None
 define gui.choice_button_tile = False
-define gui.choice_button_borders = Borders(175, 25, 175, 25)
+define gui.choice_button_borders = Borders(120, 25, 120, 25) #Borders(175, 25, 175, 25)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5

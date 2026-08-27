@@ -1,3 +1,9 @@
+################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
 ## Help screen #################################################################
 ##
 ## A screen that gives information about key and mouse bindings. It uses other
@@ -14,10 +20,7 @@ screen help():
 
         ## everything below this goes into the 'transclude' part of screen game_menu()
 
-        if gui.dark_mode:
-            style_prefix "help_dark"
-        else:   
-            style_prefix "help"
+        style_prefix "help"
 
         ## rotates menu contents
         transform:
@@ -206,10 +209,7 @@ screen gamepad_help():
         text _("Hides the user interface.")
 
     textbutton _("Calibrate"): 
-        if gui.dark_mode:
-            style "help_calibrate_dark_button"
-        else:
-            style "help_calibrate_button"
+        style "help_calibrate_button"
         action GamepadCalibrate() 
 
 
@@ -223,17 +223,9 @@ style help_vscrollbar:
     xpos 90   
     ypos -212
     ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb.png") # "#c4b5a2"
-    base_bar Frame("gui/scrollbar/vbar.png") # "#d7cfcc"
-    unscrollable "hide" #gui.unscrollable
-
-style help_dark_vscrollbar:
-    xpos 90   
-    ypos -212
-    ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb_dark.png") #"#363739"
-    base_bar Frame("gui/scrollbar/vbar_dark.png") #"#1b1b1c"
-    unscrollable "hide" #gui.unscrollable
+    thumb Frame("gui/scrollbar/vthumb_[persistent.theme].png")
+    base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
+    unscrollable gui.unscrollable
 
 style help_button:
     # size_group "help"
@@ -252,18 +244,10 @@ style help_button_text:
     font gui.text_font_header
 
 style help_calibrate_button:    
-    hover_background Frame("gui/underline.png") 
-    selected_background Frame("gui/underline.png")
+    hover_background Frame("gui/underline_[persistent.theme].png") 
+    selected_background Frame("gui/underline_[persistent.theme].png")
 
 style help_calibrate_button_text:  
-    color gui.text_color 
-    hover_color gui.accent_color 
-
-style help_calibrate_dark_button:    
-    hover_background Frame("gui/underline_dark.png") 
-    selected_background Frame("gui/underline_dark.png")
-
-style help_calibrate_dark_button_text:  
     color gui.text_color 
     hover_color gui.accent_color 
 

@@ -1,3 +1,9 @@
+################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
 ## About screen ################################################################
 ##
 ## This screen gives credit and copyright information about the game and Ren'Py.
@@ -16,10 +22,7 @@ screen about():
 
         ## everything below this goes into the 'transclude' part of screen game_menu()
 
-        if gui.dark_mode:
-            style_prefix "about_dark"
-        else:
-            style_prefix "about"
+        style_prefix "about"
 
         ## rotates menu contents
         transform:
@@ -94,14 +97,6 @@ style about_vscrollbar:
     xpos 45   
     ypos -139
     ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb.png")
-    base_bar Frame("gui/scrollbar/vbar.png")
-    unscrollable "hide" #gui.unscrollable
-
-style about_dark_vscrollbar:
-    xpos 45   
-    ypos -139
-    ymaximum 527
-    thumb Frame("gui/scrollbar/vthumb_dark.png")
-    base_bar Frame("gui/scrollbar/vbar_dark.png")
-    unscrollable "hide" #gui.unscrollable
+    thumb Frame("gui/scrollbar/vthumb_[persistent.theme].png")
+    base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
+    unscrollable gui.unscrollable

@@ -25,7 +25,7 @@ label demo_dialogue:
 
     scene bg demo 
     show screen skills_and_inventory_button
-    show screen return_button  
+    # show screen return_button  
 
 
     show vi pitfighter concerned demo at left20 
@@ -57,11 +57,11 @@ label demo_dialogue:
 
     ### leveling up skills based on picked options
     menu:
-        extend " "
+        # extend " "
         "Aye. Military.":    
             vi "You do lots of fighting, then?"        
             menu:
-                extend " "
+                # extend " "
                 "That's where the scars come from. (WAR +2, VIG +2)" (special=soldier): 
                     call set_initial_skill_points('soldier')
                     call set_adulthood_background('soldier')
@@ -74,7 +74,7 @@ label demo_dialogue:
         "In an ambassadorial capacity, yes.": 
             vi "Ugh, politicians."
             menu:
-                extend " "
+                # extend " "
                 "Not exactly, but let's just say I'm pretty good at getting what I want. (CHA +2, SUR +1, VIG +1)" (special=deceiver):
                     call set_initial_skill_points('deceiver')
                     call set_adulthood_background('deceiver')
@@ -86,7 +86,7 @@ label demo_dialogue:
         "I did. Buried in books all day long.":
             vi "Yeah? What kind?"
             menu:
-                extend " "
+                # extend " "
                 "Theory and research. (SCH +2, CHA +1, SUR +1)" (special=scientist):
                     call set_initial_skill_points('scientist')
                     call set_adulthood_background('scientist')
@@ -98,7 +98,7 @@ label demo_dialogue:
         "'Elsewhere' doing a lot of heavy lifting there.": 
             vi "Depends how you can be useful."
             menu:
-                extend " "
+                # extend " "
                 "People often don't notice me. (SUR +2, WAR +1, CHA +1)" (special=shadow):
                     call set_initial_skill_points('shadow')
                     call set_adulthood_background('shadow')
@@ -111,7 +111,7 @@ label demo_dialogue:
     player "Still not clear what the Sheriff wants, though."
     vi "You'll have to hear it from her. Anything else?"
     menu:
-        extend " "
+        # extend " "
         "I spent a lot of time in training grounds and barracks...":
             menu:
                 "Just swords and spears, all day long. (WAR +2, VIG +2)":
@@ -161,7 +161,7 @@ label demo_dialogue:
     window hide
 
     hide screen skills_and_inventory_button
-    hide screen return_button
+    # hide screen return_button
 
     scene black with dissolve
     
@@ -170,11 +170,11 @@ label demo_dialogue:
 ### Cinematic screen demo ############################################
 label demo_cinematic:
 
-    show screen return_button
+    # show screen return_button
     
     $ textbox_type = "cinematic"
 
-    show screen return_button
+    # show screen return_button
 
     scene black with dissolve
 
@@ -232,7 +232,7 @@ label demo_cinematic:
     \"Good morning, love. We're going to be late.\"
     """
 
-    hide screen return_button
+    # hide screen return_button
     scene black with dissolve
     
     return
@@ -247,7 +247,7 @@ label demo_crimescene:
 
     cine "DEMO: CRIME SCENE"            
     
-    show screen return_button with dissolve
+    # show screen return_button with dissolve
 
     window hide
     $ textbox_type = "dialogue"
@@ -532,7 +532,7 @@ label demo_crimescene:
     hide vi 
     hide black overlay
 
-    hide screen return_button with dissolve
+    # hide screen return_button with dissolve
 
     scene black with dissolve
     return
@@ -550,7 +550,7 @@ label demo_skill_check:
 
     scene bg zaun alley
     show screen skills_and_inventory_button
-    show screen return_button
+    # show screen return_button
 
     window show 
     "This section simulates a simple scene with dice roll and skill check mechanics.\n\nScene starting now..."
@@ -588,7 +588,7 @@ label demo_skill_check:
 
 
     menu:
-        extend " "
+        # extend " "
         "Lead a quiet entry with Caitlyn covering and Vi ready to strike. (Survival)":
 
             # writer decides what skill and skill level is required for this check 

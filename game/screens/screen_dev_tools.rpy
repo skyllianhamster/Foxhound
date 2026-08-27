@@ -1,3 +1,9 @@
+################################################################################
+## Initialization
+################################################################################
+
+init offset = -1
+
 ## DEBUG SCREEN #####################################
 ## shows values of variables
 
@@ -280,6 +286,40 @@ screen dev_tools_game:
         frame:
             text " : [playtime_seconds]"
     
+    label "--- GUI VARIABLES ---"     
+    hbox:
+        frame:  
+            text "gui.text_color"
+        frame:  
+            text " : [gui.text_color]"
+    hbox:
+        frame:  
+            text "gui.accent_color"
+        frame:  
+            text " : [gui.accent_color]"
+    hbox:
+        frame:  
+            text "gui.idle_color"
+        frame:  
+            text " : [gui.idle_color]"
+    hbox:
+        frame:  
+            text "persistent.theme"
+        frame:  
+            text " : [persistent.theme]"
+    hbox:
+        frame:  
+            text "gui.text_size_multiplier"
+        frame:  
+            text " : [gui.text_size_multiplier]"
+    hbox:
+        frame:  
+            text "persistent.reduce_clutter"
+        frame:  
+            text " : [persistent.reduce_clutter]"
+     
+
+  
     null height 20
 
 style dev_tools_frame is empty:

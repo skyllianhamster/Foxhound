@@ -105,6 +105,8 @@ style navigation_button_text:
 
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
+    zorder 50
+
     style_prefix "game_menu"
     
     # if main_menu:        

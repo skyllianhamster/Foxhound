@@ -3,7 +3,9 @@
 ### to be changed when UI assets are available
 #####################################################################
 screen skills_and_inventory_button:
-
+    
+    zorder 11
+    
     # imagebutton auto "gui/button/skills_%s.png" xalign 0.95 yalign 0.05 focus_mask None action ShowMenu("skills_and_inventory") 
     imagebutton: 
         focus_mask True
@@ -12,6 +14,7 @@ screen skills_and_inventory_button:
         idle "gui/screen_skills/screen_skills_closed_idle.png"
         hover "gui/screen_skills/screen_skills_closed_hover.png"  
         action ShowMenu("skills_and_inventory")
+            
 
 ### SKILLS & INVENTORY SCREEN #######################################
 ### displays skills and inventory
@@ -19,8 +22,10 @@ screen skills_and_inventory_button:
 
 
 screen skills_and_inventory:  
+    on "show" action SetVariable("current_screen", "skills_inventory")
 
-    zorder 10
+    modal True
+    zorder 10    
 
     ### skills and inventory screen background
     frame:
@@ -35,7 +40,10 @@ screen skills_and_inventory:
             yalign 0.035
             idle "gui/screen_skills/screen_skills_open_idle.png"
             hover "gui/screen_skills/screen_skills_open_hover.png"    
-            action Return()                 
+            action [
+                SetVariable("current_screen", "dialogue"),
+                Return()
+                ]
 
         ### rotates the content slightly to match the skewed paper background
         transform:
@@ -125,7 +133,7 @@ screen skills_and_inventory:
                                     if childhood_background == "":
                                         text ""                        
                                     else:
-                                        text "[childhood_background!u]" style "background_type"
+                                        # text "[childhood_background!u]" style "background_type"
                                         text "[childhood_background_description_add]" style "background_description"
                         
                     vbar value YScrollValue("vp_bg2"):
@@ -364,12 +372,13 @@ screen skills_and_inventory:
                             background Frame("[item_zoom]")
                         else:                            
                             background Composite(
-                                    (282,243),
-                                    (0,0), "[item_zoom]",
-                                    (0,0), "gui/circled_[persistent.theme].png"
-                                )    
+                                (282,243),
+                                (0,0), "[item_zoom]",
+                                (0,0), "gui/circled_[persistent.theme].png"
+                            )    
 
-    # use quick_menu()
+
+    use quick_menu()
 
 screen skill_value_indicator_warfare:
 

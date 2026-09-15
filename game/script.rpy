@@ -59,7 +59,7 @@ label gameplay_demo:
 
     while exitloop == False:
         menu:  
-            "Player customization demo":
+            "Player customization demo": 
                 call demo_player_customization 
             "Dialogue demo":   
                 call demo_dialogue

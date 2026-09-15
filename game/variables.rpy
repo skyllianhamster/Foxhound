@@ -7,6 +7,15 @@
 ### UI/UX ####################################
 
 default y_adj = ui.adjustment() ## stores viewport x/y values to prevent jumping back up a scrollable page
+default current_screen = "dialogue" ## tracks what screen the player is on
+default qm_orientation = "horizontal" ## orientation of the quick menu
+
+define qm_vertical_screens = [ ## all screens using a vertical orientation for the quick menu (default is horizontal)
+    "skills_inventory",
+    "player_customization",
+    "crime_scene",
+    "cinematic",
+    ]
 
 ### PLAYER CUSTOMIZATION #####################
 

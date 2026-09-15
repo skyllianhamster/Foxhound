@@ -1,10 +1,11 @@
 ### NAME & PRONOUNS #################################################
 ### text input and pronoun selection
 #####################################################################
-screen player_name_and_pronouns():
+screen player_name_and_pronouns:
+    on "show" action SetVariable("current_screen", "player_customization") 
 
     modal True
-    zorder 10
+    zorder 10    
     
     ## background
     frame: 
@@ -55,6 +56,7 @@ screen player_name_and_pronouns():
 
                     ## arrow buttons cycle through pronoun array
                     textbutton "◄":  
+                        alt "Button to cycle through list of pronouns"
                         style "player_customization_pronouns_button"
                         action CycleVariable("pronoun", ["they/them", "she/her", "he/him"], reverse=True)                                                                  
                                         
@@ -68,6 +70,7 @@ screen player_name_and_pronouns():
                             yalign 0.5
 
                     textbutton "►":
+                        alt "Button to cycle through list of pronouns"
                         style "player_customization_pronouns_button"
                         action CycleVariable("pronoun", ["they/them", "she/her", "he/him"])
 
@@ -117,7 +120,7 @@ screen player_name_and_pronouns():
             ypos 603            
             xfill False
 
-            text " 990 AN" style "player_customization_input_small"
+            text " 990 AN" alt "990 A.N." style "player_customization_input_small"
 
         frame:
             style "player_customization_input_frame_small"     
@@ -131,7 +134,7 @@ screen player_name_and_pronouns():
             ypos 678            
             xfill False
 
-            text " 991 AN" style "player_customization_input_small"
+            text " 991 AN" alt "991 A.N." style "player_customization_input_small"
 
         frame:
             style "empty"   
@@ -139,12 +142,13 @@ screen player_name_and_pronouns():
             ypos 840           
             xfill False
 
-            text "Sheriff of Piltover" style "player_customization_input_small" size 14
-        
-                        
+            text "Sheriff of Piltover": 
+                alt "Signature of Caitlyn Kirammman, Sheriff of Piltover"
+                style "player_customization_input_small" size 14                            
 
     ## back to main menu button
     textbutton "<< Back":
+        alt "Back"
         style "player_customization_navigation_button"
         xalign 0.01
         action MainMenu()
@@ -152,11 +156,12 @@ screen player_name_and_pronouns():
 
     ## check if name and pronouns are valid 
     textbutton "Next >>":
+        alt "Next"
         style "player_customization_navigation_button"
         xalign 0.99
-        action Call("check_name_and_pronouns")
-
-    use quick_menu()
+        action Call("check_name_and_pronouns")        
+    
+    # use quick_menu()
 
 style player_customization_id_title is gui_text:
     font gui.text_font_header
@@ -237,7 +242,7 @@ style player_customization_navigation_button_text is gui_button_text:
 ### CHECK FUNCTION #########################################
 ### checks text input and pronoun selection
 #####################################################################
-label check_name_and_pronouns():
+label check_name_and_pronouns:
     show screen player_name_and_pronouns
 
     $ player_name = player_name.strip()
@@ -260,15 +265,14 @@ label check_name_and_pronouns():
 ### CONFIRM SCREEN #################################################
 ### confirms text input and pronoun selection
 #####################################################################
-screen player_name_and_pronouns_confirm():
+screen player_name_and_pronouns_confirm:
     modal True
     zorder 11
 
     ## darkens the background a bit to highlight the post-it note
     add "gui/overlay/black_overlay.png" alpha 0.4
-    use quick_menu()
 
-                    
+    # use quick_menu()                    
 
     ## rotates post-it text
     transform:
@@ -289,9 +293,11 @@ screen player_name_and_pronouns_confirm():
                 #xanchor 1.0        
                 #ypos 30  
                 
-                textbutton "[player_name!u],\n   [pronoun!u]" style "player_customization_review_button"
+                textbutton "[player_name!u],\n   [pronoun!u]":                     
+                    style "player_customization_review_button"
 
                 text "\njust triple checking—sheriff's orders. paperwork's annoying to re-file\n":
+                    alt "Reviewing input: Player name, " + str(player_name) + ", pronouns," + str(pronoun) + ". Just triple checking, sheriff's orders. Paperwork's annoying to re-file."
                     style "player_customization_review_text"
                     
                 hbox:

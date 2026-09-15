@@ -33,9 +33,9 @@ label reset_skills_and_inventory():
     return
 
 ### add an item to the inventory
-label add_to_inventory(item):
-    $ inventory.append(item)
-    return
+# label add_to_inventory(item):
+#     $ inventory.append(item)
+#     return
 
 ## TODO: add a label wrapper for potential inventory actions?
 ## listname.insert(index, item)
@@ -53,114 +53,59 @@ label add_to_inventory(item):
 ### automatically updates parent skills
 #################################################################
 
-label set_adulthood_background(bg):
-    if bg == 'soldier':
-        $ adulthood_background = 'soldier'
-        $ adulthood_background_description = soldier_background_description
-    elif bg == 'strategist':
-        $ adulthood_background = 'strategist'
-        $ adulthood_background_description = strategist_background_description
-    elif bg == 'diplomat':
-        $ adulthood_background = 'diplomat'
-        $ adulthood_background_description = diplomat_background_description
-    elif bg == 'deceiver':
-        $ adulthood_background = 'deceiver'
-        $ adulthood_background_description = deceiver_background_description
-    elif bg == 'scientist':
-        $ adulthood_background = 'scientist'
-        $ adulthood_background_description = scientist_background_description
-    elif bg == 'craftsman':
-        $ adulthood_background = 'craftsman'
-        $ adulthood_background_description = craftsman_background_description
-    elif bg == 'shadow':
-        $ adulthood_background = 'shadow'
-        $ adulthood_background_description = shadow_background_description
-    elif bg == 'streetrat':
-        $ adulthood_background = 'streetrat'
-        $ adulthood_background_description = streetrat_background_description
-    else:
-        $ adulthood_background = ''
-        $ adulthood_background_description = ''
+label set_adulthood_background(bg=no_bg):
+    
+    $ adulthood_background = bg.key
+    $ adulthood_background_description = bg.description
+
+    call set_initial_skill_points(bg)
+
     return
 
-label set_childhood_background(bg):
-    if bg == 'soldier':
-        $ childhood_background = 'soldier'
-        $ childhood_background_description = soldier_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = soldier_background_description_add
-    elif bg == 'strategist':
-        $ childhood_background = 'strategist'
-        $ childhood_background_description = strategist_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = strategist_background_description
-    elif bg == 'diplomat':
-        $ childhood_background = 'diplomat'
-        $ childhood_background_description = diplomat_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = diplomat_background_description
-    elif bg == 'deceiver':
-        $ childhood_background = 'deceiver'
-        $ childhood_background_description = deceiver_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = deceiver_background_description
-    elif bg == 'scientist':
-        $ childhood_background = 'scientist'
-        $ childhood_background_description = scientist_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = deceiver_background_description
-    elif bg == 'craftsman':
-        $ childhood_background = 'craftsman'
-        $ childhood_background_description = craftsman_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = craftsman_background_description
-    elif bg == 'shadow':
-        $ childhood_background = 'shadow'
-        $ childhood_background_description = shadow_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = shadow_background_description
-    elif bg == 'streetrat':
-        $ childhood_background = 'streetrat'
-        $ childhood_background_description = streetrat_background_description
-        if childhood_background == adulthood_background:
-            $ childhood_background_description_add = streetrat_background_description
-    else:
-        $ childhood_background = ''
-        $ childhood_background_description = ''
-        $ childhood_background_description_add = '' 
+label set_childhood_background(bg=no_bg):
+
+    $ childhood_background = bg.key
+    $ childhood_background_description = bg.description
+    if childhood_background == adulthood_background:
+        $ childhood_background_description_add = bg.description2
+   
+    call set_initial_skill_points(bg)
+    
     return
 
 label set_initial_skill_points(bg):
-    if bg == 'soldier':
+    if bg.key == 'soldier':
         call update_warfare(2)
         call update_vigor(2)
-    elif bg == 'strategist':
+    elif bg.key == 'strategist':
         call update_warfare(2)
         call update_scholarship(1)
         call update_vigor(1)
-    elif bg == 'diplomat':
+    elif bg.key == 'diplomat':
         call update_charisma(2)
         call update_warfare(1)
         call update_scholarship(1)
-    elif bg == 'deceiver':
+    elif bg.key == 'deceiver':
         call update_charisma(2)
         call update_survival(1)
         call update_vigor(1)
-    elif bg == 'scientist':
+    elif bg.key == 'scientist':
         call update_scholarship(2)
         call update_charisma(1)
         call update_survival(1)
-    elif bg == 'craftsman':
+    elif bg.key == 'craftsman':
         call update_scholarship(2)
         call update_vigor(2)
-    elif bg == 'shadow':
+    elif bg.key == 'shadow':
         call update_survival(2)
         call update_warfare(1)
         call update_charisma(1)
-    elif bg == 'streetrat':
+    elif bg.key == 'streetrat':
         call update_survival(2)
         call update_charisma(1)
         call update_vigor(1)
+    else:
+        return
     return
 
 ### SKILLS ####################################################

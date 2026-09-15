@@ -317,6 +317,23 @@ screen dev_tools_game:
             text "persistent.reduce_clutter"
         frame:  
             text " : [persistent.reduce_clutter]"
+    hbox:
+        frame:  
+            text "persistent.quick_menu"
+        frame:  
+            text " : [persistent.quick_menu]"
+    hbox:
+        frame:  
+            text "qm_orientation"
+        frame:  
+            text " : [qm_orientation]"
+    hbox:
+        frame:  
+            text "current_screen"
+        frame:  
+            text " : [current_screen]"
+
+
      
 
   

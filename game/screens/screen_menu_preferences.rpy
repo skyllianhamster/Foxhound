@@ -252,12 +252,11 @@ screen accessibility_prefs():
         xspacing 50         
     
         vbox:            
-            style_prefix "radio"
-            ## TODO: find a way to implement this without using conditional statements
-            label _("Reduce visual clutter")
+            style_prefix "radio"            
+            label _("Reduce visual clutter") alt "Reduce visual clutter"
             # text "Remove some elements that may interfere with text readability"  
-            textbutton _("Off") action SetVariable("persistent.reduce_clutter", False) # gui.SetPreference("reduce_clutter", False)
-            textbutton _("On") action SetVariable("persistent.reduce_clutter", True) # gui.SetPreference("reduce_clutter", True)
+            textbutton _("Off") action SetVariable("persistent.reduce_clutter", False)
+            textbutton _("On") action SetVariable("persistent.reduce_clutter", True) 
 
         vbox:         
             style_prefix "radio"
@@ -298,6 +297,25 @@ screen accessibility_prefs():
                     gui.SetPreference("idle_color", '#bbb', rebuild=False),
                     gui.SetPreference("accent_color", '#90caf9')             
                 ]
+        vbox:            
+            style_prefix "radio"            
+            label _("Self-Voicing")
+            # text "Turn on screen reader assist."  
+            textbutton _("Off"):
+                action Preference("self voicing", "disable")
+                style_suffix "radio_button"
+
+            textbutton _("Text-to-speech"):
+                action Preference("self voicing", "enable")
+                style_suffix "radio_button"
+
+            textbutton _("Clipboard"):
+                action Preference("clipboard voicing", "enable")
+                style_suffix "radio_button"
+
+            textbutton _("Debug"):
+                action Preference("debug voicing", "enable")
+                style_suffix "radio_button"
 
         vbox:
             style_prefix "radio"

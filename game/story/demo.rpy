@@ -21,6 +21,8 @@ label demo_player_customization:
 label demo_dialogue:
     call reset_skills_and_inventory()
 
+    $ current_screen = "dialogue"
+
     $ textbox_type = "dialogue"
 
     scene bg demo 
@@ -63,49 +65,41 @@ label demo_dialogue:
             menu:
                 # extend " "
                 "That's where the scars come from. (WAR +2, VIG +2)" (special=soldier): 
-                    call set_initial_skill_points('soldier')
-                    call set_adulthood_background('soldier')
+                    call set_adulthood_background(soldier)
                     "Vi grins and nods with approval."
                     vi "That makes two of us."
                 "I'm better with a bird's eye view. (WAR +2, SCH +1, VIG +1)" (special=strategist):
-                    call set_initial_skill_points('strategist')
-                    call set_adulthood_background('strategist')
+                    call set_adulthood_background(strategist)
                     vi "Cait-- I mean, the Sheriff'll appreciate having someone else to bounce ideas off of."
         "In an ambassadorial capacity, yes.": 
             vi "Ugh, politicians."
             menu:
                 # extend " "
                 "Not exactly, but let's just say I'm pretty good at getting what I want. (CHA +2, SUR +1, VIG +1)" (special=deceiver):
-                    call set_initial_skill_points('deceiver')
-                    call set_adulthood_background('deceiver')
+                    call set_adulthood_background(deceiver)
                     vi "That can come in handy."
                 "Talking often is the path of least resistance. (CHA +2, WAR +1, SCH +1)" (special=diplomat):
-                    call set_initial_skill_points('diplomat')
-                    call set_adulthood_background('diplomat')
+                    call set_adulthood_background(diplomat)
                     vi "Debatable."
         "I did. Buried in books all day long.":
             vi "Yeah? What kind?"
             menu:
                 # extend " "
                 "Theory and research. (SCH +2, CHA +1, SUR +1)" (special=scientist):
-                    call set_initial_skill_points('scientist')
-                    call set_adulthood_background('scientist')
+                    call set_adulthood_background(scientist)
                     vi "We could use more people in R&D and analysis."
                 "Schematics and application. (SCH +2, VIG +2)" (special=craftsman):
-                    call set_initial_skill_points('craftsman')
-                    call set_adulthood_background('craftsman')
+                    call set_adulthood_background(craftsman)
                     vi "Nice, Chief Zevi could use a hand if you can work Hextech."
         "'Elsewhere' doing a lot of heavy lifting there.": 
             vi "Depends how you can be useful."
             menu:
                 # extend " "
                 "People often don't notice me. (SUR +2, WAR +1, CHA +1)" (special=shadow):
-                    call set_initial_skill_points('shadow')
-                    call set_adulthood_background('shadow')
+                    call set_adulthood_background(shadow)
                     vi "Best way to stay alive."
                 "I notice people. A lot. And things about them. (SUR +2, CHA +1, VIG +1)" (special=streetrat):
-                    call set_initial_skill_points('streetrat')
-                    call set_adulthood_background('streetrat')
+                    call set_adulthood_background(streetrat)
                     vi "That makes you both reliable and dangerous."
 
     player "Still not clear what the Sheriff wants, though."
@@ -115,43 +109,31 @@ label demo_dialogue:
         "I spent a lot of time in training grounds and barracks...":
             menu:
                 "Just swords and spears, all day long. (WAR +2, VIG +2)":
-                    call set_initial_skill_points('soldier')
-                    call set_childhood_background('soldier')
+                    call set_childhood_background(soldier)
                 "Maps. Learning what generals had for breakfast. More maps. (WAR +2, SCH +1, VIG +1)": 
-                    call set_initial_skill_points('strategist')
-                    call set_childhood_background('strategist')
+                    call set_childhood_background(strategist)
         "Want to know something about people?":
             menu:
                 "It's fascinating how much a good Noxian red can reveal. (CHA +2, WAR +1, SCH +1)":
-                    call set_initial_skill_points('diplomat')
-                    call set_childhood_background('diplomat')
+                    call set_childhood_background(diplomat)
                 "If someone embellishes too much they're probably lying. (CHA +2, SUR +1, VIG +1)":
-                    call set_initial_skill_points('deceiver')
-                    call set_childhood_background('deceiver')
+                    call set_childhood_background(deceiver)
         "Yes. My books and equipment...":
             menu:
                 "I'll need a bit more space to store my books. (SCH +2, CHA +1, SUR +1)":
-                    call set_initial_skill_points('scientist')
-                    call set_childhood_background('scientist')
+                    call set_childhood_background(scientist)
                 "Gonna need a replacement for my hammer. And some new gloves. (SCH +2, VIG +2)":
-                    call set_initial_skill_points('craftsman')
-                    call set_childhood_background('craftsman')
+                    call set_childhood_background(craftsman)
         "Mm. Nice office.":
             menu:
                 "I'll go take a look around, if you don't mind. (SUR +2, WAR +1, CHA +1)":
-                    call set_initial_skill_points('shadow')
-                    call set_childhood_background('shadow')
+                    call set_childhood_background(shadow)
                 "That conspiracy board's missing a few pins. (SUR +2, CHA +1, VIG +1)":
-                    call set_initial_skill_points('streetrat')
-                    call set_childhood_background('streetrat')
-    
-    # call add_to_inventory("item_demo_note")
-    # call add_to_inventory("item_demo_rods")
-    # call add_to_inventory("item_demo_keys")
+                    call set_childhood_background(streetrat)   
 
-    call add_to_inventory(demo_note)
-    call add_to_inventory(demo_rods)
-    call add_to_inventory(demo_keys)
+    $ inventory.append(demo_note)
+    $ inventory.append(demo_rods)
+    $ inventory.append(demo_keys)
 
     """Click the skills button on the upper right to see the skills screen.
     
@@ -169,12 +151,11 @@ label demo_dialogue:
 
 ### Cinematic screen demo ############################################
 label demo_cinematic:
+    $ current_screen = "cinematic"
 
-    # show screen return_button
-    
     $ textbox_type = "cinematic"
 
-    # show screen return_button
+    # show screen return_button  
 
     scene black with dissolve
 
@@ -240,7 +221,10 @@ label demo_cinematic:
 ### Crime scene screen demo ############################################
 label demo_crimescene:
 
+    $ current_screen = "crime_scene"
+
     $ textbox_type = "cinematic"
+
     window auto
 
     scene cs demo with dissolve    

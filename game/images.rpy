@@ -16,9 +16,15 @@ image caitlyn enforcer concerned demo = "images/characters/caitlyn/caitlyn_enfor
 image vi pitfighter concerned demo = "images/characters/vi/vi_pitfighter_concerned_demo.png"
 
 ### CRIME SCENE OBJECTS ###################################
-image cs00 device closeup = "images/crimescenes/cs00_demo_device_closeup.png"
-image cs00 keys closeup = "images/crimescenes/cs00_demo_keys_closeup.png"
-image cs00 paper closeup = "images/crimescenes/cs00_demo_paper_closeup.png"
-image cs00 rods closeup = "images/crimescenes/cs00_demo_rods_closeup.png"
-image cs00 shoes closeup = "images/crimescenes/cs00_demo_shoes_closeup.png"
-image cs00 window closeup = "images/crimescenes/cs00_demo_window_closeup.png"
+image cs00 device closeup = Frame("images/crimescenes/cs00_demo_device_closeup.png", style="cs_object_closeup")
+image cs00 keys closeup = Frame("images/crimescenes/cs00_demo_keys_closeup.png", style="cs_object_closeup")
+image cs00 paper closeup = Frame("images/crimescenes/cs00_demo_paper_closeup.png", style="cs_object_closeup")
+image cs00 rods closeup = Frame("images/crimescenes/cs00_demo_rods_closeup.png", style="cs_object_closeup")
+image cs00 shoes closeup = Frame("images/crimescenes/cs00_demo_shoes_closeup.png", style="cs_object_closeup")
+image cs00 window closeup = Frame("images/crimescenes/cs00_demo_window_closeup.png", style="cs_object_closeup")
+
+style cs_object_closeup is empty:
+    xsize 850
+    ysize 850
+    xalign 0.5
+    yalign 0.1

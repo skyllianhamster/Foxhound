@@ -96,40 +96,40 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
-screen say(who, what): 
+# screen say(who, what): 
 
-    window:
-        id "window"
+#     window:
+#         id "window"
 
-        ### changes textbox design
-        ### overridden in screens_custom.py
-        if textbox_type == "cinematic": 
-            left_margin -193
-            bottom_margin -100
-            left_padding -80
-            right_padding 100
-            background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
+#         ### changes textbox design
+#         ### overridden in screens_custom.py
+#         if textbox_type == "cinematic": 
+#             left_margin -193
+#             bottom_margin -100
+#             left_padding -80
+#             right_padding 100
+#             background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
 
-        if who is not None:
+#         if who is not None:
 
-            window:
-                id "namebox"
+#             window:
+#                 id "namebox"
 
-                ### changes namebox design based on textbox type
-                ### overridden in screens_custom.py
-                if textbox_type == "cinematic":
-                    background Image("gui/namebox_cinematic.png", xalign=0.5, yalign=1.0)
+#                 ### changes namebox design based on textbox type
+#                 ### overridden in screens_custom.py
+#                 if textbox_type == "cinematic":
+#                     background Image("gui/namebox_cinematic.png", xalign=0.5, yalign=1.0)
 
-                style "namebox"
-                text who id "who"
+#                 style "namebox"
+#                 text who id "who"
 
-        text what id "what"
+#         text what id "what"
 
 
-    ## If there's a side image, display it above the text. Do not display on the
-    ## phone variant - there's no room.
-    if not renpy.variant("small"):
-        add SideImage() xalign 0.0 yalign 1.0
+#     ## If there's a side image, display it above the text. Do not display on the
+#     ## phone variant - there's no room.
+#     if not renpy.variant("small"):
+#         add SideImage() xalign 0.0 yalign 1.0
 
 
 ## Make the namebox available for styling through the Character object.
@@ -166,9 +166,8 @@ style namebox:
     #xpos gui.name_xpos
     #ypos gui.name_ypos    
     xalign 0.80 #gui.name_xalign
-    yalign -0.36     
+    yalign -0.36   
 
-    # background Frame("gui/namebox.png")
     #background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     #padding gui.namebox_borders.padding
 

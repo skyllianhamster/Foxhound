@@ -21,7 +21,7 @@ init -1:
             ### style in screens.rpy under "window" and "namebox"
             if textbox_type == "cinematic":
                 # background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
-                background Frame("#000d", xsize=1920, ysize=270, xalign=0, yalign=1.0)
+                background Transform(Frame("gui/textbox_cinematic.png", xsize=1920, ysize=270, xalign=0, yalign=1.0), alpha=0.9)
                 left_padding -400
                 right_padding 650
                 xalign 0.5
@@ -46,8 +46,9 @@ init -1:
             # FancyText: Here's where all the magic happens.
             # Replace your usual "text" statement with "fancytext" to enable
             # some fancy effects on text display.
-            fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect
+            fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect            
 
+## TODO: remove later
 style demo_button_colors:
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
     idle_color "#eee"
@@ -121,81 +122,7 @@ screen return_button:
         action MainMenu()
 
 
-### BUTTON TO SHOW TEXT FOR CRIME SCENE OBJECTS #######################
-### a 'Read' button for crime scene objects with written text
-### ###################################################################
-screen object_text_button(object):
-    zorder 10
-    textbutton _("READ"):
-        text_style "demo_button_colors"  
-        xalign 0.85 
-        yalign 0.95 
-        action ShowMenu("object_text", object)
 
-### TEXT FOR CRIME SCENE OBJECTS ######################################
-### shows the actual text on the object
-### ###################################################################
-screen object_text(object):
-    zorder 10
-    add "gui/overlay/black_overlay.png" alpha 0.85
-    hbox:
-        xalign 0.5
-        yalign 0.3
-        spacing 10
-
-        text "{color=#eeeeee}[object]{/color}"
-
-    textbutton _("BACK"): 
-        text_style "demo_button_colors"
-        xalign 0.85 
-        yalign 0.95 
-        action [Call("clear_screens"), Jump("cs00_demo")]
-
-### CRIME SCENES ###################################################
-screen cs00_demo:
-    if cs00_lockbox_taken == False:
-        add "images/crimescenes/cs00_demo.png"
-    else:
-        add "images/crimescenes/cs00_demoB.png"
-    modal True
-    
-    imagebutton auto "cs00_demo_device_%s":
-        focus_mask True
-        xpos 1255 
-        ypos 528
-        action Jump("cs00_device")
-    imagebutton auto "cs00_demo_paper_%s":
-        focus_mask True
-        xpos 891
-        ypos 799
-        action Jump("cs00_paper")
-    imagebutton auto "cs00_demo_rods_%s":
-        focus_mask True
-        xpos 933
-        ypos 766
-        action Jump("cs00_rods")
-    imagebutton auto "cs00_demo_shoes_%s":
-        focus_mask True
-        xpos 1114
-        ypos 426
-        action Jump("cs00_shoes")
-    imagebutton auto "cs00_demo_window_%s":
-        focus_mask True
-        xpos 475
-        ypos 101
-        action Jump("cs00_window")
-    
-    if cs00_lockbox_taken == False:
-        imagebutton auto "cs00_demo_lockbox_%s":
-            focus_mask True
-            xpos 1017
-            ypos 715
-            action Jump("cs00_lockbox")
-        imagebutton auto "cs00_demo_keys_%s":
-            focus_mask True
-            xpos 1366
-            ypos 244
-            action Jump("cs00_keys")
 
     
 

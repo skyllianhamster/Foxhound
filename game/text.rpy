@@ -25,7 +25,7 @@ define gui.contributors = _p("""
 {u}Contributors{/u}
 
 Organization: postarcaneanhedonia\n
-UI/UX: Jules Ackleow, Batstronaut, {a=https://x.com/PeachesPlace}PeachesPlace{/a}\n
+UI/UX: Jules Ackleow, Batstronaut, {a=https://x.com/PeachesPlace}PeachesPlace{/a}, {a=https://www.instagram.com/9noyn_/}9noyn{/a}\n
 Coding: corvus, skyllianhamster, taqueets\n
 Testing: Lucerni, king julian, GeekyEleanor, Nightworldlove, krearrr, hope_88, Archerslayer203, RedWind
 """)

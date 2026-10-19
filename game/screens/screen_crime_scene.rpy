@@ -22,7 +22,7 @@ screen object_text(object):
 
     textbutton _("<< BACK"): 
         style "cs_read_button"
-        action [Call("clear_screens"), Jump("cs00_demo")]
+        action [Call("clear_screens"), Return()] # Jump("cs00_demo")  
 
 ### CRIME SCENES ###################################################
 screen cs00_demo:
@@ -79,7 +79,7 @@ style cs_read_button_text:
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
     outlines [(4, "#000d", 1, 1)]
     idle_color "#eee"
-    hover_background Frame("gui/underline.png")
+    hover_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")
     size 50*gui.text_size_multiplier
 
 style cs_object_text:

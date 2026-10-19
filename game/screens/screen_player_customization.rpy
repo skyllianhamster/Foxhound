@@ -143,7 +143,7 @@ screen player_name_and_pronouns:
             xfill False
 
             text "Sheriff of Piltover": 
-                alt "Signature of Caitlyn Kirammman, Sheriff of Piltover"
+                alt "Signature of Caitlyn Kieramen, Sheriff of Piltover"
                 style "player_customization_input_small" size 14                            
 
     ## back to main menu button
@@ -161,7 +161,7 @@ screen player_name_and_pronouns:
         xalign 0.99
         action Call("check_name_and_pronouns")        
     
-    # use quick_menu()
+
 
 style player_customization_id_title is gui_text:
     font gui.text_font_header
@@ -270,9 +270,7 @@ screen player_name_and_pronouns_confirm:
     zorder 11
 
     ## darkens the background a bit to highlight the post-it note
-    add "gui/overlay/black_overlay.png" alpha 0.4
-
-    # use quick_menu()                    
+    add "gui/overlay/black_overlay.png" alpha 0.4    
 
     ## rotates post-it text
     transform:
@@ -280,9 +278,8 @@ screen player_name_and_pronouns_confirm:
         yanchor 0
         rotate_pad False
         rotate 5
-        # xpos 1570
         ypos 311
-        xpos 1090
+        xpos 1405 - int(315*gui.text_size_multiplier)
        
 
         ## post-it note image
@@ -290,11 +287,12 @@ screen player_name_and_pronouns_confirm:
             style "player_customization_postit"      
 
             vbox:                    
-                #xanchor 1.0        
-                #ypos 30  
-                
-                textbutton "[player_name!u],\n   [pronoun!u]":                     
+               
+                textbutton "[player_name!u],":                     
                     style "player_customization_review_button"
+                    background Frame("gui/underline2_[persistent.theme]_[persistent.cblindness].png")                    
+
+                textbutton "[pronoun!u]" style "player_customization_review_button"
 
                 text "\njust triple checking—sheriff's orders. paperwork's annoying to re-file\n":
                     alt "Reviewing input: Player name, " + str(player_name) + ", pronouns," + str(pronoun) + ". Just triple checking, sheriff's orders. Paperwork's annoying to re-file."
@@ -323,15 +321,15 @@ style player_customization_postit is empty:
     xpadding 30    
     top_padding 40
     bottom_padding 30
-    xsize 450
+    xsize int(450*gui.text_size_multiplier)
     ysize int(450*gui.text_size_multiplier)
 
 style player_customization_review_button is gui_button:
-    background Frame("gui/circled_question_[persistent.theme].png", 
-        xpos=-50, ypos=-30, 
-        xsize=int(200*gui.text_size_multiplier)+120, 
-        ysize=int(75*gui.text_size_multiplier)+95
-        )
+    # background Frame("gui/circled_question_[persistent.theme].png", 
+    #     xpos=-30, ypos=-30, 
+    #     xsize=int(200*gui.text_size_multiplier)+120, 
+    #     ysize=int(75*gui.text_size_multiplier)+95
+    #     )
     xalign 0.5
 
 style player_customization_review_button_text is gui_button_text:
@@ -345,10 +343,10 @@ style player_customization_review_text is gui_text:
     size 36*gui.text_size_multiplier
 
 style player_customization_confirm_button is gui_button:
-    hover_background Frame("gui/underline_[persistent.theme].png")
+    hover_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")    
 
 style player_customization_confirm_button_text is gui_button_text:
     font gui.text_font_handwritten
     idle_color gui.text_color 
-    hover_color gui.accent_color 
+    hover_color gui.hover_color 
     size 36*gui.text_size_multiplier

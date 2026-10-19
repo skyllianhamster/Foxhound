@@ -2,18 +2,14 @@
 
 ### resets all skills to 0 ###############################
 label reset_skills_and_inventory(): 
-    $ childhood_background = ''
-    $ adulthood_background = ''
-    $ childhood_background_description = ''
-    $ adulthood_background_description = ''
+    $ childhood_background = no_bg
+    $ adulthood_background = no_bg
 
-    $ childhood_background_description_add = ''
-
-    $ warfare = 1
-    $ charisma = 1
-    $ scholarship = 1
-    $ survival = 1
-    $ vigor = 1
+    $ warfare_pts = 1
+    $ charisma_pts = 1
+    $ scholarship_pts = 1
+    $ survival_pts = 1
+    $ vigor_pts = 1
 
     $ warfare_dc_modifier = 0
     $ charisma_dc_modifier = 0
@@ -32,266 +28,102 @@ label reset_skills_and_inventory():
     $ item_zoom = "gui/screen_skills/items/item_zoom.png"
     return
 
-### add an item to the inventory
-# label add_to_inventory(item):
-#     $ inventory.append(item)
-#     return
-
-## TODO: add a label wrapper for potential inventory actions?
-## listname.insert(index, item)
-## listname.remove(item)
-## listname.index(item)
-## listname.count(item)
-## listname.clear()
-## listname.pop()
-## listname.sort() # sorts ascending
-## listname.reverse() # reverses the list order
-
-
-### BACKGROUNDS ####################################################
-### USAGE: initial skill spread distribution
+### BACKGROUNDS ###############################################
+### USAGE: for initial skill spread distribution
+### SYNTAX: call set_adulthood_background(PlayerBackground bg)
 ### automatically updates parent skills
-#################################################################
+###############################################################
 
-label set_adulthood_background(bg=no_bg):
-    
-    $ adulthood_background = bg.key
-    $ adulthood_background_description = bg.description
+label set_adulthood_background(bg=no_bg):   
 
+    $ adulthood_background = bg
     call set_initial_skill_points(bg)
 
     return
 
 label set_childhood_background(bg=no_bg):
 
-    $ childhood_background = bg.key
-    $ childhood_background_description = bg.description
-    if childhood_background == adulthood_background:
-        $ childhood_background_description_add = bg.description2
-   
+    $ childhood_background = bg   
     call set_initial_skill_points(bg)
     
     return
 
 label set_initial_skill_points(bg):
     if bg.key == 'soldier':
-        call update_warfare(2)
-        call update_vigor(2)
+        call update_skill(warfare, 2)
+        call update_skill(vigor, 2)
     elif bg.key == 'strategist':
-        call update_warfare(2)
-        call update_scholarship(1)
-        call update_vigor(1)
+        call update_skill(warfare, 2)
+        call update_skill(scholarship, 1)
+        call update_skill(vigor, 1)
     elif bg.key == 'diplomat':
-        call update_charisma(2)
-        call update_warfare(1)
-        call update_scholarship(1)
+        call update_skill(charisma, 2)
+        call update_skill(warfare, 1)
+        call update_skill(scholarship, 1)
     elif bg.key == 'deceiver':
-        call update_charisma(2)
-        call update_survival(1)
-        call update_vigor(1)
+        call update_skill(charisma, 2)
+        call update_skill(survival, 1)
+        call update_skill(vigor, 1)
     elif bg.key == 'scientist':
-        call update_scholarship(2)
-        call update_charisma(1)
-        call update_survival(1)
+        call update_skill(scholarship, 2)
+        call update_skill(charisma, 1)
+        call update_skill(survival, 1)
     elif bg.key == 'craftsman':
-        call update_scholarship(2)
-        call update_vigor(2)
+        call update_skill(scholarship, 2)
+        call update_skill(vigor, 2)
     elif bg.key == 'shadow':
-        call update_survival(2)
-        call update_warfare(1)
-        call update_charisma(1)
+        call update_skill(survival, 2)
+        call update_skill(warfare, 1)
+        call update_skill(charisma, 1)
     elif bg.key == 'streetrat':
-        call update_survival(2)
-        call update_charisma(1)
-        call update_vigor(1)
+        call update_skill(survival, 2)
+        call update_skill(charisma, 1)
+        call update_skill(vigor, 1)
     else:
         return
     return
 
-### SKILLS ####################################################
-### USAGE: call update_skillname(x)
-### where x is an integer to increase
-### minimum 1, maximum 6
-#################################################################
+### SKILLS ############################################
+### USAGE: updates skill values by an amount
+### SYNTAX: call update_skill(PlayerSkill skill, int x)
+### skills have a minimum of 1, maximum of 6
+#######################################################
 
-label update_warfare(x):
-    if (warfare + x) >= 6:
-        $ warfare = 6
-    elif (warfare + x) <= 1:
-        $ warfare = 1
+label update_skill(skill, x):
+
+    ## gets value of the variable matching the string skill name
+    $ player_skill_value = getattr(store, skill.key+"_pts")
+
+    if (player_skill_value + x) >= 6:
+        $ player_skill_value = 6
+    elif (player_skill_value + x) <= 1:
+        $ player_skill_value = 1
     else:
-        $ warfare = warfare + x
+        $ player_skill_value = player_skill_value + x
+
+    ## sets value of the variable matching the string skill name
+    $ setattr(store, skill.key+"_pts", player_skill_value)
     return
 
-label update_charisma(x):
-    if (charisma + x) >= 6:
-        $ charisma = 6
-    elif (charisma + x) <= 1:
-        $ charisma = 1
-    else:
-        $ charisma = charisma + x
-    return
-
-label update_scholarship(x):
-    if (scholarship + x) >= 6:
-        $ scholarship = 6
-    elif (scholarship + x) <= 1:
-        $ scholarship = 1
-    else:
-        $ scholarship = scholarship + x
-    return
-
-label update_survival(x):
-    if (survival + x) >= 6:
-        $ survival = 6
-    elif (survival + x) <= 1:
-        $ survival = 1
-    else:
-        $ survival = survival + x
-    return
-
-label update_vigor(x):
-    if (vigor + x) >= 6:
-        $ vigor = 6
-    elif (vigor + x) <= 1:
-        $ vigor = 1
-    else:
-        $ vigor = vigor + x
-    return
-
-### SKILL_DC_MODIFIERS ###########################
-### USAGE: call update_skill_dc_modifier(x)
-### where x is a +/- integer to be added to the dc
-### minimum -2, maximum 2
-##################################################
-
-label update_warfare_dc_modifier(x):
-    if (warfare_dc_modifier + x) >= 2:
-        $ warfare_dc_modifier = 2
-    elif (warfare_dc_modifier + x) <= -2:
-        $ warfare_dc_modifier = -2
-    else:
-        $ warfare_dc_modifier = warfare_dc_modifier + x
-    return
-
-label update_charisma_dc_modifier(x):
-    if (charisma_dc_modifier + x) >= 2:
-        $ charisma_dc_modifier = 2
-    elif (charisma_dc_modifier + x) <= -2:
-        $ charisma_dc_modifier = -2
-    else:
-        $ charisma_dc_modifier = charisma_dc_modifier + x
-    return
-
-label update_scholarship_dc_modifier(x):
-    if (scholarship_dc_modifier + x) >= 2:
-        $ scholarship_dc_modifier = 2
-    elif (scholarship_dc_modifier + x) <= -2:
-        $ scholarship_dc_modifier = -2
-    else:
-        $ scholarship_dc_modifier = scholarship_dc_modifier + x
-    return
-
-label update_survival_dc_modifier(x):
-    if (survival_dc_modifier + x) >= 2:
-        $ survival_dc_modifier = 2
-    elif (survival_dc_modifier + x) <= -2:
-        $ survival_dc_modifier = -2
-    else:
-        $ survival_dc_modifier = survival_dc_modifier + x
-    return
-
-label update_vigor_dc_modifier(x):
-    if (vigor_dc_modifier + x) >= 2:
-        $ vigor_dc_modifier = 2
-    elif (vigor_dc_modifier + x) <= -2:
-        $ vigor_dc_modifier = -2
-    else:
-        $ vigor_dc_modifier = vigor_dc_modifier + x
-    return
-
-### ROLLS & SKILL CHECKS ###############################
-### USAGE: call DiceRoll() and show dice roll UI
+### ROLLS & SKILL CHECKS #########################
+### USAGE: calls DiceRoll() and show dice roll UI
 ### Added by taqueets
-########################################################
+##################################################
 
 init python:
     def DiceRoll(sides=20):
         return renpy.random.randint(1, sides)
 
-label skill_check_warfare(required_skill_value):  
+label skill_check(skill, required_skill_value):
 
-    $ skill_check_type = "warfare"
+    $ skill_check_type = skill.key
+    $ player_skill_value = getattr(store, skill.key+"_pts")
 
-    if warfare >= required_skill_value:
+    if player_skill_value >= required_skill_value:
         $ skill_check_success = True
     else:
         $ roll = DiceRoll()
-        call calculate_dc(required_skill_value, warfare)
-        call screen dice_tray_overlay
-        if roll >= dc:
-            $ skill_check_success = True
-        else:
-            $ skill_check_success = False                
-    return
-
-label skill_check_charisma(required_skill_value): 
-
-    $ skill_check_type = "charisma"
-
-    if charisma >= required_skill_value:
-        $ skill_check_success = True
-    else:
-        $ roll = DiceRoll()
-        call calculate_dc(required_skill_value, charisma)
-        call screen dice_tray_overlay
-        if roll >= dc:
-            $ skill_check_success = True
-        else:
-            $ skill_check_success = False
-    return
-
-label skill_check_scholarship(required_skill_value):
-
-    $ skill_check_type = "scholarship"
-
-    if scholarship >= required_skill_value:
-        $ skill_check_success = True
-    else:
-        $ roll = DiceRoll()
-        call calculate_dc(required_skill_value, scholarship)
-        call screen dice_tray_overlay
-        if roll >= dc:
-            $ skill_check_success = True
-        else:
-            $ skill_check_success = False
-    return
-
-label skill_check_survival(required_skill_value):
-
-    $ skill_check_type = "survival"
-
-    if survival >= required_skill_value:
-        $ skill_check_success = True
-    else:
-        $ roll = DiceRoll()
-        call calculate_dc(required_skill_value, survival)
-        call screen dice_tray_overlay
-        if roll >= dc:
-            $ skill_check_success = True
-        else:
-            $ skill_check_success = False
-    return
-
-label skill_check_vigor(required_skill_value):
-
-    $ skill_check_type = "vigor"
-
-    if vigor >= required_skill_value:
-        $ skill_check_success = True
-    else:
-        $ roll = DiceRoll()
-        call calculate_dc(required_skill_value, vigor)
+        call calculate_dc(required_skill_value, player_skill_value)
         call screen dice_tray_overlay
         if roll >= dc:
             $ skill_check_success = True
@@ -363,79 +195,3 @@ init python:
 screen playtime_counter():
     timer 1.0 repeat True action SetVariable("playtime_seconds", playtime_seconds + 1)
 
-# label run_skill_check:
-
-#     call screen dice_tray_overlay
-
-#     hide screen skills_and_inventory_button
-#     hide screen return_button
-
-#     scene black with dissolve
-
-#     if skill_check >= dc:
-#         if skill_type == survival_choice:
-#             jump stealth_success
-
-#         elif skill_type == warfare_choice:
-#             jump takedown_success
-
-#         elif skill_type == charisma_choice:
-#             jump manipulation_success
-
-#     else:
-#         if skill_type == survival_choice:
-#             jump stealth_failure
-
-#         elif skill_type == warfare_choice:
-#             jump takedown_failure
-
-#         elif skill_type == charisma_choice:
-#             jump manipulation_failure
-
-# label stealth_success:
-#     window show
-#     """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a successful stealth mission would go here.
-#     """
-#     window hide
-
-#     return
-
-# label stealth_failure:
-#     window show
-#     """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a failed stealth mission would go here.
-#     """
-#     window hide
-
-#     return
-
-# label takedown_success:
-#     window show
-#     """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a successful takedown plan would go here.
-#     """
-#     window hide
-
-#     return
-
-# label takedown_failure:
-#     window show
-#     """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of a failed takedown plan would go here.
-#     """
-#     window hide
-
-#     return
-
-# label manipulation_success:
-#     window show
-#     """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of successful distraction and manipulation would go here.
-#     """
-#     window hide
-
-#     return
-
-# label manipulation_failure:
-#     window show
-#     """[skill_type] skill check = [skill_check], DC = [dc].\nA scene of failed distraction and manipulation would go here.
-#     """
-#     window hide
-
-#     return

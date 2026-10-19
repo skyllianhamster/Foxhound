@@ -88,7 +88,10 @@ screen quick_menu():
                     Text("Show", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=110, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
             if qm_orientation == "horizontal":
                 xanchor 1.0
                 xpos 1650
@@ -118,7 +121,10 @@ screen quick_menu_buttons:
                     Text("Back", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=110, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)  
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
             insensitive Composite(
                 (60, 60),
                 (0, 0), Transform(Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"), alpha=0.4),
@@ -146,7 +152,10 @@ screen quick_menu_buttons:
                 Text("History", style="quick_tooltip_text_"+qm_orientation), 
                 xmaximum=170, ymaximum=42))
             ]
-        unhovered SetField(mtt_qm, 'redraw', False)  
+        unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
         insensitive Composite(
             (60, 60),
             (0, 0), Transform(Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"), alpha=0.4),
@@ -175,7 +184,10 @@ screen quick_menu_buttons:
                     Text("Skip", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=110, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)  
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
             insensitive Composite(
                 (60, 60),
                 (0, 0), Transform(Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"), alpha=0.4),
@@ -214,7 +226,10 @@ screen quick_menu_buttons:
                     Text("Autoplay", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=190, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)  
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
             insensitive Composite(
                 (60, 60),
                 (0, 0), Transform(Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"), alpha=0.4),
@@ -264,7 +279,10 @@ screen quick_menu_buttons:
                     Text("Save", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=110, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
             insensitive Composite(
                 (60, 60),
                 (0, 0), Transform(Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"), alpha=0.4),
@@ -292,7 +310,10 @@ screen quick_menu_buttons:
                     Text("Quick Save", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=240, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)  
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ] 
             idle Composite(
                 (60, 60),
                 (0, 0), Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"),
@@ -315,7 +336,10 @@ screen quick_menu_buttons:
                     Text("Quick Load", style="quick_tooltip_text_"+qm_orientation), 
                     xmaximum=240, ymaximum=42))
                 ]
-            unhovered SetField(mtt_qm, 'redraw', False)  
+            unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
             idle Composite(
                 (60, 60),
                 (0, 0), Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"),
@@ -338,7 +362,10 @@ screen quick_menu_buttons:
                 Text("Settings", style="quick_tooltip_text_"+qm_orientation), 
                 xmaximum=190, ymaximum=42))
             ]
-        unhovered SetField(mtt_qm, 'redraw', False)  
+        unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
         idle Composite(
             (60, 60),
             (0, 0), Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"),
@@ -361,7 +388,10 @@ screen quick_menu_buttons:
                 Text("Debug", style="quick_tooltip_text_"+qm_orientation), 
                 xmaximum=150, ymaximum=42))
             ]
-        unhovered SetField(mtt_qm, 'redraw', False)
+        unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
         idle Composite(
             (60, 60),
             (0, 0), Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hex_[persistent.theme].png", style="quick_icon_idle"),
@@ -386,7 +416,10 @@ screen quick_menu_buttons:
                 Text("Hide", style="quick_tooltip_text_"+qm_orientation), 
                 xmaximum=110, ymaximum=42))
             ]
-        unhovered SetField(mtt_qm, 'redraw', False)
+        unhovered [
+                mtt_qm.Action(Text(" ")),
+                SetField(mtt_qm, 'redraw', False)
+                ]
         if qm_orientation == "horizontal":
             idle Transform(Frame("gui/screen_quick_menu/quick_menu_"+qm_orientation+"_hide_[persistent.theme].png", style="quick_icon_idle"), ypos=-5)
         else:
@@ -427,7 +460,7 @@ style quick_tooltip_frame_horizontal:
     ypos -35
 
 style quick_tooltip_text_horizontal: 
-    color '#eee'  
+    color gui.text_ondark_color  
     font gui.text_font_typewriter
     size 26*gui.text_size_multiplier 
     xanchor 0.5
@@ -442,7 +475,7 @@ style quick_tooltip_frame_vertical:
     ypos 15
 
 style quick_tooltip_text_vertical: 
-    color '#eee'  
+    color gui.text_ondark_color  
     font gui.text_font_typewriter
     size 26*gui.text_size_multiplier 
     xanchor 0

@@ -10,6 +10,8 @@ init offset = -1
 ## screens (keyboard_help, mouse_help, and gamepad_help) to display the actual
 ## help.
 
+
+
 screen help():
 
     tag menu
@@ -32,12 +34,9 @@ screen help():
             ypos 50           
             
             ## menu title on top of the page
-            text "HELP":
-                style "pref_header"
-                xpos 30
-                ypos 15
+            text "HELP" style "menu_header"
 
-            ## adds a Keyboard, Mouse, and Accessibility tab
+            ## adds a Keyboard and Mouse tab
             transform:
                 xanchor 0
                 yanchor 0
@@ -58,25 +57,12 @@ screen help():
 
             ## constrains the menu contents to a specific area of the page
             frame:       
-                # background Frame("gui/overlay/black_overlay.png") 
-                style "empty" 
-                xanchor 0
-                yanchor 0 
-                xpos 2
-                ypos 143                 
-                xsize 825   
-                ysize 837      
-                left_padding 77
-                right_padding 65
-                top_padding 25
-                bottom_padding 20
+                style "help_frame"                
 
                 ## the scrollable area
                 viewport:  
-                    # add "gui/overlay/black_overlay.png" alpha 0.4
-                    yadjustment y_adj
-                    xalign 0
-                    yalign 0
+                    style "help_viewport"                    
+                    yadjustment y_adj                    
                     scrollbars "vertical"          
                     mousewheel True
                     draggable True
@@ -86,8 +72,7 @@ screen help():
 
                     ## menu contents
                     vbox:                      
-                        style "empty"                        
-                        spacing 40  
+                        style "help_vbox"    
 
                         null height 20                 
 
@@ -147,7 +132,7 @@ screen keyboard_help():
 
     hbox:
         label "V"
-        text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
+        text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.") ## 
 
     ## hiding this since we built our own accessibility menu
     # hbox:
@@ -219,6 +204,25 @@ style help_label is gui_label
 style help_label_text is gui_label_text
 style help_text is gui_text
 
+style help_frame is empty:
+    xanchor 0
+    yanchor 0 
+    xpos 2
+    ypos 143                 
+    xsize 825   
+    ysize 837      
+    left_padding 77
+    right_padding 65
+    top_padding 25
+    bottom_padding 20
+
+style help_viewport is empty:
+    xalign 0
+    yalign 0
+
+style help_vbox is empty:
+    spacing 40
+
 style help_vscrollbar:
     xpos 90   
     ypos -212
@@ -227,25 +231,26 @@ style help_vscrollbar:
     base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
     unscrollable gui.unscrollable
 
-style help_button:
+style help_button: ## tabs
     # size_group "help"
     properties gui.button_properties("help_button")
     yanchor 1.0
-    idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png", Borders(50,0,100,0))
-    hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png", Borders(50,0,100,0))
-    selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png", Borders(50,0,100,0))
+    idle_background Frame("gui/screen_menus/screen_menu_tab_idle_[persistent.theme].png", Borders(50,0,100,0))
+    hover_background Frame("gui/screen_menus/screen_menu_tab_selected_[persistent.theme].png", Borders(50,0,100,0))
+    selected_background Frame("gui/screen_menus/screen_menu_tab_selected_[persistent.theme].png", Borders(50,0,100,0))
 
 
-style help_button_text:
+style help_button_text: ## tabs text
     properties gui.text_properties("pref_button")
-    color gui.text_color 
-    hover_color gui.accent_color    
+    color gui.idle_color 
+    hover_color gui.text_secondary_color
+    selected_color gui.text_secondary_color
     size 40*gui.text_size_multiplier
     font gui.text_font_header
 
 style help_calibrate_button:    
-    hover_background Frame("gui/underline_[persistent.theme].png") 
-    selected_background Frame("gui/underline_[persistent.theme].png")
+    hover_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png") 
+    selected_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")
 
 style help_calibrate_button_text:  
     color gui.text_color 
@@ -253,9 +258,11 @@ style help_calibrate_button_text:
 
 style help_label:
     xsize 250
-    right_padding 40
+    right_padding 40    
 
 style help_label_text:
+    font gui.text_font_dialogue
+    color gui.text_secondary_color
     size 33*gui.text_size_multiplier
     xalign 1.0
     textalign 1.0
@@ -263,4 +270,8 @@ style help_label_text:
 style help_menu_background:
     xsize 782
     ysize 851
+
+style help_text:
+    color gui.text_secondary_color
+    font gui.text_font_dialogue
 

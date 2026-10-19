@@ -71,9 +71,9 @@ screen dice_tray_overlay:
 
                 if display_roll_value == True:
                     if roll >= dc:
-                        text "[roll]" style "dice_roll_value_text" color "#56bbff"
+                        text "[roll]" style "dice_roll_value_text" alt "You rolled: [roll]" color "#fff" ## "#56bbff"
                     else:
-                        text "[roll]" style "dice_roll_value_text" color "#ff6565"                
+                        text "[roll]" style "dice_roll_value_text" alt "You rolled: [roll]" color "#888" ## "#ff6565"                
             
             ### short delay before confirming roll status
             if display_success_or_fail == False:
@@ -84,9 +84,9 @@ screen dice_tray_overlay:
 
                 if display_success_or_fail == True:
                     if roll >= dc:
-                        text "SUCCESS" style "dice_roll_status_text" color "#56bbff"
+                        text "SUCCESS" style "dice_roll_status_text" color "#fff" ## "#56bbff"
                     else:
-                        text "FAILURE" style "dice_roll_status_text" color "#ff6565"
+                        text "FAILURE" style "dice_roll_status_text" color "#888" ## "#ff6565"
 
         ### short delay before showing continue button
         if display_continue == False:
@@ -122,14 +122,13 @@ style dice_roll_value_text:
     color "#fff"
 
 style dice_roll_continue_button:
-    hover_background Frame("gui/underline_dark.png")
+    hover_background Frame("gui/underline_white.png")
     xalign 0.5
     yalign 0.9
     
 style dice_roll_continue_button_text:
     font gui.text_font_header
-    idle_color "#fff"
-    hover_color "#90CAF9"
+    color "#fff"
     size 50
 
 style dice_roll_modifiers is empty:    
@@ -147,125 +146,3 @@ style dice_roll_modifiers_text:
     font gui.text_font_dialogue
     color "#eee"
     size 33*gui.text_size_multiplier
-
-
-# if roll == 20:
-#     add "roll20":
-#         zoom 1.3
-#         xcenter 0.5
-#         ycenter 0.4
-
-# elif roll == 1:
-#     add "roll1":
-#         zoom 1.3
-#         xcenter 0.5
-#         ycenter 0.4
-
-# else:
-#     if roll == 2:
-#         add "roll2":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 3:
-#         add "roll3":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 4:
-#         add "roll4":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 5:
-#         add "roll5":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 6:
-#         add "roll6":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 7:
-#         add "roll7":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 8:
-#         add "roll8":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 9:
-#         add "roll9":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 10:
-#         add "roll10":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 11:
-#         add "roll11":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 12:
-#         add "roll12":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 13:
-#         add "roll13":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 14:
-#         add "roll14":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 15:
-#         add "roll15":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 16:
-#         add "roll16":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 17:
-#         add "roll17":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 18:
-#         add "roll18":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4
-
-#     elif roll == 19:
-#         add "roll19":
-#             zoom 1.3
-#             xcenter 0.5
-#             ycenter 0.4

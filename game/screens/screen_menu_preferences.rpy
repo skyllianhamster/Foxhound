@@ -34,10 +34,7 @@ screen preferences():
             ypos 50            
             
             ## menu title on top of the page
-            text "SETTINGS":
-                style "pref_header"
-                xpos 30
-                ypos 15
+            text "SETTINGS" style "menu_header"
 
             ## adds a Game tab and an Accessibility tab
             transform:
@@ -56,26 +53,13 @@ screen preferences():
                     textbutton _(" ACCESSIBILITY    ") action SetScreenVariable("pref_tab", "accessibility")
 
             ## constrains the menu contents to a specific area of the page
-            frame:       
-                # background Frame("gui/overlay/black_overlay.png") 
-                style "empty" 
-                xanchor 0
-                yanchor 0 
-                xpos 2
-                ypos 143                 
-                xsize 825   
-                ysize 837      
-                left_padding 77
-                right_padding 65
-                top_padding 25
-                bottom_padding 20
+            frame:                
+                style "pref_frame"                 
 
                 ## the scrollable area
                 viewport:  
-                    # add "gui/overlay/black_overlay.png" alpha 0.4
-                    yadjustment y_adj
-                    xalign 0
-                    yalign 0
+                    style "pref_viewport"
+                    yadjustment y_adj                    
                     scrollbars "vertical"          
                     mousewheel True
                     draggable False
@@ -84,8 +68,7 @@ screen preferences():
 
                     ## menu contents
                     vbox:                      
-                        style "empty"                        
-                        spacing 40                             
+                        style "pref_vbox"                     
 
                         if pref_tab == "game":
                             use game_prefs
@@ -95,7 +78,7 @@ screen preferences():
 ## shown if the GAME tab is clicked
 screen game_prefs():    
 
-    hbox:            
+    hbox:        
         box_wrap True
         spacing 20 
 
@@ -130,8 +113,8 @@ screen game_prefs():
             hbox:     
                 ypos -8
                 text "    "
-                bar value FieldValue(persistent, "brig", 2., style="slider_slider", offset=-1, min=-0.7, max=0.7)
-            textbutton "   Reset" action SetField(persistent, "brig", 0)
+                bar value FieldValue(persistent, "brig", 2., style="slider_slider", offset=-1, min=-0.7, max=0.7) alt "Brightness slider "
+            textbutton "   Reset" action SetField(persistent, "brig", 0) alt "Reset brightness"
 
         vbox:
             ## Contrast setting
@@ -142,8 +125,9 @@ screen game_prefs():
             hbox:
                 ypos -8         
                 text "    "  
-                bar value FieldValue(persistent, "cont", 2., style="slider_slider", min=0.2, max=1.8)
-            textbutton "   Reset" action SetField(persistent, "cont", 1)
+                bar value FieldValue(persistent, "cont", 2., style="slider_slider", min=0.2, max=1.8) alt "Contrast slider "
+            textbutton "   Reset" action SetField(persistent, "cont", 1) alt "Reset contrast"
+
 
         vbox:
             ## Text speed setting
@@ -154,8 +138,9 @@ screen game_prefs():
             hbox:
                 ypos -8 
                 text "    "
-                bar value Preference("text speed")
-            textbutton "   Reset" action SetVariable("preferences.text_cps", 100)
+                bar value Preference("text speed") alt "Text speed slider "
+            textbutton "   Reset" action SetVariable("preferences.text_cps", 100) alt "Reset text speed"
+
                 
         vbox:
             ## Auto forward speed setting
@@ -166,8 +151,9 @@ screen game_prefs():
             hbox:
                 ypos -8
                 text "    "
-                bar value Preference("auto-forward time")
-            textbutton "   Reset" action SetVariable("preferences.afm_time", 15)    
+                bar value Preference("auto-forward time") alt "Auto-forward speed slider "
+            textbutton "   Reset" action SetVariable("preferences.afm_time", 15) alt "Reset auto-forward speed"
+
         
         vbox:
             ## Global sound setting
@@ -178,8 +164,9 @@ screen game_prefs():
             hbox:
                 ypos -8
                 text "    "
-                bar value Preference("mixer main volume")
-            textbutton "   Reset" action Preference("mixer main volume", 1.0)    
+                bar value Preference("mixer main volume") alt "Global volume slider "
+            textbutton "   Reset" action Preference("mixer main volume", 1.0) alt "Reset global volume"
+ 
 
         if config.has_music:
             vbox:
@@ -193,8 +180,9 @@ screen game_prefs():
                 hbox:
                     ypos -8
                     text "    "
-                    bar value Preference("music volume")
-                textbutton "   Reset" action Preference("music volume", config.default_music_volume)             
+                    bar value Preference("music volume") alt "Music slider "
+                textbutton "   Reset" action Preference("music volume", config.default_music_volume)  alt "Reset music volume"
+          
 
         if config.has_sound:
             vbox:
@@ -206,14 +194,15 @@ screen game_prefs():
                 hbox:
                     ypos -8
                     text "    "
-                    bar value Preference("sound volume")
+                    bar value Preference("sound volume") alt "Sound effects volume slider "
                 hbox:                    
                     xanchor 1.0
                     xpos 525
                     spacing 40
                     if config.sample_sound:
-                        textbutton _("   Test") action Play("sound", config.sample_sound)
-                    textbutton "   Reset" action Preference("sound volume", config.default_sfx_volume)                
+                        textbutton _("   Test") action Play("sound", config.sample_sound) alt "Test sound effect"
+                    textbutton "   Reset" action Preference("sound volume", config.default_sfx_volume)  alt "Reset sound effects volume"
+            
 
 
         if config.has_voice:
@@ -226,14 +215,14 @@ screen game_prefs():
                 hbox:
                     ypos -8
                     text "    "
-                    bar value Preference("voice volume")
+                    bar value Preference("voice volume")  alt "Voice volume slider "
                 hbox:
                     xanchor 1.0
                     xpos 525
                     spacing 40
                     if config.sample_voice:
-                        textbutton _("   Test") action Play("voice", config.sample_voice)
-                    textbutton "   Reset" action Preference("voice volume", config.default_voice_volume)
+                        textbutton _("   Test") action Play("voice", config.sample_voice) alt "Test voice sample"
+                    textbutton "   Reset" action Preference("voice volume", config.default_voice_volume) alt "Reset voice volume"
 
         if config.has_music or config.has_sound or config.has_voice:
             null height gui.pref_spacing
@@ -245,147 +234,240 @@ screen game_prefs():
         null height (4 * gui.pref_spacing)
 
 ## shown if the ACCESSIBILITY tab is clicked
-screen accessibility_prefs(): 
-    
-    grid 2 3:
-        xmaximum 300
-        xspacing 50         
-    
-        vbox:            
-            style_prefix "radio"            
-            label _("Reduce visual clutter") alt "Reduce visual clutter"
-            # text "Remove some elements that may interfere with text readability"  
-            textbutton _("Off") action SetVariable("persistent.reduce_clutter", False)
-            textbutton _("On") action SetVariable("persistent.reduce_clutter", True) 
+screen accessibility_prefs():
 
-        vbox:         
-            style_prefix "radio"
-            label _("High contrast text")
-            # text "Force a solid background on all text elements (engine override)"
-            textbutton _("Off") action Preference("high contrast text", "disable") #style_suffix "radio_button"
-            textbutton _("On") action Preference("high contrast text", "enable") #style_suffix "radio_button"
-
+    hbox:   
         vbox:
-            style_prefix "radio"
-            label _("Alt text")
-            # text "Include alt text descriptions in between narrative elements"  
-            textbutton _("Off") action SetVariable("persistent.alt_text", False)
-            textbutton _("On") action SetVariable("persistent.alt_text", True)
+            spacing 75
 
-        vbox:
-            style_prefix "radio"
-            label _("Dark mode")
-            # text "Invert color scheme"
-            textbutton _("Off"): 
-                action [
-                    SetVariable("persistent.theme", "light"),
-                    SetVariable("persistent.namebox", "gui/namebox_light.png"),                    
-                    SetVariable("persistent.textbox", "gui/textbox_light.png"),
-                    
-                    gui.SetPreference("text_color", '#000', rebuild=False),
-                    gui.SetPreference("idle_color", '#555', rebuild=False),
-                    gui.SetPreference("accent_color", '#900')          
-                ]
+            grid 2 4:
+                xmaximum 300
+                xspacing 75         
+            
+                vbox:            
+                    style_prefix "radio"            
+                    label _("Reduce visual clutter")
+                    # text "Remove some elements that may interfere with text readability"  
+                    textbutton _("Off") action SetVariable("persistent.reduce_clutter", False) alt "Reduce visual clutter - Off"
+                    textbutton _("On") action SetVariable("persistent.reduce_clutter", True) alt "Reduce visual clutter - On"
 
-            textbutton _("On"):
-                action [
-                    SetVariable("persistent.theme", "dark"),
-                    SetVariable("persistent.namebox", "gui/namebox_dark.png"),
-                    SetVariable("persistent.textbox", "gui/textbox_dark.png"),
-                    
-                    gui.SetPreference("text_color", '#fff', rebuild=False),
-                    gui.SetPreference("idle_color", '#bbb', rebuild=False),
-                    gui.SetPreference("accent_color", '#90caf9')             
-                ]
-        vbox:            
-            style_prefix "radio"            
-            label _("Self-Voicing")
-            # text "Turn on screen reader assist."  
-            textbutton _("Off"):
-                action Preference("self voicing", "disable")
-                style_suffix "radio_button"
+                vbox:            
+                    style_prefix "radio"            
+                    label _("Red-blindness GUI")
+                    # text "Replaces the red accents with blue for users with color blindness"  
+                    textbutton _("Off"): 
+                        alt "Replace red accent with blue - Off"
+                        action [     
+                            If(
+                                persistent.theme == "light",
+                                gui.SetPreference("radar_graph_color", '#dea198', rebuild=False),
+                                gui.SetPreference("radar_graph_color", '#c94248', rebuild=False)                                                         
+                            ), 
+                            If(
+                                persistent.theme == "light",
+                                gui.SetPreference("hover_color", '#900', rebuild=False),
+                                gui.SetPreference("hover_color", '#fff', rebuild=False)                                                         
+                            ),                          
+                            If(
+                                persistent.theme == "light",
+                                gui.SetPreference("accent_color", '#900'),
+                                gui.SetPreference("accent_color", '#ff656c')                                                         
+                            ),
+                            SetVariable("persistent.cblindness", "cboff")
+                            ]
+                    textbutton _("On"):
+                        alt "Replace red accent with blue - On"
+                        action [                                    
+                            If(
+                                persistent.theme == "light",
+                                gui.SetPreference("radar_graph_color", '#90caf9', rebuild=False),
+                                gui.SetPreference("radar_graph_color", '#226ea8', rebuild=False)
+                            ),
+                            If(
+                                persistent.theme == "light",
+                                gui.SetPreference("hover_color", '#226ea8', rebuild=False),
+                                gui.SetPreference("hover_color", '#eee', rebuild=False)                                                         
+                            ),
+                            If(
+                                persistent.theme == "light",
+                                gui.SetPreference("accent_color", '#226ea8'),
+                                gui.SetPreference("accent_color", '#90caf9')                                                        
+                            ),
+                            SetVariable("persistent.cblindness", "cbon")
+                            ]
 
-            textbutton _("Text-to-speech"):
-                action Preference("self voicing", "enable")
-                style_suffix "radio_button"
+                vbox:         
+                    style_prefix "radio"
+                    label _("High contrast text (override)")
+                    # text "Force a solid background on all text elements (engine override)"
+                    textbutton _("Off") action Preference("high contrast text", "disable") alt "High contrast text - Off"
+                    textbutton _("On") action Preference("high contrast text", "enable") alt "High contrast text - On"
 
-            textbutton _("Clipboard"):
-                action Preference("clipboard voicing", "enable")
-                style_suffix "radio_button"
+                vbox:
+                    style_prefix "radio"
+                    label _("Alt text")
+                    # text "Include alt text descriptions in between narrative elements"  
+                    textbutton _("Off") action SetVariable("persistent.alt_text", False) alt "Include alt text - Off"
+                    textbutton _("On") action SetVariable("persistent.alt_text", True) alt "Include alt text - On"
 
-            textbutton _("Debug"):
-                action Preference("debug voicing", "enable")
-                style_suffix "radio_button"
+                vbox:
+                    style_prefix "radio"
+                    label _("Dark mode")
+                    # text "Invert color scheme"
+                    textbutton _("Off"): 
+                        alt "Dark mode - Off"
 
-        vbox:
-            style_prefix "radio"
-            label _("Font size")
-            textbutton _("Regular"):
-                action [ 
-                    SetVariable("persistent.text_size_multiplier", 1),
-                    gui.SetPreference("text_size_multiplier", 1), #changes text size
-                    gui.SetPreference("name_ypos", 28), # adjusts name within namebox as text changes size
-                    gui.SetPreference("dialogue_ypos", 75) # adjusts text w/in dialogue box as text changes size
-                ]
-            textbutton _("Medium"): 
-                action [
-                    SetVariable("persistent.text_size_multiplier", 1.2),
-                    gui.SetPreference("text_size_multiplier", 1.2),
-                    gui.SetPreference("name_ypos", 25),
-                    gui.SetPreference("dialogue_ypos", 60)
-                ]
-            textbutton _("Large"): 
-                action [
-                    SetVariable("persistent.text_size_multiplier", 1.4),
-                    gui.SetPreference("text_size_multiplier", 1.4),
-                    gui.SetPreference("name_ypos", 21),
-                    gui.SetPreference("dialogue_ypos", 55)
-                ]
+                        action [
+                            SetVariable("persistent.theme", "light"),
+                            SetVariable("persistent.namebox", "gui/namebox_light.png"),                    
+                            SetVariable("persistent.textbox", "gui/textbox_light.png"),                            
+                            
+                            If(
+                                persistent.cblindness == "cboff",
+                                gui.SetPreference("radar_graph_color", '#dea198', rebuild=False),
+                                gui.SetPreference("radar_graph_color", '#90caf9', rebuild=False)                            
+                            ),
+                            If(
+                                persistent.cblindness == "cboff",
+                                gui.SetPreference("hover_color", '#900', rebuild=False),
+                                gui.SetPreference("hover_color", '#226ea8', rebuild=False)
+                            ),
+                            If(
+                                persistent.cblindness == "cboff",
+                                gui.SetPreference("accent_color", '#900', rebuild=False),
+                                gui.SetPreference("accent_color", '#226ea8', rebuild=False)
+                            ),
+                            gui.SetPreference("text_color", '#000', rebuild=False),
+                            gui.SetPreference("text_secondary_color", '#000', rebuild=False),
+                            gui.SetPreference("text_ondark_color", '#fff', rebuild=False),
+                            gui.SetPreference("idle_color", '#555')
+                        ]
+
+                    textbutton _("On"):
+                        alt "Dark mode - On"
+                        action [
+                            SetVariable("persistent.theme", "dark"),
+                            SetVariable("persistent.namebox", "gui/namebox_dark.png"),
+                            SetVariable("persistent.textbox", "gui/textbox_dark.png"),                            
+                            
+                            If(
+                                persistent.cblindness == "cboff",
+                                gui.SetPreference("radar_graph_color", '#c94248', rebuild=False),
+                                gui.SetPreference("radar_graph_color", '#226ea8', rebuild=False)
+                            ),                        
+                            gui.SetPreference("hover_color", '#fff', rebuild=False),
+                            If(
+                                persistent.cblindness == "cboff",
+                                gui.SetPreference("accent_color", '#ff656c'),
+                                gui.SetPreference("accent_color", '#90caf9')
+                            ),
+                            gui.SetPreference("text_color", '#fff', rebuild=False),
+                            gui.SetPreference("text_secondary_color", '#ffecbc', rebuild=False),
+                            gui.SetPreference("text_ondark_color", '#ffecbc', rebuild=False),
+                            gui.SetPreference("idle_color", '#bbb')                      
+                        ]
+                vbox:            
+                    style_prefix "radio"            
+                    label _("Self-Voicing")
+                    # text "Turn on screen reader assist."  
+                    textbutton _("Off"):
+                        action Preference("self voicing", "disable")
+                        style_suffix "radio_button"
+
+                    textbutton _("Text-to-speech"):
+                        action Preference("self voicing", "enable")
+                        style_suffix "radio_button"
+
+                    textbutton _("Clipboard"):
+                        action Preference("clipboard voicing", "enable")
+                        style_suffix "radio_button"
+
+                    textbutton _("Debug"): ##TODO: remove this later
+                        action Preference("debug voicing", "enable")
+                        style_suffix "radio_button"
+
+                vbox:
+                    style_prefix "radio"
+                    label _("Font size")
+                    textbutton _("Regular"):
+                        alt "Font size - Regular"
+                        action [ 
+                            SetVariable("persistent.text_size_multiplier", 1),
+                            gui.SetPreference("text_size_multiplier", 1), #changes text size
+                            gui.SetPreference("name_ypos", 28), # adjusts name within namebox as text changes size
+                            gui.SetPreference("dialogue_ypos", 75) # adjusts text w/in dialogue box as text changes size
+                        ]
+                    textbutton _("Medium"): 
+                        alt "Font size - Medium"
+                        action [
+                            SetVariable("persistent.text_size_multiplier", 1.2),
+                            gui.SetPreference("text_size_multiplier", 1.2),
+                            gui.SetPreference("name_ypos", 25),
+                            gui.SetPreference("dialogue_ypos", 60)
+                        ]
+                    textbutton _("Large"): 
+                        alt "Font size - Large"
+                        action [
+                            SetVariable("persistent.text_size_multiplier", 1.4),
+                            gui.SetPreference("text_size_multiplier", 1.4),
+                            gui.SetPreference("name_ypos", 21),
+                            gui.SetPreference("dialogue_ypos", 55)
+                        ]
+            
+            grid 2 2:  
+                xmaximum 300   
+                xspacing 75
+
+                vbox:            
+                    style_prefix "radio"
+                    label _("Headers")                                  
+                    textbutton _("ARSENAL"): 
+                        alt "Header font - Arsenal"
+                        text_font "fonts/header/Arsenal-Regular.ttf"
+                        action gui.SetPreference("font_header", "fonts/header/Arsenal-Regular.ttf")
+                    textbutton _("JOSEFIN SANS"):  
+                        alt "Header font - Josefin Sans"              
+                        text_font "fonts/header/JosefinSans-VariableFont_wght.ttf"
+                        action gui.SetPreference("font_header", "fonts/header/JosefinSans-VariableFont_wght.ttf")
+
+                vbox:            
+                    style_prefix "radio"
+                    label _("Handwritten")
+                    textbutton _("SS Soapy Hands"):
+                        alt "Handwritten font - S.S. Soapy Hands"
+                        text_font "fonts/handwritten/SS Soapy Hands Medium.otf"
+                        action gui.SetPreference("font_handwritten", "fonts/handwritten/SS Soapy Hands Medium.otf")
+                    textbutton _("Patrick Hand"):
+                        alt "Handwritten font - Patrick Hand"
+                        text_font "fonts/handwritten/PatrickHand-Regular.ttf"
+                        action gui.SetPreference("font_handwritten", "fonts/handwritten/PatrickHand-Regular.ttf")
+
+                vbox:            
+                    style_prefix "radio"
+                    label _("Typewriter")
+                    textbutton _("Courier Prime"):
+                        alt "Typewriter font - Courier Prime"
+                        text_font "fonts/typewriter/CourierPrime-Regular.ttf"
+                        action gui.SetPreference("font_typewriter", "fonts/typewriter/CourierPrime-Regular.ttf")
+                    textbutton _("Special Elite"):
+                        alt "Typewriter font - Special Elite"
+                        text_font "fonts/typewriter/SpecialElite-Regular.ttf"
+                        action gui.SetPreference("font_typewriter", "fonts/typewriter/SpecialElite-Regular.ttf")
+
+                vbox: 
+                    style_prefix "radio"
+                    label _("Dialogue")
+                    textbutton _("DM Sans"):
+                        alt "Dialogue font - D.M. Sans"
+                        text_font "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"
+                        action gui.SetPreference("font_dialogue", "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf")
+                    textbutton _("League Spartan"):
+                        alt "Dialogue font - League Spartan"
+                        text_font "fonts/dialogue/LeagueSpartan-Regular.otf"
+                        action gui.SetPreference("font_dialogue", "fonts/dialogue/LeagueSpartan-Regular.otf")
     
-    grid 2 2:  
-        xmaximum 300      
-        xspacing 75
-
-        vbox:            
-            style_prefix "radio"
-            label _("Headers")                                  
-            textbutton _("ARSENAL"):            
-                text_font "fonts/header/Arsenal-Regular.ttf"
-                action gui.SetPreference("font_header", "fonts/header/Arsenal-Regular.ttf")
-            textbutton _("JOSEFIN SANS"):                
-                text_font "fonts/header/JosefinSans-VariableFont_wght.ttf"
-                action gui.SetPreference("font_header", "fonts/header/JosefinSans-VariableFont_wght.ttf")
-
-        vbox:            
-            style_prefix "radio"
-            label _("Handwritten")
-            textbutton _("SS Soapy Hands"):
-                text_font "fonts/handwritten/SS Soapy Hands Medium.otf"
-                action gui.SetPreference("font_handwritten", "fonts/handwritten/SS Soapy Hands Medium.otf")
-            textbutton _("Patrick Hand"):
-                text_font "fonts/handwritten/PatrickHand-Regular.ttf"
-                action gui.SetPreference("font_handwritten", "fonts/handwritten/PatrickHand-Regular.ttf")
-
-        vbox:            
-            style_prefix "radio"
-            label _("Typewriter")
-            textbutton _("Courier Prime"):
-                text_font "fonts/typewriter/CourierPrime-Regular.ttf"
-                action gui.SetPreference("font_typewriter", "fonts/typewriter/CourierPrime-Regular.ttf")
-            textbutton _("Special Elite"):
-                text_font "fonts/typewriter/SpecialElite-Regular.ttf"
-                action gui.SetPreference("font_typewriter", "fonts/typewriter/SpecialElite-Regular.ttf")
-
-        vbox: 
-            style_prefix "radio"
-            label _("Dialogue")
-            textbutton _("DM Sans"):
-                text_font "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"
-                action gui.SetPreference("font_dialogue", "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf")
-            textbutton _("League Spartan"):
-                text_font "fonts/dialogue/LeagueSpartan-Regular.otf"
-                action gui.SetPreference("font_dialogue", "fonts/dialogue/LeagueSpartan-Regular.otf")
-    
+        null width 100
+        
     null height (4 * gui.pref_spacing)
 
                  
@@ -416,6 +498,27 @@ style slider_button is gui_button
 style slider_button_text is gui_button_text
 style slider_pref_vbox is pref_vbox
 
+style pref_frame is empty:
+    # background Frame("#000d") 
+    xanchor 0
+    yanchor 0 
+    xpos 2
+    ypos 143                 
+    xsize 825   
+    ysize 837      
+    left_padding 77
+    right_padding 65
+    top_padding 25
+    bottom_padding 20
+
+style pref_viewport is empty:
+    # add "gui/overlay/black_overlay.png" alpha 0.4
+    xalign 0
+    yalign 0
+
+style pref_vbox is empty:
+    spacing 40
+
 style pref_vscrollbar:
     xpos 90   
     ypos -212
@@ -424,10 +527,6 @@ style pref_vscrollbar:
     base_bar Frame("gui/scrollbar/vbar_[persistent.theme].png")
     unscrollable gui.unscrollable
 
-style pref_header:
-    font gui.text_font_header
-    size 45*gui.text_size_multiplier
-
 style pref_label:
     top_margin gui.pref_spacing
     bottom_margin 3    
@@ -435,7 +534,7 @@ style pref_label:
 style pref_label_text:  
     yalign 1.0
     underline True
-    color gui.text_color
+    color gui.text_secondary_color
 
 # style pref_vbox:
 #     xsize 338
@@ -443,25 +542,26 @@ style pref_label_text:
 style pref_button:
     properties gui.text_properties("pref_button")
     yanchor 1.0
-    idle_background Frame("gui/screen_menus/screen_menu_tab_idle.png", Borders(50,0,100,0))
-    hover_background Frame("gui/screen_menus/screen_menu_tab_selected.png", Borders(50,0,100,0))
-    selected_background Frame("gui/screen_menus/screen_menu_tab_selected.png", Borders(50,0,100,0))
+    idle_background Frame("gui/screen_menus/screen_menu_tab_idle_[persistent.theme].png", Borders(50,0,100,0))
+    hover_background Frame("gui/screen_menus/screen_menu_tab_selected_[persistent.theme].png", Borders(50,0,100,0))
+    selected_background Frame("gui/screen_menus/screen_menu_tab_selected_[persistent.theme].png", Borders(50,0,100,0))
 
 style pref_button_text:
     properties gui.text_properties("pref_button")
-    color gui.text_color 
-    hover_color gui.accent_color    
+    color gui.idle_color 
+    hover_color gui.text_secondary_color
+    selected_color gui.text_secondary_color
     size 40*gui.text_size_multiplier
     font gui.text_font_header
 
 style mute_all_button:    
-    hover_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(70, 0, 0, 0))
-    selected_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(70, 0, 0, 0))
+    hover_background Frame("gui/button/radio_[persistent.theme]_[persistent.cblindness]_selected_foreground.png", Borders(70, 0, 0, 0))
+    selected_background Frame("gui/button/radio_[persistent.theme]_[persistent.cblindness]_selected_foreground.png", Borders(70, 0, 0, 0))
 
 style mute_all_button_text:  
     color gui.idle_color 
-    hover_color gui.text_color 
-    selected_color gui.text_color 
+    hover_color gui.text_secondary_color 
+    selected_color gui.text_secondary_color 
 
 style radio_vbox:
     spacing gui.pref_button_spacing
@@ -469,16 +569,16 @@ style radio_vbox:
 style radio_button:    
     properties gui.button_properties("radio_button")
     size_group None
-    hover_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(70, 100, 0, 0))
+    hover_background Frame("gui/button/radio_[persistent.theme]_[persistent.cblindness]_selected_foreground.png", Borders(70, 100, 0, 0))
     selected_background None
-    selected_foreground "gui/button/radio_[persistent.theme]_selected_foreground.png"
+    selected_foreground "gui/button/radio_[persistent.theme]_[persistent.cblindness]_selected_foreground.png"
     # foreground "gui/button/radio_[prefix_]foreground.png"
 
 style radio_button_text:
     properties gui.text_properties("radio_button")
     color gui.idle_color
-    hover_color gui.text_color
-    selected_color gui.text_color
+    hover_color gui.text_secondary_color
+    selected_color gui.text_secondary_color
 
 style check_vbox:
     spacing gui.pref_button_spacing
@@ -486,35 +586,35 @@ style check_vbox:
 style check_button:
     properties gui.button_properties("check_button")
     size_group None    
-    hover_background Frame("gui/button/check_[persistent.theme]_selected_foreground.png", Borders(70, 100, 0, 0))
+    hover_background Frame("gui/button/check_[persistent.theme]_[persistent.cblindness]_selected_foreground.png", Borders(70, 100, 0, 0))
     selected_background None
-    selected_foreground "gui/button/check_[persistent.theme]_selected_foreground.png"
+    selected_foreground "gui/button/check_[persistent.theme]_[persistent.cblindness]_selected_foreground.png"
     # foreground "gui/button/check_[prefix_]foreground.png"    
 
 style check_button_text:
     properties gui.text_properties("check_button")
     color gui.idle_color
-    hover_color gui.text_color
-    selected_color gui.text_color 
+    hover_color gui.text_secondary_color
+    selected_color gui.text_secondary_color 
 
 style slider_slider:
     xsize 491
     ysize 95        
-    right_bar "gui/slider/bar_empty_[persistent.theme].png" # the 'empty' side of the bar
-    left_bar "gui/slider/bar_full_[persistent.theme].png" # the 'full' side of the bar representing the value
-    thumb "gui/slider/bar_thumb_[persistent.theme].png" # the draggable element of the slider
+    right_bar "gui/slider/bar_empty.png" # the 'empty' side of the bar
+    left_bar "gui/slider/bar_full_[persistent.cblindness].png" # the 'full' side of the bar representing the value
+    thumb "gui/slider/bar_thumb_[persistent.cblindness].png" # the draggable element of the slider
     thumb_offset 25.5 # To have the left and right bars continue unbroken, set this to half the width of the thumb in pixels
 
 style slider_button: 
     properties gui.button_properties("slider_button")
     xalign 0.74
     ypos -35
-    hover_background Frame("gui/button/radio_[persistent.theme]_selected_foreground.png", Borders(50, 100, 0, 0))
+    hover_background Frame("gui/button/radio_[persistent.theme]_[persistent.cblindness]_selected_foreground.png", Borders(50, 100, 0, 0))
 
 style slider_button_text:
     properties gui.text_properties("slider_button")
     color gui.idle_color 
-    hover_color gui.text_color 
+    hover_color gui.text_secondary_color 
 
 style slider_vbox:
     xsize 675

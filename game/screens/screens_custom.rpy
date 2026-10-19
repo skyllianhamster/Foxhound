@@ -1,53 +1,3 @@
-################################################################################
-## Initialization
-################################################################################
-
-init offset = -1
-
-### custom generic / smaller screens 
-
-### CUSTOM TEXT EFFECTS ###############################################
-### usage for plugins/01_fancytext.rpy 
-#######################################################################
-init -1:
-    # FancyText: To use this say screen, you need to add the three parameters exactly as given!
-    screen say(who, what, slow_effect = slow_typewriter, slow_effect_delay = 0, always_effect = None):
-        style_prefix "say"
-
-        window:
-            id "window"
-
-            ### changes textbox design
-            ### style in screens.rpy under "window" and "namebox"
-            if textbox_type == "cinematic":
-                # background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
-                background Transform(Frame("gui/textbox_cinematic.png", xsize=1920, ysize=270, xalign=0, yalign=1.0), alpha=0.9)
-                left_padding -400
-                right_padding 650
-                xalign 0.5
-                yalign 1.0 
-            elif textbox_type == "dialogue": # the default textbox style           
-                background Image(persistent.textbox)
-                
-            if who is not None:
-
-                window:
-                    id "namebox"
-
-                    ### changes namebox design based on textbox type
-                    if textbox_type == "cinematic":
-                        background Image("gui/namebox_cinematic.png")
-                    elif textbox_type == "dialogue":  
-                        background Image(persistent.namebox)
-
-                    style "namebox"
-                    text who id "who"
-            
-            # FancyText: Here's where all the magic happens.
-            # Replace your usual "text" statement with "fancytext" to enable
-            # some fancy effects on text display.
-            fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect            
-
 ## TODO: remove later
 style demo_button_colors:
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
@@ -72,43 +22,63 @@ label clear_screens:
     return
 
 ### SHOW ERROR MSG ################################################
+
 screen error_screen(error_msg):
+
     modal True
-    zorder 100
 
-    add "gui/overlay/black_overlay.png" alpha 0.4
+    zorder 200
 
-    frame:
-        style "empty"
-        background Frame("gui/screen_confirm/screen_confirm_frame_[persistent.theme].png")        
-        xalign 0.5
-        yalign 0.5
-        xsize 684
-        ysize 361
-        padding (10, 5)
+    style_prefix "error_screen"
 
-        text "[error_msg]" style "error_screen_text"                                       
+    add "gui/overlay/black_overlay.png" alpha 0.7
 
-        textbutton "Return":
-            style "error_screen_button"              
-            action [Call("clear_screens"), Return()]
+    frame: 
 
-style error_screen_text is gui_text:
+        vbox:
+            xalign .5
+            yalign .87
+            spacing 45
+
+            label _(error_msg):
+                style "error_screen_prompt"
+                xalign 0.5
+
+            textbutton "Return":
+                style "error_screen_button"              
+                action [Call("clear_screens"), Return()]
+
+
+style error_screen_frame 
+style error_screen_prompt is gui_prompt
+style error_screen_prompt_text is gui_prompt_text
+style error_screen is gui_medium_button
+style error_screen_text is gui_medium_button_text
+
+style error_screen_frame is gui_frame:    
+    background Frame("gui/screen_confirm/screen_confirm_frame_[persistent.theme].png")     
+    padding (41, 121, 25, 28)
+    xalign .5
+    yalign .5
+    xsize 684
+
+style error_screen_prompt_text:
+    textalign 0.5    
     font gui.text_font_handwritten
+    color gui.text_secondary_color
+    size 60
+
+style error_screen_button:
+    properties gui.button_properties("confirm_button")
+    hover_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")
     xalign 0.5
-    yalign 0.4
-    size 50
-
-style error_screen_button is gui_button:
-    hover_background Frame("gui/underline_[persistent.theme].png")
-    xalign 0.5 
-    yalign 0.95
-
-style error_screen_button_text is gui_button_text:
+    
+style error_screen_button_text:
+    properties gui.text_properties("confirm_button")
     font gui.text_font_handwritten
-    color gui.text_color
-    hover_color gui.accent_color
-    size 50
+    size 60
+    color gui.text_secondary_color
+    hover_color gui.hover_color
 
 ### RETURN TO MAIN MENU BUTTON ######################################
 ### for testing purposes 
@@ -119,12 +89,7 @@ screen return_button:
         text_style "demo_button_colors"        
         xalign 0.95 
         yalign 0.95 
-        action MainMenu()
-
-
-
-
-    
+        action MainMenu()    
 
 ### TRANSFORMS ###################################################
 ### custom positions used for character sprites

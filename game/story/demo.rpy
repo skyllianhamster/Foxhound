@@ -214,8 +214,8 @@ label demo_cinematic:
     """
 
     # hide screen return_button
-    scene black with dissolve
-    
+    scene black with dissolve    
+
     return
 
 ### Crime scene screen demo ############################################
@@ -526,20 +526,20 @@ label demo_skill_check:
     $ textbox_type = "dialogue"
 
     # Set skills for this demo scene    
-    $ survival = 4
-    $ warfare = 2
-    $ charisma = 1    
-    $ scholarship = 1
-    $ vigor = 1
+    $ survival_pts = 4
+    $ warfare_pts = 2
+    $ charisma_pts = 1    
+    $ scholarship_pts = 1
+    $ vigor_pts = 1
 
     scene bg zaun alley
     show screen skills_and_inventory_button
     # show screen return_button
 
     window show 
-    "This section simulates a simple scene with dice roll and skill check mechanics.\n\nScene starting now..."
+    "This section simulates a simple scene with dice roll and skill check mechanics. Scene starting now..."
 
-    """{i}Steam hisses from broken pipes. The glow of shimmer pulses faintly\namongst the broken glass containers scattered by the warehouse.{/i}
+    """{i}Steam hisses from broken pipes. The glow of shimmer pulses faintly amongst the broken glass containers scattered by the warehouse.{/i}
 
     {i}Inside are armed chemtanks and crates.{/i}
 
@@ -577,7 +577,7 @@ label demo_skill_check:
 
             # writer decides what skill and skill level is required for this check 
             # e.g. player has to beat Survival 3
-            call skill_check_survival(3)
+            call skill_check(survival, 3)
             if skill_check_success == True:
                 # player succeeds
                 "(Survival option success scene goes here.)"
@@ -586,14 +586,14 @@ label demo_skill_check:
                 "(Survival option failure scene goes here.)"
 
         "Work with Caitlyn to map positions and create a precise takedown plan. (Warfare)":
-            call skill_check_warfare(5)
+            call skill_check(warfare, 5)
             if skill_check_success == True:
                 "(Warfare option success scene goes here.)"
             else:
                 "(Warfare option failure scene goes here.)"
 
-        "Create a distraction or manipulate someone inside. (Charisma)":
-            call skill_check_charisma(2)
+        "Create a distraction or manipulate someone inside.":
+            call skill_check(charisma, 2)
             if skill_check_success == True:
                 "(Charisma option success scene goes here.)"
             else:

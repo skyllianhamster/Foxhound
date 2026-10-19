@@ -25,7 +25,7 @@ screen about():
         style_prefix "about"
 
         ## rotates menu contents
-        transform:
+        transform:            
             xanchor 0
             yanchor 0
             rotate_pad False
@@ -34,31 +34,15 @@ screen about():
             ypos 50 
 
             ## menu title on top of the page
-            text "ABOUT\n":
-                style "about_header"
-                xpos 30
-                ypos 15
+            text "ABOUT\n" style "menu_header"               
 
             ## constrains the menu contents to a specific area of the page
-            frame:       
-                # background Frame("gui/overlay/black_overlay.png") 
-                style "empty"                 
-                xanchor 0
-                yanchor 0 
-                xpos 2
-                ypos 85                  
-                xsize 825   
-                ysize 895      
-                left_padding 37
-                right_padding 20
-                top_padding 10
-                bottom_padding 20
+            frame:                       
+                style "about_frame" 
 
                 ## the scrollable area
                 viewport:  
-                    # add "gui/overlay/black_overlay.png" alpha 0.4
-                    xalign 0
-                    yalign 0
+                    style "about_viewport"
                     scrollbars "vertical"          
                     mousewheel True
                     draggable True
@@ -81,12 +65,25 @@ style about_label is gui_label
 style about_label_text is gui_label_text
 style about_text is gui_text
 
-style about_header:
-    font gui.text_font_header
-    size 45*gui.text_size_multiplier
+style about_frame is empty:
+    xanchor 0
+    yanchor 0 
+    xpos 2
+    ypos 85                  
+    xsize 825   
+    ysize 895      
+    left_padding 37
+    right_padding 20
+    top_padding 10
+    bottom_padding 20 
+
+style about_viewport is empty:
+    xalign 0
+    yalign 0
 
 style about_text:
     font gui.interface_text_font
+    color gui.text_secondary_color
     size gui.text_size
     line_spacing 10
 

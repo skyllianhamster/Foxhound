@@ -12,9 +12,6 @@ init offset = -1
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#choice
 
-
-
-
 ## Some choices are only available if the player picked a certain background.
 ## Add a special icon by including (special=<PlayerBackground object>) in the choice item.
 ## e.g. "Lockpick the door" (special=streetrat):
@@ -28,8 +25,7 @@ screen choice(items, special=no_bg):
 
     vbox:
 
-        for index, i in enumerate(items):
-            # textbutton i.caption action i.action
+        for index, i in enumerate(items):           
         
             ## check if any of the choices are available due to certain player backgrounds
             $ special = i.kwargs.get("special", False)
@@ -38,6 +34,7 @@ screen choice(items, special=no_bg):
             $ bg_index = (index % 4) + 1            
            
             ## choice buttons
+            # textbutton i.caption action i.action
             textbutton i.caption: 
                 xpadding 75      
                 
@@ -59,7 +56,10 @@ screen choice(items, special=no_bg):
                             Text("This choice is available due \nto the "+special.name+" background.", style="special_choice_tooltip_text"),
                             xmaximum=700, ymaximum=102))
                         ]
-                    unhovered SetField(mtt_choice, 'redraw', False)                
+                    unhovered [
+                        SetField(mtt_choice, 'redraw', False),
+                        mtt_choice.Action(Text(""))
+                        ]
                 action [
                     ## adds selected player choices to the History menu
                     Function(narrator.add_history, kind="adv", who = player_name.upper()+" (choice)", what = i.caption), 
@@ -113,7 +113,7 @@ style choice_button is default:
 
 style choice_button_text is default:
     # properties gui.text_properties("choice_button")
-    idle_color gui.text_color
-    hover_color gui.accent_color
+    idle_color gui.text_secondary_color
+    hover_color gui.hover_color
     xalign 0.5
     yalign 0.5

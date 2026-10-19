@@ -35,25 +35,11 @@ screen history():
             ypos 50
 
             ## menu title on top of the page
-            text "HISTORY\n":
-                style "history_header"
-                xpos 30
-                ypos 15
+            text "HISTORY\n" style "menu_header"
 
             ## constrains the menu contents to a specific area of the page
-            frame:       
-                # background Frame("gui/overlay/black_overlay.png") 
-                style "empty"                 
-                xanchor 0
-                yanchor 0 
-                xpos 2
-                ypos 85                  
-                xsize 825   
-                ysize 895      
-                left_padding 37
-                right_padding 20
-                top_padding 10
-                bottom_padding 20
+            frame:                       
+                style "history_frame"                  
                 
                 ## the scrollable area
                 vpgrid id "vp_history":
@@ -61,8 +47,7 @@ screen history():
                     cols 1
                     yinitial 1.0
                     xalign 0
-                    yalign 0
-                    # scrollbars "vertical"
+                    yalign 0                    
                     mousewheel True
                     draggable True
                     pagekeys True
@@ -111,13 +96,21 @@ style history_text is gui_text
 style history_label is gui_label
 style history_label_text is gui_label_text
 
-style history_header:
-    font gui.text_font_header
-    size 45*gui.text_size_multiplier
+style history_frame is empty:
+    xanchor 0
+    yanchor 0 
+    xpos 2
+    ypos 85                  
+    xsize 825   
+    ysize 895      
+    left_padding 37
+    right_padding 20
+    top_padding 10
+    bottom_padding 20
 
 style history_window:
     xfill True
-    ysize gui.history_height
+    ysize int(gui.text_size_multiplier*350) - 140 # gui.history_height
 
 style history_name:
     xpos gui.history_name_xpos
@@ -132,10 +125,10 @@ style history_name_text:
     textalign gui.history_name_xalign
 
 style history_text:
-    xpos 230# gui.history_text_xpos
+    xpos gui.history_text_xpos
     ypos gui.history_text_ypos
     xanchor gui.history_text_xalign
-    xsize 470 # gui.history_text_width
+    xsize gui.history_text_width
     min_width gui.history_text_width
     textalign gui.history_text_xalign
     layout ("subtitle" if gui.history_text_xalign else "tex")

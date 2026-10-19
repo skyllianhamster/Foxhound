@@ -96,13 +96,13 @@ label docu_pronouns:
 
 label docu_custom_functions_and_variables:   
 
-    ## There are 8 player backgrounds:
-    ## 'soldier', 'strategist', 'diplomat', 'deceiver',
-    ## 'scientist', 'craftsman', 'shadow', 'streetrat'    
+    ## There are 8 player backgrounds defined as PlayerBackground objects:
+    ## soldier, strategist, diplomat, deceiver,
+    ## scientist, craftsman, shadow, streetrat
 
     ## set the player's backgrounds (ONLY CALL ONCE IN THE GAME) 
-    call set_adulthood_background('soldier')
-    call set_childhood_background('craftsman')
+    call set_adulthood_background(soldier)
+    call set_childhood_background(craftsman)
 
     ## ----------------------------------------------------------------
 
@@ -120,29 +120,29 @@ label docu_custom_functions_and_variables:
 
     ## ----------------------------------------------------------------
 
-    ## There are 5 player skills:
-    ## 'warfare', 'charisma', 'scholarship',
-    ## 'survival', 'vigor'
+    ## There are 5 player skills defined as PlayerSkill objects :
+    ## warfare, charisma, scholarship, survival, vigor
 
     ## update the skills manually with a positive or negative integer
+    ## general syntax: update_skill(PlayerSkill skill, int amount)
 
-    call update_warfare(2)
-    call update_scholarship(2)
-    call update_charisma(1)
-    call update_survival(1)
-    call update_vigor(2)
+    call update_skill(warfare, 2)
+    call update_skill(scholarship, 2)
+    call update_skill(charisma, -1)
+    call update_skill(survival, 1)
+    call update_skill(vigor, -2)
 
     ## ----------------------------------------------------------------
 
     ## Skill check funtions
-    ## general syntax: skill_check_<skillname>(difficulty)
+    ## general syntax: skill_check(PlayerSkill skill, int difficulty)
     ## where difficulty is from 1-6 with 6 as highest
 
-    call skill_check_warfare(1)
-    call skill_check_charisma(2)
-    call skill_check_scholarship(3)
-    call skill_check_survival(4)
-    call skill_check_vigor(5)
+    call skill_check(warfare, 1)
+    call skill_check(charisma, 2)
+    call skill_check(scholarship, 3)
+    call skill_check(survival, 4)
+    call skill_check(vigor, 5)
 
     ## ----------------------------------------------------------------
 
@@ -155,7 +155,7 @@ label docu_custom_functions_and_variables:
     ## ----------------------------------------------------------------
 
     ## Inventory functions (Python)
-    ## general syntax: $ inventory.function(<item_name>)
+    ## general syntax: $ inventory.<function>(Item item)
     ## Item objects should be defined beforehand in variables.rpy
 
     $ inventory.append(demo_note)
@@ -177,9 +177,22 @@ label docu_custom_screens:
     ## for player input (CALL ONLY ONCE IN THE GAME)
     call screen player_name_and_pronouns 
 
+    ## shows the READ button for crime scene objects with text
+    show screen object_text_button(cs00_paper_text)    
+
 #####################################################################
 ### DEVELOPERS ######################################################
 #####################################################################
+
+### Compression #######################################################
+
+## Web playable version has a recommended limit of under 500MB
+## and a hard limit of 1BG. Convert to the ff formats before uploading.
+
+"""
+images: .webp
+audio: .ogg
+"""
 
 ### Zorder list #######################################################
 

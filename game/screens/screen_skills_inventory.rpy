@@ -7,13 +7,33 @@ screen skills_and_inventory_button:
     zorder 11
     
     # imagebutton auto "gui/button/skills_%s.png" xalign 0.95 yalign 0.05 focus_mask None action ShowMenu("skills_and_inventory") 
+    # imagebutton: 
+    #     focus_mask True
+    #     xalign 0.97 #0.95
+    #     yalign 0.04 #0.07
+    #     idle "gui/screen_skills/screen_skills_closed_idle.png"
+    #     hover "gui/screen_skills/screen_skills_closed_hover.png"  
+    #     action ShowMenu("skills_and_inventory")
+
     imagebutton: 
         focus_mask True
-        xalign 0.97 #0.95
-        yalign 0.04 #0.07
-        idle "gui/screen_skills/screen_skills_closed_idle.png"
-        hover "gui/screen_skills/screen_skills_closed_hover.png"  
+        xalign 0.99 #0.95
+        yalign 0.02 #0.07
+        idle Composite(
+            (150,150),
+            (0,0), Frame("gui/screen_skills/screen_skills_button_bg_[persistent.theme].png", style="skills_and_inventory_button"),
+            (0,0), Frame("gui/screen_skills/screen_skills_button_closed_[persistent.theme].png", style="skills_and_inventory_button")
+        )
+        hover Composite(
+            (150,150),
+            (0,0), Frame("gui/screen_skills/screen_skills_button_bg_[persistent.theme].png", style="skills_and_inventory_button"),
+            (0,0), Transform(Frame("gui/screen_skills/screen_skills_button_closed_[persistent.theme].png"), xsize=152, ysize=152)
+        )
         action ShowMenu("skills_and_inventory")
+
+style skills_and_inventory_button is empty:
+    xsize 150
+    ysize 150
             
 
 ### SKILLS & INVENTORY SCREEN #######################################
@@ -45,6 +65,12 @@ screen skills_and_inventory:
                 Return()
                 ]
 
+        ### lets the Esc button on keyboard also set the $ current_screen variable
+        key "game_menu" action [
+                SetVariable("current_screen", "dialogue"),
+                Return()
+                ]
+
         ### rotates the content slightly to match the skewed paper background
         transform:
             rotate -1
@@ -69,8 +95,8 @@ screen skills_and_inventory:
                     frame:
                         style "background_icon"
 
-                        if adulthood_background != '':                        
-                            background Frame("gui/screen_skills/backgrounds/bg_[adulthood_background]_[persistent.theme].png")                      
+                        if adulthood_background.key != "":                        
+                            background Frame("gui/screen_skills/backgrounds/bg_"+adulthood_background.key+"_[persistent.theme].png")                      
 
                     ### description                    
                     viewport id "vp_bg1":       
@@ -86,11 +112,11 @@ screen skills_and_inventory:
 
                             vbox:
 
-                                if adulthood_background == "":
+                                if adulthood_background.key == "":
                                     text ""
-                                else:
-                                    text "[adulthood_background!u]" style "background_type"
-                                    text "[adulthood_background_description]" style "background_description"
+                                else:                                    
+                                    text adulthood_background.name.upper() style "background_type"
+                                    text adulthood_background.description style "background_description"
                     
                     vbar value YScrollValue("vp_bg1"):
                         style "background_vscrollbar"
@@ -105,8 +131,8 @@ screen skills_and_inventory:
                     frame:
                         style "background_icon"
 
-                        if childhood_background != '':                        
-                            background Frame("gui/screen_skills/backgrounds/bg_[childhood_background]_[persistent.theme].png")                  
+                        if childhood_background.key != "":                        
+                            background Frame("gui/screen_skills/backgrounds/bg_"+childhood_background.key+"_[persistent.theme].png")                  
 
                     ### description                    
                     viewport id "vp_bg2":  
@@ -122,19 +148,17 @@ screen skills_and_inventory:
 
                             vbox:                   
 
-                                if childhood_background != adulthood_background:
-                                    if childhood_background == "":
+                                if childhood_background.key != adulthood_background.key:
+                                    if childhood_background.key == "":
                                         text ""
                                     else:
-                                        text "[childhood_background!u]" style "background_type"
-                                        text "[childhood_background_description]" style "background_description"
-
+                                        text childhood_background.name.upper() style "background_type" 
+                                        text childhood_background.description style "background_description"
                                 else:
-                                    if childhood_background == "":
+                                    if childhood_background.key == "":
                                         text ""                        
-                                    else:
-                                        # text "[childhood_background!u]" style "background_type"
-                                        text "[childhood_background_description_add]" style "background_description"
+                                    else: 
+                                        text childhood_background.description2 style "background_description"           
                         
                     vbar value YScrollValue("vp_bg2"):
                         style "background_vscrollbar"
@@ -151,9 +175,9 @@ screen skills_and_inventory:
 
                 ### radar chart                
                 if persistent.theme == 'light':
-                    add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#dea198','#736c64',1,350,True) xalign 0.5 yalign 0.70                    
+                    add RadarChart(6, [warfare_pts,charisma_pts,scholarship_pts,survival_pts,vigor_pts], gui.radar_graph_color,'#736c64',1,350,True) xalign 0.5 yalign 0.70                    
                 else:
-                    add RadarChart(6, [warfare,charisma,scholarship,survival,vigor], '#226ea8','#a3a8bc',1,350,True) xalign 0.5 yalign 0.70               
+                    add RadarChart(6, [warfare_pts,charisma_pts,scholarship_pts,survival_pts,vigor_pts], gui.radar_graph_color,'#fbb03b',1,350,True) xalign 0.5 yalign 0.70   # "#226ea8" "#a3a8bc"
                 
                 
 
@@ -175,10 +199,11 @@ screen skills_and_inventory:
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
                                 Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(50*gui.text_size_multiplier)+100),
-                                Text("Warfare", style="skill_tooltip_text"), 
+                                Text(warfare.name, style="skill_tooltip_text"), 
                                 xmaximum=170, ymaximum=45, ypos=-45))                           
                             ]
                         unhovered [
+                            mtt.Action(Text(" ")),
                             Hide("skill_value_indicator_warfare"),
                             SetField(mtt, 'redraw', False) 
                             ]                 
@@ -201,10 +226,11 @@ screen skills_and_inventory:
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
                                 Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(125*gui.text_size_multiplier)+25), 
-                                Text("Charisma", style="skill_tooltip_text"), 
+                                Text(charisma.name, style="skill_tooltip_text"), 
                                 xmaximum=200, ymaximum=45, ypos=-45))
                             ]
                         unhovered [
+                            mtt.Action(Text(" ")),
                             Hide("skill_value_indicator_charisma"),
                             SetField(mtt, 'redraw', False)
                             ]
@@ -226,11 +252,12 @@ screen skills_and_inventory:
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
                                 Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(175*gui.text_size_multiplier)+25), 
-                                Text("Scholarship", style="skill_tooltip_text"), 
+                                Text(scholarship.name, style="skill_tooltip_text"), 
                                 xmaximum=270, ymaximum=45, ypos=65))
                                 
                             ]
                         unhovered [
+                            mtt.Action(Text(" ")),
                             Hide("skill_value_indicator_scholarship"),
                             SetField(mtt, 'redraw', False)
                             ]
@@ -252,10 +279,11 @@ screen skills_and_inventory:
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
                                 Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(125*gui.text_size_multiplier)+25), 
-                                Text("Survival", style="skill_tooltip_text"), 
+                                Text(survival.name, style="skill_tooltip_text"), 
                                 xmaximum=200, ymaximum=45, ypos=65))                                
                             ]
                         unhovered [
+                            mtt.Action(Text(" ")),
                             Hide("skill_value_indicator_survival"),
                             SetField(mtt, 'redraw', False)
                             ]
@@ -277,10 +305,11 @@ screen skills_and_inventory:
                             SetField(mtt, 'redraw', True), 
                             mtt.Action(Fixed(
                                 Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(75*gui.text_size_multiplier)+35), 
-                                Text("Vigor", style="skill_tooltip_text"), 
+                                Text(vigor.name, style="skill_tooltip_text"), 
                                 xmaximum=140, ymaximum=45, ypos=-45))
                             ]
                         unhovered [
+                            mtt.Action(Text(" ")),
                             Hide("skill_value_indicator_vigor"),
                             SetField(mtt, 'redraw', False)
                             ]
@@ -316,6 +345,7 @@ screen skills_and_inventory:
                     else:
                         for i in inventory:
                             imagebutton: 
+                                alt i.description
                                 idle i.icon                                
                                 hover Composite(
                                     (130,130), 
@@ -374,7 +404,7 @@ screen skills_and_inventory:
                             background Composite(
                                 (282,243),
                                 (0,0), "[item_zoom]",
-                                (0,0), "gui/circled_[persistent.theme].png"
+                                (0,0), "gui/circled_[persistent.cblindness].png"
                             )    
 
 
@@ -384,24 +414,24 @@ screen skill_value_indicator_warfare:
 
     zorder 11
 
-    textbutton "[warfare]":
+    textbutton "[warfare_pts]":
         style "skill_value_indicator_button" 
-        if warfare == 6: 
+        if warfare_pts == 6: 
             xpos 1534
             ypos 294
-        elif warfare == 5:
+        elif warfare_pts == 5:
             xpos 1534
             ypos 323
-        elif warfare == 4:
+        elif warfare_pts == 4:
             xpos 1535
             ypos 352
-        elif warfare == 3:
+        elif warfare_pts == 3:
             xpos 1535
             ypos 381
-        elif warfare == 2:
+        elif warfare_pts == 2:
             xpos 1536
             ypos 410
-        elif warfare == 1:
+        elif warfare_pts == 1:
             xpos 1536
             ypos 439
         action NullAction()
@@ -410,24 +440,24 @@ screen skill_value_indicator_charisma:
 
     zorder 11
 
-    textbutton "[charisma]":
+    textbutton "[charisma_pts]":
         style "skill_value_indicator_button" 
-        if charisma == 6: 
+        if charisma_pts == 6: 
             xpos 1700
             ypos 410
-        elif charisma == 5:
+        elif charisma_pts == 5:
             xpos 1672
             ypos 420
-        elif charisma == 4:
+        elif charisma_pts == 4:
             xpos 1644
             ypos 430
-        elif charisma == 3:
+        elif charisma_pts == 3:
             xpos 1618
             ypos 438
-        elif charisma == 2:
+        elif charisma_pts == 2:
             xpos 1590
             ypos 449
-        elif charisma == 1:
+        elif charisma_pts == 1:
             xpos 1563
             ypos 459
         action NullAction()
@@ -436,24 +466,24 @@ screen skill_value_indicator_scholarship:
 
     zorder 11
 
-    textbutton "[scholarship]":
+    textbutton "[scholarship_pts]":
         style "skill_value_indicator_button" 
-        if scholarship == 6: 
+        if scholarship_pts == 6: 
             xpos 1640
             ypos 606
-        elif scholarship == 5:
+        elif scholarship_pts == 5:
             xpos 1622
             ypos 582
-        elif scholarship == 4:
+        elif scholarship_pts == 4:
             xpos 1605
             ypos 559
-        elif scholarship == 3:
+        elif scholarship_pts == 3:
             xpos 1588
             ypos 536
-        elif scholarship == 2:
+        elif scholarship_pts == 2:
             xpos 1571
             ypos 513
-        elif scholarship == 1:
+        elif scholarship_pts == 1:
             xpos 1554
             ypos 490
         action NullAction()
@@ -462,24 +492,24 @@ screen skill_value_indicator_survival:
 
     zorder 11
 
-    textbutton "[survival]":
+    textbutton "[survival_pts]":
         style "skill_value_indicator_button" 
-        if survival == 6: 
+        if survival_pts == 6: 
             xpos 1436
             ypos 610
-        elif survival == 5:
+        elif survival_pts == 5:
             xpos 1453
             ypos 585
-        elif survival == 4:
+        elif survival_pts == 4:
             xpos 1469
             ypos 563
-        elif survival == 3:
+        elif survival_pts == 3:
             xpos 1487
             ypos 538
-        elif survival == 2:
+        elif survival_pts == 2:
             xpos 1503
             ypos 514
-        elif survival == 1:
+        elif survival_pts == 1:
             xpos 1520
             ypos 491
         action NullAction()
@@ -488,24 +518,24 @@ screen skill_value_indicator_vigor:
 
     zorder 11
 
-    textbutton "[vigor]":
+    textbutton "[vigor_pts]":
         style "skill_value_indicator_button" 
-        if vigor == 6: 
+        if vigor_pts == 6: 
             xpos 1368
             ypos 416
-        elif vigor == 5:
+        elif vigor_pts == 5:
             xpos 1398
             ypos 425
-        elif vigor == 4:
+        elif vigor_pts == 4:
             xpos 1426
             ypos 433
-        elif vigor == 3:
+        elif vigor_pts == 3:
             xpos 1453
             ypos 442
-        elif vigor == 2:
+        elif vigor_pts == 2:
             xpos 1482
             ypos 451
-        elif vigor == 1:
+        elif vigor_pts == 1:
             xpos 1510
             ypos 460
         action NullAction()
@@ -530,7 +560,7 @@ style skill_icon_hover is empty:
     ysize 60
 
 style skill_value_indicator_button is gui_button:
-    background Frame("gui/screen_skills/skills/circle_marker_[persistent.theme].png")
+    background Frame("gui/screen_skills/skills/circle_marker_[persistent.cblindness].png")
     xsize int(22*gui.text_size_multiplier)
     ysize int(22*gui.text_size_multiplier)
     xanchor 0.5
@@ -539,13 +569,12 @@ style skill_value_indicator_button is gui_button:
 style skill_value_indicator_button_text is gui_button_text:
     size 22*gui.text_size_multiplier
     font "fonts/dialogue/DMSans-VariableFont_opsz,wght.ttf"
-    idle_color "#fff"
-    hover_color "#fff"
+    color "#fff"
     xalign 0.5
     yalign 0.5
 
 style section_headers:
-    color gui.text_color  
+    color gui.text_secondary_color  
     font gui.text_font_typewriter
 
 
@@ -589,12 +618,12 @@ style background_description_frame is empty:
     ypadding 20 
 
 style background_type:
-    color gui.text_color 
+    color gui.text_secondary_color 
     font gui.text_font_typewriter
     size 38*gui.text_size_multiplier
 
 style background_description:
-    color gui.text_color 
+    color gui.text_secondary_color 
     font gui.text_font_typewriter
     # line_spacing -20
     # kerning -1
@@ -621,7 +650,7 @@ style skills_header_frame is empty:
     left_padding 20
 
 style skill_tooltip_text:
-    color '#eee'  
+    color gui.text_ondark_color
     # bold True
     font gui.text_font_typewriter
     size 26*gui.text_size_multiplier 
@@ -669,7 +698,7 @@ style item_header_frame is empty:
     top_padding 25
 
 style item_header:
-    color gui.text_color  
+    color gui.text_secondary_color  
     font gui.text_font_handwritten 
     size 38*gui.text_size_multiplier
 
@@ -679,7 +708,7 @@ style item_description_frame is empty:
     right_padding 300
 
 style item_description:
-    color gui.text_color 
+    color gui.text_secondary_color 
     font gui.text_font_handwritten 
     # line_spacing -5
     size 28*gui.text_size_multiplier

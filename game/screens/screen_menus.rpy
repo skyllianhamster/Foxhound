@@ -85,13 +85,13 @@ style navigation_button_text is gui_button_text
 style navigation_button:
     size_group None #"navigation"
     properties gui.button_properties("navigation_button")
-    hover_background Frame("gui/underline_[persistent.theme].png")
-    selected_background Frame("gui/underline_[persistent.theme].png")
+    hover_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")
+    selected_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")
 
 style navigation_button_text:
     font "fonts/handwritten/JustAnotherHand-Regular.ttf"
     size 67
-    color gui.text_color 
+    color gui.text_secondary_color
     properties gui.text_properties("navigation_button")    
 
 ## Game Menu screen ############################################################
@@ -124,14 +124,16 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
         ## changes background depending on the menu screen
         if renpy.get_screen("help") or renpy.get_screen("preferences"):
-            add "gui/screen_menus/screen_menu_tab_contents.png":
-                xsize 782
-                ysize 851
+            
+            transform:
                 xanchor 0
                 yanchor 0
                 rotate_pad False
-                xpos 1080
-                ypos 195
+                rotate -1.85
+                xpos 1067
+                ypos 184  
+
+                add "gui/screen_menus/screen_menu_tab_contents_[persistent.theme].png" xsize 782 ysize 851
 
         hbox:
 
@@ -164,6 +166,14 @@ style game_menu_scrollbar is gui_vscrollbar
 
 style game_menu_label is gui_label
 style game_menu_label_text is gui_label_text
+
+
+style menu_header:
+    font gui.text_font_header
+    color gui.text_secondary_color
+    size 45*gui.text_size_multiplier
+    xpos 30
+    ypos 15
 
 style game_menu_outer_frame:
     background Frame("gui/screen_menus/screen_menu_bg_[persistent.theme].png")

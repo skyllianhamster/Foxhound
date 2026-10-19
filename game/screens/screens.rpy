@@ -20,11 +20,12 @@ style input:
 style hyperlink_text:
     font gui.interface_text_font
     properties gui.text_properties("hyperlink", accent=True)
+    idle_color gui.accent_color
+    hover_color gui.hover_color
     hover_underline True
 
 style gui_text:
     properties gui.text_properties("interface")
-
 
 style button:
     properties gui.button_properties("button")
@@ -81,114 +82,6 @@ style frame:
 ################################################################################
 ## In-game screens
 ################################################################################
-
-
-## Say screen ##################################################################
-##
-## The say screen is used to display dialogue to the player. It takes two
-## parameters, who and what, which are the name of the speaking character and
-## the text to be displayed, respectively. (The who parameter can be None if no
-## name is given.)
-##
-## This screen must create a text displayable with id "what", as Ren'Py uses
-## this to manage text display. It can also create displayables with id "who"
-## and id "window" to apply style properties.
-##
-## https://www.renpy.org/doc/html/screen_special.html#say
-
-# screen say(who, what): 
-
-#     window:
-#         id "window"
-
-#         ### changes textbox design
-#         ### overridden in screens_custom.py
-#         if textbox_type == "cinematic": 
-#             left_margin -193
-#             bottom_margin -100
-#             left_padding -80
-#             right_padding 100
-#             background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
-
-#         if who is not None:
-
-#             window:
-#                 id "namebox"
-
-#                 ### changes namebox design based on textbox type
-#                 ### overridden in screens_custom.py
-#                 if textbox_type == "cinematic":
-#                     background Image("gui/namebox_cinematic.png", xalign=0.5, yalign=1.0)
-
-#                 style "namebox"
-#                 text who id "who"
-
-#         text what id "what"
-
-
-#     ## If there's a side image, display it above the text. Do not display on the
-#     ## phone variant - there's no room.
-#     if not renpy.variant("small"):
-#         add SideImage() xalign 0.0 yalign 1.0
-
-
-## Make the namebox available for styling through the Character object.
-init python:
-    config.character_id_prefixes.append('namebox')
-
-style window is default
-style say_label is default
-style say_dialogue is default
-style say_thought is say_dialogue
-
-style namebox is default
-style namebox_label is say_label
-
-style window:    
-    xfill True
-    #yalign gui.textbox_yalign
-    xanchor 0.0
-    yanchor 0.0  
-    xpos 522
-    ypos 672
-    ysize gui.textbox_height
-    left_padding -330    
-    right_padding 1370  
-    top_padding 10
-
-    # background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
-
-### TODO: see if there's a better way to position the namebox
-style namebox:  
-    xanchor 0
-    xsize 491 #gui.namebox_width
-    ysize 70 #gui.namebox_height
-    #xpos gui.name_xpos
-    #ypos gui.name_ypos    
-    xalign 0.80 #gui.name_xalign
-    yalign -0.36   
-
-    #background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    #padding gui.namebox_borders.padding
-
-#position of name within namebox
-style say_label:
-    properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
-    ypos gui.name_ypos
-    # yalign gui.name_yalign
-
-### TODO: see if the text anchor can be changed to top left (xanchor 0.0, yanchor 0.0)
-#position of text within dialogue textbox
-style say_dialogue:
-    properties gui.text_properties("dialogue")
-
-    yanchor 0
-    xpos gui.dialogue_xpos
-    ypos gui.dialogue_ypos
-    # xsize gui.dialogue_width    
-
-    adjust_spacing False
 
 ## Input screen ################################################################
 ##
@@ -280,32 +173,32 @@ style confirm_prompt_text is gui_prompt_text
 style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
-style confirm_dark_button is gui_medium_button
-style confirm_dark_button_text is gui_medium_button_text
-
 style confirm_frame:    
-    background Frame("gui/screen_confirm/screen_confirm_frame_[persistent.theme].png", gui.confirm_frame_borders, tile=gui.frame_tile)       
-    padding gui.confirm_frame_borders.padding
+    background Frame("gui/screen_confirm/screen_confirm_frame_[persistent.theme].png") #, gui.confirm_frame_borders, tile=gui.frame_tile)       
+    # padding gui.confirm_frame_borders.padding
+    padding (41, 121, 25, 28)
     xalign .5
     yalign .5
     xsize 684
-    ysize 361
+    # ysize 361
 
 style confirm_prompt_text:
     textalign 0.5    
-    layout "subtitle"
-    font "fonts/handwritten/SS Soapy Hands Regular.otf"
+    # layout "subtitle"
+    color gui.text_secondary_color
+    font gui.text_font_handwritten
     size 60
 
 style confirm_button:
     properties gui.button_properties("confirm_button")
-    hover_background Frame("gui/underline_[persistent.theme].png")
+    hover_background Frame("gui/underline_[persistent.theme]_[persistent.cblindness].png")
     
 style confirm_button_text:
     properties gui.text_properties("confirm_button")
-    font "fonts/handwritten/SS Soapy Hands Regular.otf"
+    font gui.text_font_handwritten
     size 60
-    color gui.text_color
+    color gui.text_secondary_color
+    hover_color gui.hover_color
 
 ## Skip indicator screen #######################################################
 ##

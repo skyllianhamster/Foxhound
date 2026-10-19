@@ -133,11 +133,19 @@ define config.after_default_callbacks += [
 define gui.name_color = gui.preference("name_color", '#fff') 
 
 ## The colors used for dialogue and menu choice text.
+
+## default colors: black on light mode, white on dark mode
 define gui.text_color = gui.preference("text_color", '#000') # darkmode: '#fff'
+
+## secondary colors: black on light mode, light yellow on dark mode
+define gui.text_secondary_color = gui.preference("text_secondary_color", '#000') # darkmode: '#ffecbc'
+
+## ondark colors: for text on fixed dark backgrounds: white on light mode, light yellow on dark mode
+define gui.text_ondark_color = gui.preference("text_ondark_color", '#fff') # darkmode: '#ffecbc'
 # define gui.interface_text_color = '#404040'
 
 ## An accent color used throughout the interface to label and highlight text.
-define gui.accent_color = gui.preference("accent_color", '#900') #darkmode: '#90CAF9'
+define gui.accent_color = gui.preference("accent_color", '#900') #darkmode: '#c94248' or '#90caf9'
 
 ## The color used for a text button when it is neither selected nor hovered.
 define gui.idle_color = gui.preference("idle_color", '#555')  # darkmode: '#bbb'
@@ -147,7 +155,9 @@ define gui.idle_color = gui.preference("idle_color", '#555')  # darkmode: '#bbb'
 define gui.idle_small_color = '#606060'
 
 ## The color that is used for buttons and bars that are hovered.
-define gui.hover_color = '#0099ff'
+define gui.hover_color = gui.preference("hover_color", '#900') # darkmode: '#ffecbc' or '#90caf9'
+
+define gui.radar_graph_color = gui.preference("radar_graph_color", '#dea198') # darkmode: '#c94248'
 
 ## The color used for a text button when it is selected but not focused. A
 ## button is selected if it is the current screen or preference value.
@@ -170,6 +180,7 @@ define gui.text_size_multiplier = gui.preference("text_size_multiplier", 1)
 
 default persistent.alt_text = False
 default persistent.reduce_clutter = False
+default persistent.cblindness = "cboff"
 
 default persistent.text_size_multiplier = 1
 default persistent.theme = "light"
@@ -491,9 +502,9 @@ define gui.history_name_width = 233
 define gui.history_name_xalign = 1.0
 
 ## The position, width, and alignment of the dialogue text.
-define gui.history_text_xpos = 255
+define gui.history_text_xpos = 230
 define gui.history_text_ypos = 3
-define gui.history_text_width = 1110
+define gui.history_text_width = 470
 define gui.history_text_xalign = 0.0
 
 

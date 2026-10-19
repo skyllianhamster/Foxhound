@@ -4,16 +4,7 @@
 #####################################################################
 screen skills_and_inventory_button:
     
-    zorder 11
-    
-    # imagebutton auto "gui/button/skills_%s.png" xalign 0.95 yalign 0.05 focus_mask None action ShowMenu("skills_and_inventory") 
-    # imagebutton: 
-    #     focus_mask True
-    #     xalign 0.97 #0.95
-    #     yalign 0.04 #0.07
-    #     idle "gui/screen_skills/screen_skills_closed_idle.png"
-    #     hover "gui/screen_skills/screen_skills_closed_hover.png"  
-    #     action ShowMenu("skills_and_inventory")
+    zorder 11   
 
     imagebutton: 
         focus_mask True

@@ -76,56 +76,56 @@ screen dev_tools_player:
         frame:            
             text "adulthood_ background" 
         frame:            
-            text " : [adulthood_background]"
+            text " : " + adulthood_background.key
     hbox:
         frame:
             text "childhood_ background"
         frame:    
-            text " : [childhood_background]" 
+            text " : " + childhood_background.key
     hbox:
         frame:
             text "adulthood_ background_ description"
         frame:
-            text " : [adulthood_background_description]" 
+            text " : " + adulthood_background.description
     hbox:
         frame:
             text "childhood_ background_ description"
         frame:
-            text " : [childhood_background_description]" 
+            text " : " + childhood_background.description
     hbox:
         frame:
             text "childhood_ background_ description_add"
         frame:
-            text " : [childhood_background_description_add]" 
+            text " : " + childhood_background.description2
     
     null height 20
 
     label "--- SKILL VARIABLES ---"   
     hbox:
         frame:
-            text "warfare"
+            text "warfare_pts"
         frame:
-            text " : [warfare]" 
+            text " : [warfare_pts]" 
     hbox:
         frame:
-            text "charisma"
+            text "charisma_pts"
         frame:
-            text " : [charisma]" 
+            text " : [charisma_pts]" 
     hbox:
         frame:
-            text "scholarship"
+            text "scholarship_pts"
         frame:
-            text " : [scholarship]" 
+            text " : [scholarship_pts]" 
     hbox:
         frame:
-            text "survival"
+            text "survival_pts"
         frame:
-            text " : [survival]" 
+            text " : [survival_pts]" 
     hbox:
         frame:
-            text "vigor"
+            text "vigor_pts"
         frame:
-            text " : [vigor]" 
+            text " : [vigor_pts]" 
     hbox:
         frame:
             text "warfare_dc_modifier"

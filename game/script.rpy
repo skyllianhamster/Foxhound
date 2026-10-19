@@ -59,7 +59,7 @@ label gameplay_demo:
 
     while exitloop == False:
         
-        $ current_screen = "dialogue"     
+        $ current_screen = "dialogue"   
 
         menu:  
             "Player customization demo": 

@@ -19,7 +19,7 @@ init python:
             self.key = key
             self.name = name
             self.description = description
-            self.description2 = description2
+            self.description2 = description2    
 
     class Item:
         def __init__(self, key, name, description, icon, icon_closeup, found):

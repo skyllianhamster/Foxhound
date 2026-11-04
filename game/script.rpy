@@ -72,6 +72,8 @@ label gameplay_demo:
                 call demo_crimescene
             "Dice roll & skill check demo":
                 call demo_skill_check
+            "( Writer testing space )":
+                call testing_space    
             "Exit":                
                 $ exitloop = True
                 $ textbox_type = "cinematic"

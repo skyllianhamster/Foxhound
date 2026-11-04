@@ -155,7 +155,10 @@ label calculate_dc(required_skill_value, player_skill_value): ### TODO: add dc m
 init python:
     # Sets and saves persistent data specific to each slot about adulthood_background, player name and playtime_seconds
     def save_custom_metadata(metadata):
-        metadata["adulthood_background"] = adulthood_background.key
+        if adulthood_background and hasattr(adulthood_background, "key"):
+            metadata["adulthood_background"] = adulthood_background.key
+        else:
+            metadata["adulthood_background"] = ""
         metadata["player_name"] = player_name
         metadata["playtime_seconds"] = playtime_seconds
     

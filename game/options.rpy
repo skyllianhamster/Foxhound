@@ -4,6 +4,7 @@
 ## them. Lines beginning with a single '#' mark are commented-out code, and you
 ## may want to uncomment them when appropriate.
 
+
 ## Basics ######################################################################
 
 ## A human-readable name of the game. This is used to set the default window
@@ -79,10 +80,10 @@ define config.main_menu_music = audio.bgm_main_menu #"main-menu-theme.ogg"
 ## Each variable should be set to a transition, or None to indicate that no
 ## transition should be used.
 
-## Entering or exiting the game menu.
+## Entering or exiting the game menu. For ShowMenu()
 
-define config.enter_transition = dissolve
-define config.exit_transition = dissolve
+define config.enter_transition = None
+define config.exit_transition = None
 
 
 ## Between screens of the game menu.

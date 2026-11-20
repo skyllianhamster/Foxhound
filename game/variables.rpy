@@ -38,6 +38,7 @@ define config.tts_substitutions = [
 
 ### UI/UX ####################################
 
+default cursor_xy = (0, 0) ## stores cursor location
 default y_adj = ui.adjustment() ## stores viewport x/y values to prevent jumping back up a scrollable page
 default current_screen = "dialogue" ## tracks what screen the player is on
 default qm_orientation = "horizontal" ## orientation of the quick menu
@@ -54,14 +55,6 @@ define qm_vertical_screens = [ ## all screens using a vertical orientation for t
 ## given name TODO: set to "", defaults for testing only
 default player_name = "tala"
 default pronoun = "they/them" 
-
-## pronouns and verbs
-define they = Pronoun("they", "she", "he", default="they")
-define them = Pronoun("them", "her", "him", default="them")
-define are = PronounVerb("are", "is")
-define were = PronounVerb("were", "was")
-
-## forbidden names
 define forbidden_names = ["caitlyn", "vi"]
 
 ### TEXTBOXES #####################

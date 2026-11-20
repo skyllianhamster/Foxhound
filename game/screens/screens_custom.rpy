@@ -1,27 +1,7 @@
-## TODO: remove later
-style demo_button_colors:
-    font "fonts/handwritten/JustAnotherHand-Regular.ttf"
-    idle_color "#eee"
-    hover_color "#ec0"
-    size 50
-
-### HIDE ALL SCREENS ################################################
-label clear_screens:
-    hide screen object_text_button
-    hide screen object_text    
-    hide screen skills_and_inventory_button
-    hide screen skills_and_inventory
-    hide screen error_screen
-    hide screen player_name_and_pronouns
-    hide screen return_button
-    hide screen object_text
-    hide screen object_text_button
-    hide screen player_name_and_pronouns
-    hide screen player_name_and_pronouns_confirm
-    hide screen dice_tray_overlay
-    return
-
-### SHOW ERROR MSG ################################################
+### SHOW ERROR MESSAGE ##############################################
+### a custom error screen
+### USAGE: call screen error_screen("Error message goes here.")   
+#####################################################################
 
 screen error_screen(error_msg):
 
@@ -78,20 +58,55 @@ style error_screen_button_text:
     font gui.text_font_handwritten
     size 60
     color gui.text_secondary_color
-    hover_color gui.hover_color
+    hover_color gui.hover_color 
 
-### RETURN TO MAIN MENU BUTTON ######################################
-### for testing purposes 
+
+### SHOW DYNAMIC TOOLTIP ############################################
+### a custom tooltip that follows the mouse
+### USAGE: hovered Show("tooltip_dyn", tooltip_text="Text goes here")
+###        unhovered Hide("tooltip_dyn")
 #####################################################################
-screen return_button:
-    zorder 100
-    textbutton "RETURN": 
-        text_style "demo_button_colors"        
-        xalign 0.95 
-        yalign 0.95 
-        action MainMenu()    
 
-### TRANSFORMS ###################################################
+screen tooltip_dyn(tooltip_text="", x_off=0, y_off=0, x_anc=0.5, y_anc=0.5): 
+
+    ## Gets the cursor position once upon hovering the element. 
+    ## This is to prevent the text from briefly appearing in the 
+    ## last position of the previously hovered element before  
+    ## jumping to the position of the currently hovered element.   
+    on "show" action Function(get_cursor)  
+
+    zorder 200  
+
+    ## This tracks the position of the cursor and
+    ## displays the tooltip text while it remains hovered.
+    timer 0.05 repeat True action Function(get_cursor)
+
+    $ cx = cursor_xy[0]
+    $ cy = cursor_xy[1]     
+
+    textbutton "[tooltip_text]":
+        style "tooltip_dyn"   
+        action NullAction()
+        xanchor x_anc
+        yanchor y_anc
+        xpos cx + int(x_off*gui.text_size_multiplier)
+        ypos cy + int(y_off*gui.text_size_multiplier)
+
+        ## ensures that the tooltip does not steal focus
+        ## if positioned directly under the cursor as
+        ## this will break the hover state on the element        
+        sensitive False  
+
+style tooltip_dyn:
+    background Frame("gui/redacted.png", 32, 10, 25, 7)
+    padding (20, 10, 20, 5)
+
+style tooltip_dyn_text:
+    color gui.text_ondark_color  
+    font gui.text_font_typewriter
+    size 26*gui.text_size_multiplier 
+
+### TRANSFORMS #####################################################
 ### custom positions used for character sprites
 transform left10:
     xalign 0.1

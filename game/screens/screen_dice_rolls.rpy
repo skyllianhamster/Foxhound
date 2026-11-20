@@ -2,7 +2,7 @@
 ## Added by taqueets
 ## Used to display everything for the dice tray, dice roll, and skill check overlay
 
-screen dice_tray_modifiers:
+screen dice_tray_modifiers():
     frame:
         style "dice_roll_modifiers"
 
@@ -10,7 +10,7 @@ screen dice_tray_modifiers:
             ## TODO: display roll modifiers here
             text "No roll modifiers." style "dice_roll_modifiers_text"    
 
-screen dice_tray_overlay:      
+screen dice_tray_overlay():      
 
     ## do not display outcome right away
     default display_roll_value = False
@@ -52,7 +52,6 @@ screen dice_tray_overlay:
             ypos 110
 
             text "[skill_check_type!u] CHECK" style "dice_roll_check_text"
-            # text "+[skill_modifier] Modifier" xalign 0.5 yalign 0.24 size 22 color "#ececec"
             text "DIFFICULTY" style "dice_roll_status_text"
             text "[dc]" style "dice_roll_value_text"  
     

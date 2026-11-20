@@ -114,9 +114,13 @@ screen file_slots(title):
                                             xfit True
                                             yfit True
 
+                                            # add Transform(
+                                            #     Frame("gui/screen_menus/screen_menu_loadsave_savefile_rectangle.png", xsize=285, ysize=71), 
+                                            #     xoffset=-15, yoffset=-15
+                                            #     )
                                             add Transform(
-                                                Frame("gui/screen_menus/screen_menu_loadsave_savefile_rectangle.png", xsize=285, ysize=71), 
-                                                xoffset=-15, yoffset=-15
+                                                Frame("gui/redacted.png", xsize=300, ysize=71), 
+                                                xoffset=-25, yoffset=-15
                                                 )
 
                                             if FileCurrentPage() == "auto":
@@ -212,7 +216,7 @@ style page_label:
 style page_label_text:
     textalign 0.5
     layout "subtitle"
-    hover_color gui.hover_color
+    hover_color gui.hover_color 
     color gui.text_secondary_color
     font gui.text_font_header
     size 45*gui.text_size_multiplier
@@ -224,7 +228,7 @@ style page_button_text:
     properties gui.text_properties("page_button")
     selected_color gui.idle_color
     idle_color gui.text_secondary_color
-    hover_color gui.hover_color
+    hover_color gui.hover_color 
     selected_underline True
     
 

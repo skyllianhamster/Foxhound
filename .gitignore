@@ -11,6 +11,7 @@ art/
 *.sai2
 *.save
 *.saves
+vscode_renpy_warp_*.rpe*
 
 # # Byte-compiled / optimized / DLL files
 # __pycache__/

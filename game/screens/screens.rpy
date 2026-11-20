@@ -20,8 +20,8 @@ style input:
 style hyperlink_text:
     font gui.interface_text_font
     properties gui.text_properties("hyperlink", accent=True)
-    idle_color gui.accent_color
-    hover_color gui.hover_color
+    idle_color gui.accent_color 
+    hover_color gui.hover_color 
     hover_underline True
 
 style gui_text:
@@ -198,7 +198,7 @@ style confirm_button_text:
     font gui.text_font_handwritten
     size 60
     color gui.text_secondary_color
-    hover_color gui.hover_color
+    hover_color gui.hover_color 
 
 ## Skip indicator screen #######################################################
 ##

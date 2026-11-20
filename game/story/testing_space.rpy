@@ -2,7 +2,7 @@
 
 label testing_space:
 
-    $ current_screen = "dialogue"
+    $ set_quick_menu("dialogue")
     $ textbox_type = "dialogue"
 
     """   

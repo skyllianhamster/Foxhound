@@ -84,6 +84,7 @@ label docu_pronouns:
     ## Write the narrative using they/them pronouns.
     ## Pronouns are set by player choice and are automatically replaced.
     ## [they]  [them]  [their] [theirs] [themself] [they_re] [they_ve]
+    ## [are] [were]
 
     vi "Cait, [they_re] here."  
  
@@ -199,6 +200,7 @@ audio: .ogg
 """
 200: 
     Confirm screen
+    Custom dynamic tooltip (tooltip_dyn)
 100:            
     Quick menu screen
     Skip indicator
@@ -208,15 +210,16 @@ audio: .ogg
     Return button   
 50:
     Game Menu screens (Save, Load, About, Settings, Help, History, etc)
-11:
-    Skills and Inventory screen button
+11:    
     Skills and Inventory screen value indicators
     Player Customization Confirm screen
 10:
-    Player Customization screen
-    Skills and Inventory screen
+    Player Customization screen    
+    Skills and Inventory screen 
     Crime Scene object text 
     Crime Scene object text READ button
+09:
+    Skills and Inventory screen button
 """
 
 ### Quick menu orientations
@@ -224,20 +227,19 @@ audio: .ogg
 label docu_quick_menu:
 
     ## the list of vertical screens is listed in $ qm_vertical_screens in variables.rpy
-    ## screens have already been set to change $ current_screen when shown
 
     ## manually set these two variables whenever the narrative section changes
 
     ## at the start of dialogue:
-    $ current_screen = "dialogue"
+    $ set_quick_menu("dialogue")
     $ textbox_type = "dialogue"
 
     ## at the start of cinematics:
-    $ current_screen = "cinematic"
+    $ set_quick_menu("cinematic")
     $ textbox_type = "cinematic"
 
     ## at the start of crime scenes:
-    $ current_screen = "crime_scene"
+    $ set_quick_menu("crime_scene")
     $ textbox_type = "cinematic"
     
 

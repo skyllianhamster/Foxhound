@@ -78,7 +78,7 @@ screen history():
                                 substitute False
 
                     if not _history_list:
-                        label _("The dialogue history is empty.")                
+                        label _("The dialogue history is empty.") text_color gui.text_secondary_color
 
                 vbar value YScrollValue("vp_history")
 
@@ -116,13 +116,13 @@ style history_name:
     xpos gui.history_name_xpos
     xanchor gui.history_name_xalign
     ypos gui.history_name_ypos
-    xsize gui.history_name_width
-    color gui.accent_color
+    xsize gui.history_name_width    
 
 style history_name_text:
     min_width 180 #gui.history_name_width
     xsize 180    
     textalign gui.history_name_xalign
+    color gui.accent_color 
 
 style history_text:
     xpos gui.history_text_xpos

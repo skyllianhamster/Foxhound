@@ -28,17 +28,17 @@ init -1:
         window:
             id "window"
 
-            ### changes textbox design
-            ### style in screens.rpy under "window" and "namebox"
+            ### changes textbox design            
             if textbox_type == "cinematic":
-                # background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
                 background Transform(Frame("gui/textbox_cinematic.png", xsize=1920, ysize=270, xalign=0, yalign=1.0), alpha=0.9)
                 left_padding -400
                 right_padding 650
                 xalign 0.5
                 yalign 1.0 
-            elif textbox_type == "dialogue": # the default textbox style           
-                background Image(persistent.textbox)
+                
+            # the default textbox style 
+            elif textbox_type == "dialogue":           
+                background Image(gui.textbox)
                 
             if who is not None:
 
@@ -55,7 +55,7 @@ init -1:
                     if textbox_type == "cinematic":
                         background Image("gui/namebox_cinematic.png")
                     elif textbox_type == "dialogue":                          
-                        background Frame(persistent.namebox, 89, 23, 91, 8, tile="integer")
+                        background Frame(gui.namebox, 89, 23, 91, 8, tile="integer")
                         # padding (88, 18, 78, 6)
 
                     style "namebox"
@@ -65,42 +65,6 @@ init -1:
             # Replace your usual "text" statement with "fancytext" to enable
             # some fancy effects on text display.
             fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect
-
-# screen say(who, what): 
-
-#     window:
-#         id "window"
-
-#         ### changes textbox design
-#         ### overridden in screens_custom.py
-#         if textbox_type == "cinematic": 
-#             left_margin -193
-#             bottom_margin -100
-#             left_padding -80
-#             right_padding 100
-#             background Image("gui/textbox_cinematic.png", xalign=0, yalign=1.0)
-
-#         if who is not None:
-
-#             window:
-#                 id "namebox"
-
-#                 ### changes namebox design based on textbox type
-#                 ### overridden in screens_custom.py
-#                 if textbox_type == "cinematic":
-#                     background Image("gui/namebox_cinematic.png", xalign=0.5, yalign=1.0)
-
-#                 style "namebox"
-#                 text who id "who"
-
-#         text what id "what"
-
-
-#     ## If there's a side image, display it above the text. Do not display on the
-#     ## phone variant - there's no room.
-#     if not renpy.variant("small"):
-#         add SideImage() xalign 0.0 yalign 1.0
-
 
 ## Make the namebox available for styling through the Character object.
 init python:

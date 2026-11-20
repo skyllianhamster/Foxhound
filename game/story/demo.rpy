@@ -21,14 +21,11 @@ label demo_player_customization:
 label demo_dialogue:
     call reset_skills_and_inventory()
 
-    $ current_screen = "dialogue"
-
+    $ set_quick_menu("dialogue")
     $ textbox_type = "dialogue"
 
     scene bg demo 
     show screen skills_and_inventory_button
-    # show screen return_button  
-
 
     show vi pitfighter concerned demo at left20 
     with dissolve
@@ -143,20 +140,17 @@ label demo_dialogue:
     window hide
 
     hide screen skills_and_inventory_button
-    # hide screen return_button
 
     scene black with dissolve
     
     return
 
 ### Cinematic screen demo ############################################
-label demo_cinematic:
-    $ current_screen = "cinematic"
+label demo_cinematic:  
 
+    $ set_quick_menu("cinematic")
     $ textbox_type = "cinematic"
-
-    # show screen return_button  
-
+ 
     scene black with dissolve
 
     window auto ### use this to hide textbox between scenes
@@ -213,7 +207,6 @@ label demo_cinematic:
     \"Good morning, love. We're going to be late.\"
     """
 
-    # hide screen return_button
     scene black with dissolve    
 
     return
@@ -221,17 +214,14 @@ label demo_cinematic:
 ### Crime scene screen demo ############################################
 label demo_crimescene:
 
-    $ current_screen = "crime_scene"
-
+    $ set_quick_menu("crime_scene")
     $ textbox_type = "cinematic"
 
     window auto
 
     scene cs demo with dissolve    
 
-    cine "DEMO: CRIME SCENE"            
-    
-    # show screen return_button with dissolve
+    cine "DEMO: CRIME SCENE"   
 
     window hide
     $ textbox_type = "dialogue"
@@ -373,7 +363,7 @@ label demo_crimescene:
                         jump cs00_demo
                     "Leave it":
                         jump cs00_demo
-        jump cs00_demo
+            # jump cs00_demo
 
         $ cs00_lockbox_found = True
         jump cs00_demo
@@ -516,13 +506,12 @@ label demo_crimescene:
     hide vi 
     hide black overlay
 
-    # hide screen return_button with dissolve
-
     scene black with dissolve
     return
 
 ### Dice roll & skill check demo ############################################
 label demo_skill_check:
+    $ set_quick_menu("dialogue")
     $ textbox_type = "dialogue"
 
     # Set skills for this demo scene    
@@ -534,7 +523,6 @@ label demo_skill_check:
 
     scene bg zaun alley
     show screen skills_and_inventory_button
-    # show screen return_button
 
     window show 
     "This section simulates a simple scene with dice roll and skill check mechanics. Scene starting now..."

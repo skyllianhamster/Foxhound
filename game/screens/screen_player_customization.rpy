@@ -1,8 +1,8 @@
 ### NAME & PRONOUNS #################################################
 ### text input and pronoun selection
 #####################################################################
-screen player_name_and_pronouns:
-    on "show" action SetVariable("current_screen", "player_customization") 
+screen player_name_and_pronouns():
+    on "show" action Function(set_quick_menu, "player_customization") 
 
     modal True
     zorder 10    
@@ -265,7 +265,7 @@ label check_name_and_pronouns:
 ### CONFIRM SCREEN #################################################
 ### confirms text input and pronoun selection
 #####################################################################
-screen player_name_and_pronouns_confirm:
+screen player_name_and_pronouns_confirm():
     modal True
     zorder 11
 

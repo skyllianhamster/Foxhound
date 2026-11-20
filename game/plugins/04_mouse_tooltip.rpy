@@ -2,7 +2,8 @@
 
 default mtt = MouseTooltip(Text(""), padding={"x": 10, "y": -10})
 
-init -1500 python:
+# init -1500 python:
+init -999 python:
 
     class MouseTooltip(Tooltip, renpy.Displayable):
         """A Tooltip whose x/y position follows the mouse's."""

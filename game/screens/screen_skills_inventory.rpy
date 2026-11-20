@@ -1,10 +1,9 @@
 ### SHOW / HIDE BUTTON ##############################################
 ### shows the skills screen image used as a button
-### to be changed when UI assets are available
 #####################################################################
-screen skills_and_inventory_button:
+screen skills_and_inventory_button():
     
-    zorder 11   
+    zorder 9   
 
     imagebutton: 
         focus_mask True
@@ -20,7 +19,7 @@ screen skills_and_inventory_button:
             (0,0), Frame("gui/screen_skills/screen_skills_button_bg_[persistent.theme].png", style="skills_and_inventory_button"),
             (0,0), Transform(Frame("gui/screen_skills/screen_skills_button_closed_[persistent.theme].png"), xsize=152, ysize=152)
         )
-        action ShowMenu("skills_and_inventory")
+        action Show("skills_and_inventory") 
 
 style skills_and_inventory_button is empty:
     xsize 150
@@ -32,8 +31,9 @@ style skills_and_inventory_button is empty:
 #####################################################################
 
 
-screen skills_and_inventory:  
-    on "show" action SetVariable("current_screen", "skills_inventory")
+screen skills_and_inventory():  
+    on "show" action Function(set_quick_menu, "skills_inventory")
+    on "hide" action Function(set_quick_menu, "dialogue") 
 
     modal True
     zorder 10    
@@ -52,14 +52,16 @@ screen skills_and_inventory:
             idle "gui/screen_skills/screen_skills_open_idle.png"
             hover "gui/screen_skills/screen_skills_open_hover.png"    
             action [
-                SetVariable("current_screen", "dialogue"),
-                Return()
+                Function(set_quick_menu, "dialogue"),
+                Show("skills_and_inventory_button"),
+                Hide("skills_and_inventory")
                 ]
 
-        ### lets the Esc button on keyboard also set the $ current_screen variable
+        ### lets the Esc button on keyboard also run the set quick menu function
         key "game_menu" action [
-                SetVariable("current_screen", "dialogue"),
-                Return()
+                Function(set_quick_menu, "dialogue"),
+                Show("skills_and_inventory_button"),
+                Hide("skills_and_inventory")
                 ]
 
         ### rotates the content slightly to match the skewed paper background
@@ -165,13 +167,8 @@ screen skills_and_inventory:
                     text "Skills" style "section_headers"
 
                 ### radar chart                
-                if persistent.theme == 'light':
-                    add RadarChart(6, [warfare_pts,charisma_pts,scholarship_pts,survival_pts,vigor_pts], gui.radar_graph_color,'#736c64',1,350,True) xalign 0.5 yalign 0.70                    
-                else:
-                    add RadarChart(6, [warfare_pts,charisma_pts,scholarship_pts,survival_pts,vigor_pts], gui.radar_graph_color,'#fbb03b',1,350,True) xalign 0.5 yalign 0.70   # "#226ea8" "#a3a8bc"
-                
-                
-
+                add RadarChart(6, [warfare_pts,charisma_pts,scholarship_pts,survival_pts,vigor_pts], gui.radar_graph_color, gui.radar_line_color, 1, 350, True) xalign 0.5 yalign 0.70   
+               
                 ### skill icons with tooltip   
                 frame:
                     style "empty"
@@ -185,18 +182,13 @@ screen skills_and_inventory:
                         xpos 0 
                         ypos 0                    
                         action NullAction()
-                        hovered [                 
-                            Show("skill_value_indicator_warfare"),
-                            SetField(mtt, 'redraw', True), 
-                            mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(50*gui.text_size_multiplier)+100),
-                                Text(warfare.name, style="skill_tooltip_text"), 
-                                xmaximum=170, ymaximum=45, ypos=-45))                           
+                        hovered [          
+                            Show("tooltip_dyn", tooltip_text = "Warfare", y_anc=1.0, y_off=-20),       
+                            Show("skill_value_indicator_warfare")                                                                          
                             ]
                         unhovered [
-                            mtt.Action(Text(" ")),
-                            Hide("skill_value_indicator_warfare"),
-                            SetField(mtt, 'redraw', False) 
+                            Hide("tooltip_dyn"),
+                            Hide("skill_value_indicator_warfare")
                             ]                 
 
 
@@ -213,17 +205,12 @@ screen skills_and_inventory:
                         ypos 0                    
                         action NullAction()
                         hovered [
-                            Show("skill_value_indicator_charisma"),
-                            SetField(mtt, 'redraw', True), 
-                            mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(125*gui.text_size_multiplier)+25), 
-                                Text(charisma.name, style="skill_tooltip_text"), 
-                                xmaximum=200, ymaximum=45, ypos=-45))
+                            Show("tooltip_dyn", tooltip_text = "Charisma", y_anc=1.0, y_off=-20),
+                            Show("skill_value_indicator_charisma")                            
                             ]
-                        unhovered [
-                            mtt.Action(Text(" ")),
-                            Hide("skill_value_indicator_charisma"),
-                            SetField(mtt, 'redraw', False)
+                        unhovered [    
+                            Hide("tooltip_dyn"),
+                            Hide("skill_value_indicator_charisma")
                             ]
 
                 frame:
@@ -239,18 +226,12 @@ screen skills_and_inventory:
                         ypos 0
                         action NullAction()
                         hovered [
-                            Show("skill_value_indicator_scholarship"),
-                            SetField(mtt, 'redraw', True), 
-                            mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(175*gui.text_size_multiplier)+25), 
-                                Text(scholarship.name, style="skill_tooltip_text"), 
-                                xmaximum=270, ymaximum=45, ypos=65))
-                                
+                            Show("tooltip_dyn", tooltip_text = "Scholarship", y_anc=0.0, y_off=20),
+                            Show("skill_value_indicator_scholarship")
                             ]
                         unhovered [
-                            mtt.Action(Text(" ")),
-                            Hide("skill_value_indicator_scholarship"),
-                            SetField(mtt, 'redraw', False)
+                            Hide("tooltip_dyn"),
+                            Hide("skill_value_indicator_scholarship")
                             ]
                 
                 frame:
@@ -266,17 +247,12 @@ screen skills_and_inventory:
                         ypos 0
                         action NullAction()
                         hovered [
-                            Show("skill_value_indicator_survival"),
-                            SetField(mtt, 'redraw', True), 
-                            mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(125*gui.text_size_multiplier)+25), 
-                                Text(survival.name, style="skill_tooltip_text"), 
-                                xmaximum=200, ymaximum=45, ypos=65))                                
+                            Show("tooltip_dyn", tooltip_text = "Survival", y_anc=0.0, y_off=20),
+                            Show("skill_value_indicator_survival")                                                       
                             ]
                         unhovered [
-                            mtt.Action(Text(" ")),
-                            Hide("skill_value_indicator_survival"),
-                            SetField(mtt, 'redraw', False)
+                            Hide("tooltip_dyn"),
+                            Hide("skill_value_indicator_survival")                           
                             ]
 
                 frame:
@@ -291,22 +267,14 @@ screen skills_and_inventory:
                         xpos 0 
                         ypos 0
                         action NullAction()
-                        hovered [
-                            Show("skill_value_indicator_vigor"),
-                            SetField(mtt, 'redraw', True), 
-                            mtt.Action(Fixed(
-                                Frame("gui/tooltip_bg.png", style="skill_tooltip_frame", xsize=int(75*gui.text_size_multiplier)+35), 
-                                Text(vigor.name, style="skill_tooltip_text"), 
-                                xmaximum=140, ymaximum=45, ypos=-45))
+                        hovered [   
+                            Show("tooltip_dyn", tooltip_text = "Vigor", y_anc=1.0, y_off=-20),
+                            Show("skill_value_indicator_vigor")                           
                             ]
-                        unhovered [
-                            mtt.Action(Text(" ")),
-                            Hide("skill_value_indicator_vigor"),
-                            SetField(mtt, 'redraw', False)
-                            ]
-
-                add mtt # adds the tooltip on top of the icons
-
+                        unhovered [                                            
+                            Hide("tooltip_dyn"),
+                            Hide("skill_value_indicator_vigor")                            
+                            ]              
 
             ### inventory
             frame:
@@ -399,9 +367,9 @@ screen skills_and_inventory:
                             )    
 
 
-    use quick_menu()
+    # use quick_menu()
 
-screen skill_value_indicator_warfare:
+screen skill_value_indicator_warfare():
 
     zorder 11
 
@@ -427,7 +395,7 @@ screen skill_value_indicator_warfare:
             ypos 439
         action NullAction()
 
-screen skill_value_indicator_charisma:
+screen skill_value_indicator_charisma():
 
     zorder 11
 
@@ -453,7 +421,7 @@ screen skill_value_indicator_charisma:
             ypos 459
         action NullAction()
 
-screen skill_value_indicator_scholarship:
+screen skill_value_indicator_scholarship():
 
     zorder 11
 
@@ -479,7 +447,7 @@ screen skill_value_indicator_scholarship:
             ypos 490
         action NullAction()
 
-screen skill_value_indicator_survival:
+screen skill_value_indicator_survival():
 
     zorder 11
 
@@ -505,7 +473,7 @@ screen skill_value_indicator_survival:
             ypos 491
         action NullAction()
 
-screen skill_value_indicator_vigor:
+screen skill_value_indicator_vigor():
 
     zorder 11
 

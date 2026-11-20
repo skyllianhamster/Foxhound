@@ -7,7 +7,7 @@ init offset = -1
 ## DEBUG SCREEN #####################################
 ## shows values of variables
 
-screen dev_tools:
+screen dev_tools():
 
     default dev_tools_tab = "all"
 
@@ -53,7 +53,7 @@ screen dev_tools:
                         
             vbar value YScrollValue("vp_dev_tools")
 
-screen dev_tools_player:   
+screen dev_tools_player():   
     style_prefix "dev_tools_var"
 
     label "--- PLAYER VARIABLES ---"  
@@ -187,7 +187,7 @@ screen dev_tools_player:
     
     null height 20
 
-screen dev_tools_gameplay:    
+screen dev_tools_gameplay():    
     style_prefix "dev_tools_var"
 
     label "--- DICE ROLL VARIABLES ---"   
@@ -261,15 +261,10 @@ screen dev_tools_gameplay:
     
     null height 20
 
-screen dev_tools_game:    
+screen dev_tools_game():    
     style_prefix "dev_tools_var"
 
-    label "--- GAME VARIABLES ---"     
-    hbox:
-        frame:
-            text "forbidden_names"      
-        frame:  
-            text " : [forbidden_names]"
+    label "--- GAME VARIABLES ---"    
     hbox:
         frame:
             text "textbox_type"
@@ -277,9 +272,19 @@ screen dev_tools_game:
             text " : [textbox_type]" 
     hbox:
         frame:
+            text "forbidden_names"      
+        frame:  
+            text " : [forbidden_names]"    
+    hbox:
+        frame:
             text "exitloop"
         frame:
             text " : [exitloop]"
+    hbox:
+        frame:
+            text "cursor_xy (tooltip)"
+        frame:
+            text " : ([cursor_xy[0]], [cursor_xy[1]])"   
     hbox:
         frame:
             text "playtime_seconds"

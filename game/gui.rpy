@@ -129,35 +129,59 @@ define config.after_default_callbacks += [
 ##
 ## The colors of text in the interface.
 
+
 ## Custom color used for the names of characters (based on custom textbox)
 define gui.name_color = gui.preference("name_color", '#fff') 
+
+## Custom color for the radar graph display in the inventory
+define rdgraph_dict = {
+    'rd_light_cboff': '#dea198',
+    'rd_light_cbon': '#90caf9',
+    'rd_dark_cboff': '#c94248',
+    'rd_dark_cbon': '#226ea8'
+}
+define gui.radar_graph_color = gui.preference("radar_graph_color", rdgraph_dict['rd_light_cboff']) 
+
+define gui.radar_line_color = gui.preference("radar_line_color", '#736c64') # dark mode: '#fbb03b'
 
 ## The colors used for dialogue and menu choice text.
 
 ## default colors: black on light mode, white on dark mode
-define gui.text_color = gui.preference("text_color", '#000') # darkmode: '#fff'
+define gui.text_color = gui.preference("text_color", '#000') 
 
 ## secondary colors: black on light mode, light yellow on dark mode
-define gui.text_secondary_color = gui.preference("text_secondary_color", '#000') # darkmode: '#ffecbc'
+define gui.text_secondary_color = gui.preference("text_secondary_color", '#000') 
 
 ## ondark colors: for text on fixed dark backgrounds: white on light mode, light yellow on dark mode
-define gui.text_ondark_color = gui.preference("text_ondark_color", '#fff') # darkmode: '#ffecbc'
+define gui.text_ondark_color = gui.preference("text_ondark_color", '#fff') 
 # define gui.interface_text_color = '#404040'
 
-## An accent color used throughout the interface to label and highlight text.
-define gui.accent_color = gui.preference("accent_color", '#900') #darkmode: '#c94248' or '#90caf9'
+## An accent color used throughout the interface to label and highlight text. 
+## Changes based on Dark mode and Colorblindness mode.
+define accent_dict = {
+    'acc_light_cboff': '#900',
+    'acc_light_cbon': '#226ea8',
+    'acc_dark_cboff': '#ff656c',
+    'acc_dark_cbon': '#90caf9'
+}
+define gui.accent_color = gui.preference("accent_color", accent_dict['acc_light_cboff']) 
 
 ## The color used for a text button when it is neither selected nor hovered.
-define gui.idle_color = gui.preference("idle_color", '#555')  # darkmode: '#bbb'
+define gui.idle_color = gui.preference("idle_color", '#555')  
 
 ## The small color is used for small text, which needs to be brighter/darker to
 ## achieve the same effect.
 define gui.idle_small_color = '#606060'
 
 ## The color that is used for buttons and bars that are hovered.
-define gui.hover_color = gui.preference("hover_color", '#900') # darkmode: '#ffecbc' or '#90caf9'
-
-define gui.radar_graph_color = gui.preference("radar_graph_color", '#dea198') # darkmode: '#c94248'
+## Changes based on Dark mode and Colorblindness mode.
+define hover_dict = {
+    'hov_light_cboff': '#900',
+    'hov_light_cbon': '#226ea8',
+    'hov_dark_cboff': '#fff',
+    'hov_dark_cbon': '#ddf'
+}
+define gui.hover_color = gui.preference("hover_color", hover_dict['hov_light_cboff'])
 
 ## The color used for a text button when it is selected but not focused. A
 ## button is selected if it is the current screen or preference value.
@@ -171,21 +195,30 @@ define gui.insensitive_color = '#7070707f'
 define gui.muted_color = '#66c1ff'
 define gui.hover_muted_color = '#99d6ff'
 
-## GUI & Dark mode GUI ##################################################
+## GUI elements #########################################################
+define gui.namebox = gui.preference("namebox", "gui/namebox_light.png")
+
+define gui.textbox = gui.preference("textbox", "gui/textbox_light.png")
+
 
 
 ## Accessibility ########################################################
 
-define gui.text_size_multiplier = gui.preference("text_size_multiplier", 1)
+## Scales text size for visiblity 
+define gui.text_size_multiplier = gui.preference("text_size_multiplier", 1) ## medium: 1.2, large: 1.4
 
-default persistent.alt_text = False
-default persistent.reduce_clutter = False
+## Changes UI theme between light and dark. String variable is used as reference for other settings.
+default persistent.theme = "light"
+
+## Changes red to blue to account for red-blindness. String variable is used as reference for other settings.
 default persistent.cblindness = "cboff"
 
-default persistent.text_size_multiplier = 1
-default persistent.theme = "light"
-default persistent.namebox = "gui/namebox_light.png"
-default persistent.textbox = "gui/textbox_light.png"
+## Includes alt text displayed narratively
+default persistent.alt_text = False
+
+## Removes certain design elements that may decrease visibility
+default persistent.reduce_clutter = False
+
 
 ## Fonts and Font Sizes ########################################################
 
@@ -247,7 +280,6 @@ define gui.textbox_yalign = 1.0
 ## The placement of the speaking character's name, relative to the textbox.
 ## These can be a whole number of pixels from the left or top, or 0.5 to center.
 define gui.name_xpos = 360
-define gui.name_ypos = 0
 
 ## The horizontal alignment of the character's name. This can be 0.0 for left-
 ## aligned, 0.5 for centered, and 1.0 for right-aligned.
@@ -408,7 +440,7 @@ define gui.notify_ypos = 68
 define gui.choice_spacing = 5
 
 ## Buttons in the navigation section of the main and game menus.
-define gui.navigation_spacing = 6
+define gui.navigation_spacing = 15 #6
 
 ## Controls the amount of spacing between preferences.
 define gui.pref_spacing = 15

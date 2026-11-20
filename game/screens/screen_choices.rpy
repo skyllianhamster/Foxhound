@@ -17,9 +17,7 @@ init offset = -1
 ## e.g. "Lockpick the door" (special=streetrat):
 
 
-screen choice(items, special=no_bg):     
-    
-    default mtt_choice = MouseTooltip(Text(""), padding={"x": 10, "y": -10}) 
+screen choice(items, special=no_bg): 
 
     style_prefix "choice"    
 
@@ -49,25 +47,15 @@ screen choice(items, special=no_bg):
                     foreground Frame("gui/screen_skills/backgrounds/bg_"+special.key+"_[persistent.theme].png", style="special_choice_icon")                   
                     
                     ## tooltip details for special choices                    
-                    hovered [
-                        SetField(mtt_choice, 'redraw', True), 
-                        mtt_choice.Action(Fixed(
-                            Frame("gui/tooltip_bg.png", style="special_choice_tooltip_frame"),
-                            Text("This choice is available due \nto the "+special.name+" background.", style="special_choice_tooltip_text"),
-                            xmaximum=700, ymaximum=102))
-                        ]
-                    unhovered [
-                        SetField(mtt_choice, 'redraw', False),
-                        mtt_choice.Action(Text(""))
-                        ]
+                    hovered Show("tooltip_dyn", tooltip_text = "This choice is available due \nto the "+special.name+" background.", y_anc=0.0, y_off=40, x_anc=0.1)                       
+                    unhovered Hide("tooltip_dyn")
+
                 action [
                     ## adds selected player choices to the History menu
+                    Hide("tooltip_dyn"),
                     Function(narrator.add_history, kind="adv", who = player_name.upper()+" (choice)", what = i.caption), 
                     i.action 
-                    ]
-    add mtt_choice
-    
-    
+                    ] 
 
 style choice_vbox is vbox
 style choice_dark_vbox is vbox
@@ -95,7 +83,6 @@ style special_choice_tooltip_text:
     yanchor 0.5
     ypos -75
 
-
 style choice_vbox:
     xalign 0.5
     yalign 0.45
@@ -114,6 +101,6 @@ style choice_button is default:
 style choice_button_text is default:
     # properties gui.text_properties("choice_button")
     idle_color gui.text_secondary_color
-    hover_color gui.hover_color
+    hover_color gui.hover_color 
     xalign 0.5
     yalign 0.5

@@ -10,13 +10,11 @@ init offset = -1
 ## screens (keyboard_help, mouse_help, and gamepad_help) to display the actual
 ## help.
 
-
+default help_tab = "keyboard"
 
 screen help():
 
-    tag menu
-
-    default device = "keyboard"
+    tag menu   
 
     use game_menu(_("Help"), scroll="viewport"):
 
@@ -49,8 +47,8 @@ screen help():
                     style_prefix "help"
                     spacing 5                           
                     
-                    textbutton _(" KEYBOARD    ") action SetScreenVariable("device", "keyboard")
-                    textbutton _(" MOUSE    ") action SetScreenVariable("device", "mouse")
+                    textbutton _(" KEYBOARD    ") action SetVariable("help_tab", "keyboard")
+                    textbutton _(" MOUSE    ") action SetVariable("help_tab", "mouse")
 
                     # if GamepadExists():
                     #     textbutton _(" GAMEPAD    ") action SetScreenVariable("device", "gamepad")
@@ -76,11 +74,11 @@ screen help():
 
                         null height 20                 
 
-                        if device == "keyboard":
+                        if help_tab == "keyboard":
                             use keyboard_help
-                        elif device == "mouse":
+                        elif help_tab == "mouse":
                             use mouse_help
-                        # elif device == "gamepad":
+                        # elif help_tab == "gamepad":
                         #     use gamepad_help
 
                         null height (4 * gui.pref_spacing)

@@ -9,8 +9,6 @@ image bg zaun alley = "images/backgrounds/riot-zaun-concept-art-placeholder-bg.p
 image cs demo = "images/crimescenes/cs00_demo.png"
 image cs demoB = "images/crimescenes/cs00_demoB.png"
 
-image dice_tray = "gui/diceroll/dice_tray.png"
-
 ### SPRITES ###################################
 image caitlyn enforcer concerned demo = "images/characters/caitlyn/caitlyn_enforcer_concerned_demo.png" 
 image vi pitfighter concerned demo = "images/characters/vi/vi_pitfighter_concerned_demo.png"

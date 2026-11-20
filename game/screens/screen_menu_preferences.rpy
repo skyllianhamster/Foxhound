@@ -11,12 +11,11 @@ init offset = -1
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#preferences
 
+default pref_tab = "game"
+
 screen preferences():
 
-    tag menu
-
-    default pref_tab = "game"   
-        
+    tag menu      
 
     use game_menu(_("Preferences"), scroll="viewport"):   
 
@@ -49,8 +48,8 @@ screen preferences():
                     style_prefix "pref"
                     spacing 5          
                     
-                    textbutton _(" GAME    ") action SetScreenVariable("pref_tab", "game")
-                    textbutton _(" ACCESSIBILITY    ") action SetScreenVariable("pref_tab", "accessibility")
+                    textbutton _(" GAME    ") action SetVariable("pref_tab", "game")
+                    textbutton _(" ACCESSIBILITY    ") action SetVariable("pref_tab", "accessibility")
 
             ## constrains the menu contents to a specific area of the page
             frame:                
@@ -258,42 +257,26 @@ screen accessibility_prefs():
                     textbutton _("Off"): 
                         alt "Replace red accent with blue - Off"
                         action [     
-                            If(
-                                persistent.theme == "light",
-                                gui.SetPreference("radar_graph_color", '#dea198', rebuild=False),
-                                gui.SetPreference("radar_graph_color", '#c94248', rebuild=False)                                                         
-                            ), 
-                            If(
-                                persistent.theme == "light",
-                                gui.SetPreference("hover_color", '#900', rebuild=False),
-                                gui.SetPreference("hover_color", '#fff', rebuild=False)                                                         
-                            ),                          
-                            If(
-                                persistent.theme == "light",
-                                gui.SetPreference("accent_color", '#900'),
-                                gui.SetPreference("accent_color", '#ff656c')                                                         
-                            ),
-                            SetVariable("persistent.cblindness", "cboff")
+                            SetVariable("persistent.cblindness", "cboff"),
+
+                            gui.SetPreference("accent_color", accent_dict['acc_'+persistent.theme+'_cboff'], rebuild=False), 
+                            gui.SetPreference("hover_color", hover_dict['hov_'+persistent.theme+'_cboff'], rebuild=False), 
+                            gui.SetPreference("radar_graph_color", rdgraph_dict['rd_'+persistent.theme+'_cboff'], rebuild=False), 
+
+                            Function(style.rebuild),
+                            Function(gui.rebuild)
                             ]
                     textbutton _("On"):
                         alt "Replace red accent with blue - On"
-                        action [                                    
-                            If(
-                                persistent.theme == "light",
-                                gui.SetPreference("radar_graph_color", '#90caf9', rebuild=False),
-                                gui.SetPreference("radar_graph_color", '#226ea8', rebuild=False)
-                            ),
-                            If(
-                                persistent.theme == "light",
-                                gui.SetPreference("hover_color", '#226ea8', rebuild=False),
-                                gui.SetPreference("hover_color", '#eee', rebuild=False)                                                         
-                            ),
-                            If(
-                                persistent.theme == "light",
-                                gui.SetPreference("accent_color", '#226ea8'),
-                                gui.SetPreference("accent_color", '#90caf9')                                                        
-                            ),
-                            SetVariable("persistent.cblindness", "cbon")
+                        action [         
+                            SetVariable("persistent.cblindness", "cbon"),   
+
+                            gui.SetPreference("accent_color", accent_dict['acc_'+persistent.theme+'_cbon'], rebuild=False), 
+                            gui.SetPreference("hover_color", hover_dict['hov_'+persistent.theme+'_cbon'], rebuild=False), 
+                            gui.SetPreference("radar_graph_color", rdgraph_dict['rd_'+persistent.theme+'_cbon'], rebuild=False), 
+
+                            Function(style.rebuild),
+                            Function(gui.rebuild)
                             ]
 
                 vbox:         
@@ -319,52 +302,42 @@ screen accessibility_prefs():
 
                         action [
                             SetVariable("persistent.theme", "light"),
-                            SetVariable("persistent.namebox", "gui/namebox_light.png"),                    
-                            SetVariable("persistent.textbox", "gui/textbox_light.png"),                            
-                            
-                            If(
-                                persistent.cblindness == "cboff",
-                                gui.SetPreference("radar_graph_color", '#dea198', rebuild=False),
-                                gui.SetPreference("radar_graph_color", '#90caf9', rebuild=False)                            
-                            ),
-                            If(
-                                persistent.cblindness == "cboff",
-                                gui.SetPreference("hover_color", '#900', rebuild=False),
-                                gui.SetPreference("hover_color", '#226ea8', rebuild=False)
-                            ),
-                            If(
-                                persistent.cblindness == "cboff",
-                                gui.SetPreference("accent_color", '#900', rebuild=False),
-                                gui.SetPreference("accent_color", '#226ea8', rebuild=False)
-                            ),
+
+                            gui.SetPreference("namebox", "gui/namebox_light.png", rebuild=False),
+                            gui.SetPreference("textbox", "gui/textbox_light.png", rebuild=False),
+
                             gui.SetPreference("text_color", '#000', rebuild=False),
                             gui.SetPreference("text_secondary_color", '#000', rebuild=False),
                             gui.SetPreference("text_ondark_color", '#fff', rebuild=False),
-                            gui.SetPreference("idle_color", '#555')
+                            gui.SetPreference("accent_color", accent_dict['acc_light_'+persistent.cblindness], rebuild=False),
+                            gui.SetPreference("hover_color", hover_dict['hov_light_'+persistent.cblindness], rebuild=False),
+                            gui.SetPreference("radar_graph_color", rdgraph_dict['rd_light_'+persistent.cblindness], rebuild=False),
+                            gui.SetPreference("radar_line_color", '#736c64', rebuild=False),
+                            gui.SetPreference("idle_color", '#555', rebuild=False), 
+
+                            Function(style.rebuild),
+                            Function(gui.rebuild)                        
                         ]
 
                     textbutton _("On"):
                         alt "Dark mode - On"
                         action [
                             SetVariable("persistent.theme", "dark"),
-                            SetVariable("persistent.namebox", "gui/namebox_dark.png"),
-                            SetVariable("persistent.textbox", "gui/textbox_dark.png"),                            
-                            
-                            If(
-                                persistent.cblindness == "cboff",
-                                gui.SetPreference("radar_graph_color", '#c94248', rebuild=False),
-                                gui.SetPreference("radar_graph_color", '#226ea8', rebuild=False)
-                            ),                        
-                            gui.SetPreference("hover_color", '#fff', rebuild=False),
-                            If(
-                                persistent.cblindness == "cboff",
-                                gui.SetPreference("accent_color", '#ff656c'),
-                                gui.SetPreference("accent_color", '#90caf9')
-                            ),
+
+                            gui.SetPreference("namebox", "gui/namebox_dark.png", rebuild=False),
+                            gui.SetPreference("textbox", "gui/textbox_dark.png", rebuild=False),
+
                             gui.SetPreference("text_color", '#fff', rebuild=False),
                             gui.SetPreference("text_secondary_color", '#ffecbc', rebuild=False),
                             gui.SetPreference("text_ondark_color", '#ffecbc', rebuild=False),
-                            gui.SetPreference("idle_color", '#bbb')                      
+                            gui.SetPreference("accent_color", accent_dict['acc_dark_'+persistent.cblindness], rebuild=False),
+                            gui.SetPreference("hover_color", hover_dict['hov_dark_'+persistent.cblindness], rebuild=False),
+                            gui.SetPreference("radar_graph_color", rdgraph_dict['rd_dark_'+persistent.cblindness], rebuild=False),
+                            gui.SetPreference("radar_line_color", '#fbb03b', rebuild=False),
+                            gui.SetPreference("idle_color", '#bbb', rebuild=False), 
+
+                            Function(style.rebuild),
+                            Function(gui.rebuild)                                         
                         ]
                 vbox:            
                     style_prefix "radio"            
@@ -392,7 +365,6 @@ screen accessibility_prefs():
                     textbutton _("Regular"):
                         alt "Font size - Regular"
                         action [ 
-                            SetVariable("persistent.text_size_multiplier", 1),
                             gui.SetPreference("text_size_multiplier", 1), #changes text size
                             gui.SetPreference("name_ypos", 28), # adjusts name within namebox as text changes size
                             gui.SetPreference("dialogue_ypos", 75) # adjusts text w/in dialogue box as text changes size
@@ -400,7 +372,6 @@ screen accessibility_prefs():
                     textbutton _("Medium"): 
                         alt "Font size - Medium"
                         action [
-                            SetVariable("persistent.text_size_multiplier", 1.2),
                             gui.SetPreference("text_size_multiplier", 1.2),
                             gui.SetPreference("name_ypos", 25),
                             gui.SetPreference("dialogue_ypos", 60)
@@ -408,7 +379,6 @@ screen accessibility_prefs():
                     textbutton _("Large"): 
                         alt "Font size - Large"
                         action [
-                            SetVariable("persistent.text_size_multiplier", 1.4),
                             gui.SetPreference("text_size_multiplier", 1.4),
                             gui.SetPreference("name_ypos", 21),
                             gui.SetPreference("dialogue_ypos", 55)

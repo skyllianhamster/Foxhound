@@ -1,6 +1,48 @@
 ### Define functions here
 
-### resets all skills to 0 ###############################
+### SET QUICK MENU ORIENTATION & SCREEN NAME #############
+### USAGE (screen action): action Function(set_quick_menu, <"name_of_screen">)
+### USAGE (renpy): $ set_quick_menu("name_of_screen")
+init python:    
+    def set_quick_menu(screen_name):
+        global current_screen
+        global qm_orientation
+
+        current_screen =  screen_name
+
+        if current_screen in qm_vertical_screens:  
+            qm_orientation = "vertical"
+        else:
+            qm_orientation = "horizontal" 
+
+        # store.current_screen =  screen_name
+
+        # if current_screen in qm_vertical_screens:  
+        #     store.qm_orientation = "vertical"
+        # else:
+        #     store.qm_orientation = "horizontal"  
+
+init python:
+    def get_cursor():
+        global cursor_xy
+        cursor_xy = renpy.get_mouse_pos()
+
+### HIDE ALL SCREENS ###########################################
+label clear_screens:
+    hide screen object_text_button
+    hide screen object_text    
+    hide screen skills_and_inventory_button
+    hide screen skills_and_inventory
+    hide screen error_screen
+    hide screen player_name_and_pronouns
+    hide screen object_text
+    hide screen object_text_button
+    hide screen player_name_and_pronouns
+    hide screen player_name_and_pronouns_confirm
+    hide screen dice_tray_overlay
+    return
+
+### RESET ALL SKILLS TO 0 ######################################
 label reset_skills_and_inventory(): 
     $ childhood_background = no_bg
     $ adulthood_background = no_bg
@@ -146,7 +188,7 @@ label calculate_dc(required_skill_value, player_skill_value): ### TODO: add dc m
     else:
         $ dc = 0   
     return  
-    
+
 ### SAVE AND LOAD PERSISTENT DATA ###########################
 ### USAGE: save and retrive persistent data displayed in the save and load screens
 ### Display: background or name to used in the FileName (name will only be used in case we don't have the background)
@@ -161,7 +203,7 @@ init python:
             metadata["adulthood_background"] = ""
         metadata["player_name"] = player_name
         metadata["playtime_seconds"] = playtime_seconds
-    
+ 
     config.save_json_callbacks.append(save_custom_metadata)
 
     # Verifies if the slot has a loadable file or if it's empty
